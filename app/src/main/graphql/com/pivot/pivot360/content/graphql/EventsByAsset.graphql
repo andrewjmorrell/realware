@@ -1,0 +1,100 @@
+query EventsByAsset(
+    $token: String!
+    $id: String!
+    $status: String!
+    $page: Int!
+    $count: Boolean!
+) {
+    eventsByAsset(
+        token: $token
+        id: $id
+        status: $status
+        page: $page
+        count: $count
+    ) {
+        ... on EventResults {
+            events {
+                identity
+                title
+                asset
+                members {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                allMembers {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                smeRequest {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    parameters {
+                        safetyIssue
+                        productionStatus
+                    }
+                    text
+                }
+                type
+                description
+                status
+                statusHistory {
+                    user
+                    status
+                    date
+                }
+                chatIdentity
+                attachments {
+                    name
+                    fileType
+                    link
+                    updatedAt
+                    fileId
+                }
+                createdAt
+            }
+            total
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+        ... on AuthInfoField {
+            message
+        }
+    }
+}

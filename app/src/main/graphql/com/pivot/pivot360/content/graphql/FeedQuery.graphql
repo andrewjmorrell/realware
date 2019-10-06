@@ -1,0 +1,17 @@
+query Feed($token: String!) {
+    feed(token: $token) {
+        ... on FeedResults {
+            feed {
+                verb
+                title
+                link
+                description
+                createdAt
+            }
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+    }
+}

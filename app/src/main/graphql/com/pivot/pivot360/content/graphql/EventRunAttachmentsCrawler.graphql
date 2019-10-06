@@ -1,0 +1,13 @@
+mutation EventRunAttachmentsCrawler($id: String!, $token: String!) {
+    eventRunAttachmentsCrawler(id: $id, token: $token) {
+        result {
+            ... on ResponseMessageField {
+                isSuccess
+                message
+            }
+            ... on AuthInfoField {
+                message
+            }
+        }
+    }
+}

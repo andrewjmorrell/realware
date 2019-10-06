@@ -1,0 +1,119 @@
+{
+  "project_info": {
+    "project_number": "342617323374",
+    "firebase_url": "https://pivot360-53f38.firebaseio.com",
+    "project_id": "pivot360-53f38",
+    "storage_bucket": "pivot360-53f38.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:342617323374:android:0f4085a0c043412e",
+        "android_client_info": {
+          "package_name": "com.pivot.pivot360.pivotglass"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "342617323374-app6dp186u7a6pdj023e0f8o56h0jujs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLCAZ3UOGc1VxFLCh_r8S6kKltTM_Hpgk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "342617323374-app6dp186u7a6pdj023e0f8o56h0jujs.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "342617323374-c77rc3ikscpkrv0pmqn3gca9rgacrilh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.pivot.pivot360"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:342617323374:android:6f132aa20c1618de57b37f",
+        "android_client_info": {
+          "package_name": "com.pivot.pivot360.pivoteye"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "342617323374-app6dp186u7a6pdj023e0f8o56h0jujs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLCAZ3UOGc1VxFLCh_r8S6kKltTM_Hpgk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "342617323374-app6dp186u7a6pdj023e0f8o56h0jujs.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "342617323374-c77rc3ikscpkrv0pmqn3gca9rgacrilh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.pivot.pivot360"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:342617323374:android:51d6b4db79d5a47b",
+        "android_client_info": {
+          "package_name": "com.pivot.pivot360.pivothandsfree"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "342617323374-app6dp186u7a6pdj023e0f8o56h0jujs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLCAZ3UOGc1VxFLCh_r8S6kKltTM_Hpgk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "342617323374-app6dp186u7a6pdj023e0f8o56h0jujs.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "342617323374-c77rc3ikscpkrv0pmqn3gca9rgacrilh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.pivot.pivot360"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

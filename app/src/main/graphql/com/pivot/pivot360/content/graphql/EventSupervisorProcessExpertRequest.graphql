@@ -1,0 +1,110 @@
+mutation EventSupervisorProcessExpertRequest(
+    $accept: Boolean
+    $id: String!
+    $reject: Boolean
+    $token: String!
+) {
+    eventSupervisorProcessExpertRequest(
+        accept: $accept
+        id: $id
+        reject: $reject
+        token: $token
+    ) {
+        result {
+            ... on EventField {
+                identity
+                title
+                asset
+                members {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                allMembers {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                smeRequest {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    parameters {
+                        safetyIssue
+                        productionStatus
+                    }
+                    text
+                }
+                smeRequestHistory {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    parameters {
+                        safetyIssue
+                        productionStatus
+                    }
+                    text
+                }
+                status
+                statusHistory {
+                    user
+                    status
+                    date
+                }
+                type
+                description
+                chatIdentity
+                attachments {
+                    name
+                    fileType
+                    link
+                    updatedAt
+                    fileId
+                }
+                createdAt
+                assetTitle
+            }
+            ... on ResponseMessageField {
+                isSuccess
+                message
+            }
+            ... on AuthInfoField {
+                message
+            }
+        }
+    }
+}

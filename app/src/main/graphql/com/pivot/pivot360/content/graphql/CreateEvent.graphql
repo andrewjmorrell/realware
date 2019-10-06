@@ -1,0 +1,95 @@
+mutation EventCreate(
+    $asset: String!
+    $description: String!
+    $title: String!
+    $token: String!
+    $type: String!
+) {
+    eventCreate(
+        asset: $asset
+        description: $description
+        title: $title
+        token: $token
+        type: $type
+    ) {
+        result {
+            ... on EventField {
+                identity
+                title
+                asset
+                members {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                allMembers {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                smeRequest {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    text
+                }
+                type
+                description
+                status
+                statusHistory {
+                    user
+                    status
+                    date
+                }
+                chatIdentity
+                attachments {
+                    name
+                    fileType
+                    link
+                    updatedAt
+                    fileId
+                }
+                createdAt
+            }
+            ... on ResponseMessageField {
+                isSuccess
+                message
+            }
+            ... on AuthInfoField {
+                message
+            }
+        }
+    }
+}

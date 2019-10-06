@@ -1,0 +1,13 @@
+mutation AssetRunAttachmentsCrawler($id: String!, $token: String!) {
+    assetRunAttachmentsCrawler(id: $id, token: $token) {
+        result {
+            ... on ResponseMessageField {
+                isSuccess
+                message
+            }
+            ... on AuthInfoField {
+                message
+            }
+        }
+    }
+}

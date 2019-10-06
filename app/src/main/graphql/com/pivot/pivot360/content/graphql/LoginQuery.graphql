@@ -1,0 +1,15 @@
+mutation Auth($email: String, $password: String) {
+    auth(email: $email, password: $password) {
+        result {
+            ... on AuthField {
+                accessToken
+                refreshToken
+                message
+            }
+            ... on ResponseMessageField {
+                isSuccess
+                message
+            }
+        }
+    }
+}

@@ -1,0 +1,25 @@
+mutation EventMessageRecieved(
+    $contentText: String!
+    $count: Int!
+    $id: String!
+    $runAttachmentsCrawler: Int!
+    $token: String!
+) {
+    eventMessageRecieved(
+        contentText: $contentText
+        count: $count
+        id: $id
+        runAttachmentsCrawler: $runAttachmentsCrawler
+        token: $token
+    ) {
+        result {
+            ... on ResponseMessageField {
+                isSuccess
+                message
+            }
+            ... on AuthInfoField {
+                message
+            }
+        }
+    }
+}
