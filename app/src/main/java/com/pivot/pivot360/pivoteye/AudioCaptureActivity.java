@@ -45,6 +45,8 @@ public class AudioCaptureActivity extends Activity implements Runnable {
 
     private Button mRecordButton;
     private Button mPlaybackButton;
+    private Button mStopButton;
+    private Button mSaveButton;
     private ProgressBar mProgressBar;
     CountDownTimer mPlaybackAudioTimer;
     private TextView mFilenameLabel;
@@ -67,6 +69,8 @@ public class AudioCaptureActivity extends Activity implements Runnable {
 
     private Thread mMotor;
 
+    private boolean mRecording = false;
+
     /**
      * Called when the activity is created
      *
@@ -82,6 +86,8 @@ public class AudioCaptureActivity extends Activity implements Runnable {
         setContentView(R.layout.audio_capture_main);
 
         mRecordButton = (Button) findViewById(R.id.recordButton);
+        mStopButton = (Button) findViewById(R.id.stopButton);
+        mSaveButton = (Button) findViewById(R.id.saveButton);
         mPlaybackButton = (Button) findViewById(R.id.playbackButton);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mFilenameLabel = (TextView) findViewById(R.id.fileTextLabel);
@@ -107,6 +113,9 @@ public class AudioCaptureActivity extends Activity implements Runnable {
         mProgressBar.setVisibility(View.INVISIBLE);
         mFilenameLabel.setText("");
         mFilename = "";
+
+        mSaveButton.setVisibility(View.INVISIBLE);
+        mPlaybackButton.setVisibility(View.INVISIBLE);
 
         setButtonState(true);
         mRate44Button.performClick();
@@ -139,12 +148,21 @@ public class AudioCaptureActivity extends Activity implements Runnable {
         }
     }
 
+    public void onSave(View view) {
+        //save sample
+
+        finish();
+
+    }
+
     /**
      * Called when the start record button is pressed
      *
      * @param view The start record button
      */
     public void onStartRecord(View view) {
+        mRecordButton.setVisibility(View.GONE);
+        mStopButton.setVisibility(View.VISIBLE);
         mFilename = mFilenameLabel.getText().toString();
         if (mFilename.isEmpty()) {
             Toast.makeText(this, "No file to record to", Toast.LENGTH_LONG).show();
@@ -170,12 +188,18 @@ public class AudioCaptureActivity extends Activity implements Runnable {
         mProgressBar.setVisibility(View.VISIBLE);
         setButtonState(false);
 
+        mRecording = true;
+
         mAudioRecorder.startRecording();
 
         mMotor = new Thread(this);
         mMotor.setName("Recording Thread");
         mMotor.setPriority(Thread.MIN_PRIORITY);
         mMotor.start();
+    }
+
+    public void onStopRecord(View view) {
+        mRecording = false;
     }
 
     /**
@@ -237,7 +261,7 @@ public class AudioCaptureActivity extends Activity implements Runnable {
         final long startTime = System.currentTimeMillis();
         float seconds = 0;
 
-        while (seconds < SAMPLE_LENGTH_SECONDS &&
+        while (mRecording &&
                 mAudioRecorder != null &&
                 mAudioRecorder.getRecordingState() == AudioRecord.RECORDSTATE_RECORDING) {
             int bytesRead = mAudioRecorder.read(buffer, 0, buffer.length);
@@ -261,6 +285,12 @@ public class AudioCaptureActivity extends Activity implements Runnable {
             public void run() {
                 mProgressBar.setVisibility(View.INVISIBLE);
                 setButtonState(true);
+
+                mRecordButton.setVisibility(View.VISIBLE);
+                mStopButton.setVisibility(View.GONE);
+
+                mSaveButton.setVisibility(View.VISIBLE);
+                mPlaybackButton.setVisibility(View.VISIBLE);
             }
         });
     }

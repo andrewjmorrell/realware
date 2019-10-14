@@ -39,6 +39,7 @@
         <activity android:name="com.pivot.pivot360.pivoteye.MovieActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.AudioCaptureActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.BarcodeActivity" />
+        <activity android:name="com.pivot.pivot360.pivoteye.VideoRecorderActivity" />
     </application>
 
 </manifest>

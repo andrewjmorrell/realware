@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="hf_no_number">
+
+    <ImageView
+            android:id="@+id/video_image_view"
+            android:layout_width="400dp"
+            android:layout_height="300dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:scaleType="fitCenter"
+            android:src="@android:drawable/ic_menu_camera" />
+
+    <Button
+            android:id="@+id/preview_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/video_image_view"
+            android:layout_centerHorizontal="true"
+            android:onClick="onPreview"
+            android:text="Preview"
+            android:textSize="18sp" />
+
+    <Button
+            android:id="@+id/camera_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:onClick="onLaunchCamera"
+            android:text="Try Again"
+            android:textSize="18sp" />
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/camera_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:onClick="onSaveVideo"
+            android:text="Save Video"
+            android:textSize="18sp" />
+
+</RelativeLayout>

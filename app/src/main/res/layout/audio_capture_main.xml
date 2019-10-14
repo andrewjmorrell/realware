@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="38dp"
-    android:background="@android:color/white"
+        android:background="@color/white"
     android:contentDescription="hf_no_number">
 
     <Button
@@ -15,8 +15,19 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:onClick="onStartRecord"
-        android:text="Record Sample"
+        android:text="Record"
         android:textSize="18sp" />
+
+    <Button
+            android:id="@+id/stopButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:onClick="onStopRecord"
+            android:text="Stop"
+            android:textSize="18sp"
+            android:visibility="invisible"/>
 
     <Button
         android:id="@+id/playbackButton"
@@ -25,15 +36,25 @@
         android:layout_below="@id/recordButton"
         android:layout_centerHorizontal="true"
         android:onClick="onStartPlayback"
-        android:text="Playback Sample"
+        android:text="Preview"
         android:textSize="18sp" />
+
+    <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/playbackButton"
+            android:layout_centerHorizontal="true"
+            android:onClick="onSave"
+            android:text="Save"
+            android:textSize="18sp" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/playbackButton"
+        android:layout_below="@id/saveButton"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
         android:layout_marginTop="16dp"

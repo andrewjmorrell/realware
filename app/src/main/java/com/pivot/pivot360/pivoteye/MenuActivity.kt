@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.GridView
 import android.widget.Toast
 import com.moxtra.sdk.ChatClient
@@ -55,6 +56,13 @@ class MenuActivity : Activity(), EventResponseListener, MenuListener {
 
     private val tileList = arrayOfNulls<MainMenuTile>(7)
 
+    lateinit var cameraButton: Button
+    lateinit var documentButton: Button
+    lateinit var audioButton: Button
+    lateinit var videoButton: Button
+    lateinit var attachmentButton: Button
+    lateinit var videoConferenceButton: Button
+
     /**
      * Called when the activity is created
      *
@@ -67,7 +75,7 @@ class MenuActivity : Activity(), EventResponseListener, MenuListener {
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
-        setContentView(R.layout.activity_menu)
+        setContentView(R.layout.activity_menu_2)
 
         if (intent != null && intent.getStringExtra("identity") != null) {
             identity = intent.getStringExtra("identity")
@@ -78,6 +86,9 @@ class MenuActivity : Activity(), EventResponseListener, MenuListener {
         }
 
         var extras = hashMapOf(Pair("identity", identity), Pair("token", mToken))
+
+        cameraButton = findViewById(R.id.cameraButton)
+        documentButton = findViewById(R.id.documentButton)
 
         tileList[0] =
             MainMenuTile(this, R.string.camera_command, R.drawable.camera,
@@ -104,9 +115,11 @@ class MenuActivity : Activity(), EventResponseListener, MenuListener {
             MainMenuTile(this, R.string.start_meet_command, R.drawable.ic_video_camera,
                 MeetActivity::class.java, null, this)
 
-        mMainMenuTileAdaptor = MainMenuTileAdaptor(tileList)
-        mGridView = findViewById(R.id.gridView) as GridView
-        mGridView!!.adapter = mMainMenuTileAdaptor
+//        mMainMenuTileAdaptor = MainMenuTileAdaptor(tileList)
+//        mGridView = findViewById(R.id.gridView) as GridView
+//        mGridView!!.adapter = mMainMenuTileAdaptor
+
+
 
     }
 
@@ -213,7 +226,7 @@ class MenuActivity : Activity(), EventResponseListener, MenuListener {
                 userList.addAll(chatMembers)
                 val topic = ChatClient.getMyProfile().firstName + "'s " + "meet"
 
-                if (mMeet != null) {
+                if (mMeet.isInProgress) {
                     MeetActivity.joinMeet(this@MenuActivity, mMeet)
                 } else {
                     MeetActivity.startMeet(this@MenuActivity, topic, userList, mChat)
@@ -230,7 +243,43 @@ class MenuActivity : Activity(), EventResponseListener, MenuListener {
         })
     }
 
+    fun onCameraClick(view: View) {
+        val intent = Intent(this, CameraActivity::class.java)
+        startActivity(intent)
+    }
 
+    fun onDocumentClick(view: View) {
+        val intent = Intent(this, DocumentActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun onAudioClick(view: View) {
+        val intent = Intent(this, AudioCaptureActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun onVideoClick(view: View) {
+        val intent = Intent(this, MovieActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun onRecordVideoClick(view: View) {
+        val intent = Intent(this, VideoRecorderActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun onAttachmentsClick(view: View) {
+        val intent = Intent(this, EventActivity::class.java)
+        var extras = hashMapOf(Pair("identity", identity), Pair("token", mToken))
+            for (entry in extras.entries) {
+                intent.putExtra(entry.key, entry.value)
+            }
+        startActivity(intent)
+    }
+
+    fun onVideoConferenceClick(view: View) {
+        startMeet()
+    }
 }
 
 interface MenuListener {

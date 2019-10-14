@@ -5,13 +5,24 @@
         android:contentDescription="hf_no_number">
 
     <Button
+            android:id="@+id/camera_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="19dp"
             android:onClick="onLaunchCamera"
-            android:text="@string/camera_button_label"
+            android:text="Try Again"
+            android:textSize="18sp" />
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/camera_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="19dp"
+            android:onClick="onSavePicture"
+            android:text="Save Picture"
             android:textSize="18sp" />
 
     <ImageView
