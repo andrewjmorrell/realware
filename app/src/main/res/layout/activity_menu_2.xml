@@ -11,9 +11,21 @@
     <Button
             android:layout_width="200dp"
             android:layout_height="40dp"
-            android:id="@+id/cameraButton"
+            android:id="@+id/attachments"
             android:layout_marginTop="0dp"
             android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:text="Attachments"
+            android:drawableLeft="@android:drawable/ic_menu_gallery"
+            android:onClick="onAttachmentsClick"
+            android:contentDescription="hf_use_description|attachments"/>
+
+    <Button
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:id="@+id/cameraButton"
+            android:layout_marginTop="0dp"
+            android:layout_below="@id/attachments"
             android:layout_alignParentStart="true"
             android:text="Take Photo"
             android:onClick="onCameraClick"
@@ -59,18 +71,6 @@
     <Button
             android:layout_width="200dp"
             android:layout_height="40dp"
-            android:id="@+id/attachments"
-            android:layout_marginTop="0dp"
-            android:layout_below="@id/videoConference"
-            android:layout_alignParentStart="true"
-            android:text="Attachments"
-            android:drawableLeft="@android:drawable/ic_menu_gallery"
-            android:onClick="onAttachmentsClick"
-            android:contentDescription="hf_use_description|attachments"/>
-
-    <Button
-            android:layout_width="200dp"
-            android:layout_height="40dp"
             android:id="@+id/videoPlayerButton"
             android:layout_marginTop="0dp"
             android:layout_alignParentBottom="true"
@@ -91,5 +91,33 @@
             android:drawableLeft="@android:drawable/ic_menu_agenda"
             android:onClick="onDocumentClick"
             android:contentDescription="hf_use_description|Document Viewer"/>
+
+    <LinearLayout
+        android:layout_width="450dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:orientation="vertical"
+            android:padding="10dp"
+            android:background="@color/white">
+
+        <TextView
+            android:id="@+id/event_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+                android:text="name"
+                android:textColor="@color/black"
+                android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/event_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="description"
+                android:textColor="@color/black"
+                android:textSize="12sp"/>
+    </LinearLayout>
 
 </RelativeLayout>

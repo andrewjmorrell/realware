@@ -92,6 +92,8 @@ public class VideoRecorderActivity extends Activity {
             mediaMetadataRetriever.setDataSource(this, mResult);
             Bitmap bmFrame = mediaMetadataRetriever.getFrameAtTime(0); //unit in microsecond
             mImageView.setImageBitmap(bmFrame);
+        } else {
+            finish();
         }
     }
 }

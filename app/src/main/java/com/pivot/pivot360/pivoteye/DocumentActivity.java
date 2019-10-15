@@ -16,7 +16,8 @@ import java.io.IOException;
 public class DocumentActivity extends Activity {
 
     //private final String mSampleFileName = "thermal4.jpg";
-    private final String mSampleFileName = "note_aug_29_2019.pdf";
+    //private final String mSampleFileName = "note_aug_29_2019.pdf";
+    private final String mSampleFileName = "analyzer_test.pdf";
     private final String mSampleFolderName = "Pictures";
     //private final String mSampleMimeType = "image/jpeg";
     private final String mSampleMimeType = "application/pdf";
@@ -51,7 +52,7 @@ public class DocumentActivity extends Activity {
             // Optionally can control visual appearance
             //
             intent.putExtra("page", "1"); // Open a specific page
-            intent.putExtra("zoom", "3"); // Open at a specific zoom level
+            intent.putExtra("zoom", "1"); // Open at a specific zoom level
 
             startActivityForResult(intent, DOCUMENT_REQUEST_CODE);
         } catch (IOException ex) {

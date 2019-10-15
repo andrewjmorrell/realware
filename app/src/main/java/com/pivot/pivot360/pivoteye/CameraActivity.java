@@ -73,6 +73,8 @@ public class CameraActivity extends Activity {
         if (resultCode == Activity.RESULT_OK && data != null) {
             mPhoto = data.getExtras().getParcelable(EXTRA_RESULT);
             mImageView.setImageBitmap(mPhoto);
+        } else {
+            finish();
         }
     }
 }

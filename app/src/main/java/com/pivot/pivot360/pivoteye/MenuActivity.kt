@@ -8,6 +8,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.GridView
+import android.widget.TextView
 import android.widget.Toast
 import com.moxtra.sdk.ChatClient
 import com.moxtra.sdk.chat.controller.ChatConfig
@@ -54,14 +55,15 @@ class MenuActivity : Activity(), EventResponseListener, MenuListener {
     private val CLIENT_SECRET = "gz5L0B4Ng1o"
     private val ORG_ID: String? = null
 
-    private val tileList = arrayOfNulls<MainMenuTile>(7)
-
     lateinit var cameraButton: Button
     lateinit var documentButton: Button
     lateinit var audioButton: Button
     lateinit var videoButton: Button
     lateinit var attachmentButton: Button
     lateinit var videoConferenceButton: Button
+
+    lateinit var eventName: TextView
+    lateinit var eventDescription: TextView
 
     /**
      * Called when the activity is created
@@ -89,37 +91,8 @@ class MenuActivity : Activity(), EventResponseListener, MenuListener {
 
         cameraButton = findViewById(R.id.cameraButton)
         documentButton = findViewById(R.id.documentButton)
-
-        tileList[0] =
-            MainMenuTile(this, R.string.camera_command, R.drawable.camera,
-                CameraActivity::class.java, null, null)
-        tileList[1] =
-            MainMenuTile(this, R.string.document_command, R.drawable.document,
-                DocumentActivity::class.java, null, null)
-        tileList[2] = MainMenuTile(this, R.string.movie_command, R.drawable.movie,
-            MovieActivity::class.java, null, null)
-        tileList[3] =
-            MainMenuTile(this, R.string.barcode_command, R.drawable.barcode,
-                BarcodeActivity::class.java, null, null)
-
-        tileList[4] =
-            MainMenuTile(this, R.string.audio_command, R.drawable.asr,
-                AudioCaptureActivity::class.java, null, null)
-
-        tileList[5] = MainMenuTile(
-            this,
-            R.string.attachments_command,
-            android.R.drawable.ic_menu_gallery,
-            EventActivity::class.java, extras, null)
-        tileList[6] =
-            MainMenuTile(this, R.string.start_meet_command, R.drawable.ic_video_camera,
-                MeetActivity::class.java, null, this)
-
-//        mMainMenuTileAdaptor = MainMenuTileAdaptor(tileList)
-//        mGridView = findViewById(R.id.gridView) as GridView
-//        mGridView!!.adapter = mMainMenuTileAdaptor
-
-
+        eventName = findViewById(R.id.event_name)
+        eventDescription = findViewById(R.id.event_description)
 
     }
 
@@ -144,6 +117,11 @@ class MenuActivity : Activity(), EventResponseListener, MenuListener {
     }
 
     override fun OnEventsField(response: EventQuery.AsEventField?) {
+        runOnUiThread {
+            eventName.text = response?.title()
+            eventDescription.text = "Event Description" //response?.description()
+        }
+
 
         ChatClient.linkWithUniqueId(PreferenceUtil.getUserUniqueIdentiry(this@MenuActivity)!!, CLIENT_ID, CLIENT_SECRET, ORG_ID, object :
             ApiCallback<ChatClientDelegate> {
@@ -169,15 +147,6 @@ class MenuActivity : Activity(), EventResponseListener, MenuListener {
                     override fun onCompleted(p0: List<Meet>) {
 
                         mMeet = p0.last()
-
-                        runOnUiThread {
-                            if (mMeet.isInProgress) {
-                                tileList[6]!!.setSmallText(R.string.join_meet_command)
-                            } else {
-                                tileList[6]!!.setSmallText(R.string.start_meet_command)
-                            }
-                        }
-
                     }
 
                 })
@@ -185,26 +154,11 @@ class MenuActivity : Activity(), EventResponseListener, MenuListener {
                 mMeetRepo!!.setOnChangedListener(object : BaseRepo.OnRepoChangedListener<Meet> {
                     override fun onCreated(items: List<Meet>) {
                         mMeet = items.last()
-                        runOnUiThread {
-                            if (mMeet.isInProgress) {
-                                tileList[6]!!.setSmallText(R.string.join_meet_command)
-                            } else {
-                                tileList[6]!!.setSmallText(R.string.start_meet_command)
-                            }
-                        }
                     }
 
                     override fun onUpdated(items: List<Meet>) {
                         for (meet in items) {
                             if (meet.id == mMeet.id) {
-                                mMeet = meet
-                                runOnUiThread {
-                                    if (mMeet.isInProgress) {
-                                        tileList[6]!!.setSmallText(R.string.join_meet_command)
-                                    } else {
-                                        tileList[6]!!.setSmallText(R.string.start_meet_command)
-                                    }
-                                }
                                 return
                             }
                         }
