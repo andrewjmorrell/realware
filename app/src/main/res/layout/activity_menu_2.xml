@@ -98,6 +98,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:orientation="vertical"
+            android:layout_marginTop="30dp"
             android:padding="10dp"
             android:background="@color/white">
 

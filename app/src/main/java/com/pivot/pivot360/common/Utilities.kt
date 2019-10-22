@@ -1,5 +1,6 @@
 package com.pivot.pivot360.common
 
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -47,5 +48,30 @@ object Utilities {
         } catch (e: Exception) {
             datetime
         }
+    }
+
+    fun ConvertUTCToLocal(dateFormatInPut: String, dateFomratOutPut: String, datesToConvert: String): String {
+
+
+        var dateToReturn = datesToConvert
+
+        val sdf = SimpleDateFormat(dateFormatInPut)
+        sdf.timeZone = TimeZone.getTimeZone("UTC")
+
+        var dateLocal: Date? = null
+
+        val sdfOutPutToSend = SimpleDateFormat(dateFomratOutPut)
+        sdfOutPutToSend.timeZone = TimeZone.getDefault()
+
+        try {
+
+            dateLocal = sdf.parse(datesToConvert)
+            dateToReturn = sdfOutPutToSend.format(dateLocal)
+
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+
+        return dateToReturn
     }
 }

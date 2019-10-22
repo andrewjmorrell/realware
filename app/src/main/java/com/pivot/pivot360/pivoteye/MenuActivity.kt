@@ -27,7 +27,6 @@ import com.pivot.pivot360.content.graphql.EventQuery
 import com.pivot.pivot360.content.listeners.EventResponseListener
 import com.pivot.pivot360.network.GraphQlApiHandler
 import com.pivot.pivot360.pivotglass.R
-import kotlinx.android.synthetic.main.fragment_attachment.*
 import java.util.ArrayList
 
 /**
@@ -223,7 +222,7 @@ class MenuActivity : Activity(), EventResponseListener, MenuListener {
     }
 
     fun onAttachmentsClick(view: View) {
-        val intent = Intent(this, EventActivity::class.java)
+        val intent = Intent(this, EventAttachmentActivity::class.java)
         var extras = hashMapOf(Pair("identity", identity), Pair("token", mToken))
             for (entry in extras.entries) {
                 intent.putExtra(entry.key, entry.value)

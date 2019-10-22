@@ -18,7 +18,7 @@
             android:networkSecurityConfig="@xml/network_security_config"
             android:theme="@style/AppTheme"
             tools:replace="android:allowBackup">
-        <activity android:name="com.pivot.pivot360.pivoteye.MainActivity">
+        <activity android:name="com.pivot.pivot360.pivoteye.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -29,11 +29,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name="com.pivot.pivot360.pivoteye.EventsActivity"/>
+        <activity android:name="com.pivot.pivot360.pivoteye.MainActivity"/>
         <activity android:name="com.pivot.pivot360.pivoteye.MenuActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.MeetActivity" />
-        <activity android:name="com.pivot.pivot360.pivoteye.EventActivity" />
+        <activity android:name="com.pivot.pivot360.pivoteye.EventAttachmentActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.WebActivity" />
-        <activity android:name="com.pivot.pivot360.pivoteye.EventsActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.CameraActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.DocumentActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.MovieActivity" />

@@ -9,13 +9,12 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.pivot.pivot360.common.Utilities
 import com.pivot.pivot360.content.graphql.EventQuery
-import com.pivot.pivot360.content.listeners.OnAttachmentDataClickListener
 import com.pivot.pivot360.content.listeners.OnItemClickListener
 import com.pivot.pivot360.pivotglass.R
 import kotlinx.android.synthetic.main.item_list_attachment_v2.view.*
 
 
-class EventsAttachmentAdapter(context1: FragmentActivity, attachments: MutableList<EventQuery.Attachment>?, myListener: OnItemClickListener) : RecyclerView.Adapter<EventsAttachmentAdapter.ViewHolder>() {
+class EventAttachmentAdapter(context1: FragmentActivity, attachments: MutableList<EventQuery.Attachment>?, myListener: OnItemClickListener) : RecyclerView.Adapter<EventAttachmentAdapter.ViewHolder>() {
 
 
     var listData = attachments
