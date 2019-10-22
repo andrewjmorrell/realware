@@ -1,0 +1,308 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/layout_chat_fragment"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/mxCommonBg"
+              android:longClickable="false"
+              android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/layout_chat_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <View
+            android:id="@+id/MX_DummyView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/iv_water_mark_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="@dimen/list_item_margin"
+            android:visibility="gone"/>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/lv_chat_content_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:fastScrollEnabled="true"
+                android:headerDividersEnabled="false"
+                android:listSelector="@android:color/transparent"
+                android:paddingBottom="10dp"
+                android:scrollbarStyle="outsideOverlay"
+                android:stackFromBottom="true"
+                android:transcriptMode="normal"/>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <com.moxtra.binder.ui.widget.ProgressBar
+            android:id="@+id/pb_binder_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="false"
+            android:visibility="gone"/>
+
+        <CheckBox
+            android:id="@+id/show_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|top"
+            android:visibility="gone"/>
+
+        <LinearLayout
+            android:id="@+id/typing_indicator_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|bottom"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/typing_indicator_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="is Typing"
+                android:textSize="@dimen/chat_feed_text_size_medium"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/pending_invites_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:background="@drawable/bg_chat_invite_approval_item"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/chat_bubble_padding">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_24"
+                    android:layout_height="@dimen/dimen_24"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="@dimen/dimen_12"
+                    android:src="@drawable/ic_user"/>
+
+                <com.moxtra.binder.ui.bbcode.FlexibleRichTextView
+                    android:id="@+id/tv_pending_invites"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/Pending_Invitations"
+                    android:textColor="@color/chat_text_color"/>
+
+                <ImageView
+                    android:id="@+id/btn_close_notification"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_close"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/pending_documents_holder"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_44"
+                android:layout_gravity="top"
+                android:background="@drawable/bg_chat_invite_approval_item"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/chat_bubble_padding">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_24"
+                    android:layout_height="@dimen/dimen_24"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="@dimen/dimen_12"
+                    android:src="@drawable/ic_file_signature"
+                    />
+
+
+                <com.moxtra.binder.ui.bbcode.FlexibleRichTextView
+                    android:id="@+id/tv_pending_documents"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/text_size_15"/>
+
+                <ImageView
+                    android:id="@+id/btn_close_doc_notification"
+                    android:layout_width="@dimen/dimen_16"
+                    android:layout_height="@dimen/dimen_16"
+                    android:src="@drawable/ic_close"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/transaction_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:background="@drawable/bg_chat_invite_approval_item"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/chat_bubble_padding"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_24"
+                    android:layout_height="@dimen/dimen_24"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="@dimen/dimen_12"
+                    android:src="@drawable/common_fileinfo"
+                    />
+
+                <com.moxtra.binder.ui.bbcode.FlexibleRichTextView
+                    android:id="@+id/tv_transaction"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/chat_text_color"/>
+
+                <ImageView
+                    android:id="@+id/btn_close_transaction"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_close"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/unread_badge_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/chat_bubble_padding"
+                android:layout_marginRight="@dimen/chat_bubble_padding"
+                android:layout_marginTop="@dimen/chat_bubble_padding"
+                android:background="@drawable/tact_chat_bubble_unread_message"
+                android:gravity="center_vertical"
+                android:paddingBottom="5dp"
+                android:paddingLeft="@dimen/chat_bubble_padding"
+                android:paddingRight="@dimen/chat_bubble_padding"
+                android:paddingTop="5dp"
+                android:visibility="gone">
+
+                <com.moxtra.binder.ui.branding.widget.BrandingFgImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_up"/>
+
+                <com.moxtra.binder.ui.branding.widget.BrandingFgTextView
+                    android:id="@+id/unread_badge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="3dp"
+                    android:paddingRight="@dimen/chat_bubble_padding"
+                    android:paddingTop="3dp"
+                    android:text="@string/New_Messages"
+                    android:textSize="@dimen/chat_feed_text_size_medium"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/chat_bubble_padding"
+                android:layout_marginRight="@dimen/chat_bubble_padding"
+                android:layout_marginTop="@dimen/chat_bubble_padding"
+                android:background="@drawable/bg_chat_date"
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="5dp"
+                android:textSize="@dimen/chat_feed_text_size_medium"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/new_message_badge_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="@dimen/chat_bubble_padding"
+            android:layout_marginLeft="@dimen/chat_bubble_padding"
+            android:layout_marginRight="@dimen/chat_bubble_padding"
+            android:background="@drawable/tact_chat_bubble_unread_message"
+            android:gravity="center_vertical"
+            android:paddingBottom="5dp"
+            android:paddingLeft="@dimen/chat_bubble_padding"
+            android:paddingRight="@dimen/chat_bubble_padding"
+            android:paddingTop="5dp"
+            android:visibility="gone">
+
+            <com.moxtra.binder.ui.branding.widget.BrandingFgImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_down"/>
+
+            <com.moxtra.binder.ui.branding.widget.BrandingFgTextView
+                android:id="@+id/new_message_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="3dp"
+                android:paddingRight="@dimen/chat_bubble_padding"
+                android:paddingTop="3dp"
+                android:text="@string/New_Messages"
+                android:textSize="@dimen/chat_feed_text_size_medium"/>
+        </LinearLayout>
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/mxGrey08"
+            android:visibility="gone"/>
+
+    <ViewStub
+        android:id="@+id/chat_input_style_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+            android:visibility="gone"
+        />
+
+    <LinearLayout
+        android:id="@+id/layout_chat_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/layout_emojicon"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:visibility="gone"/>
+
+</LinearLayout>

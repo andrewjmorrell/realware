@@ -33,6 +33,7 @@
         <activity android:name="com.pivot.pivot360.pivoteye.MainActivity"/>
         <activity android:name="com.pivot.pivot360.pivoteye.MenuActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.MeetActivity" />
+        <activity android:name="com.pivot.pivot360.pivoteye.ChatActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.EventAttachmentActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.WebActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.CameraActivity" />

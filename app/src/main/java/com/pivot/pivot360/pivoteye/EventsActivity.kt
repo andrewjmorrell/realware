@@ -21,8 +21,6 @@ class EventsActivity : BaseActivity(), EventsByUserResponseListener,
     private var mToken: String? = null
     lateinit var mAdapter: EventAttachmentAdapter
 
-    lateinit var identity: String
-
 
     private var glassGestureDetector: GlassGestureDetector? = null
 
@@ -83,7 +81,7 @@ class EventsActivity : BaseActivity(), EventsByUserResponseListener,
 
     override fun onItemClick(item: String) {
         val intent = Intent(this, MainActivity::class.java)
-        var extras = hashMapOf(Pair("identity", identity), Pair("token", mToken))
+        var extras = hashMapOf(Pair("identity", item), Pair("token", mToken))
         for (entry in extras.entries) {
             intent.putExtra(entry.key, entry.value)
         }

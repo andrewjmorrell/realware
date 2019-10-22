@@ -118,7 +118,7 @@ class MenuActivity : Activity(), EventResponseListener, MenuListener {
     override fun OnEventsField(response: EventQuery.AsEventField?) {
         runOnUiThread {
             eventName.text = response?.title()
-            eventDescription.text = "Event Description" //response?.description()
+            eventDescription.text = response?.description()
         }
 
 
@@ -232,6 +232,10 @@ class MenuActivity : Activity(), EventResponseListener, MenuListener {
 
     fun onVideoConferenceClick(view: View) {
         startMeet()
+    }
+
+    fun onViewChatClick(view: View) {
+        ChatActivity.showChat(this, mChat)
     }
 }
 

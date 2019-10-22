@@ -4,14 +4,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="40dp"
-        android:background="@color/white">
+        android:background="@drawable/pivot">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:text="Select User"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_gravity="center_horizontal"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mRecyclerViewUsers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="0dp" />
+            android:padding="0dp"
+            android:layout_marginTop="60dp"/>
 
     <LinearLayout
             android:id="@+id/emptyView"
