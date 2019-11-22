@@ -13,7 +13,7 @@ import com.pivot.pivot360.pivotglass.R;
 import java.io.File;
 import java.io.IOException;
 
-public class DocumentActivity extends Activity {
+public class DocumentViewerActivity extends Activity {
 
     //private final String mSampleFileName = "thermal4.jpg";
     //private final String mSampleFileName = "note_aug_29_2019.pdf";

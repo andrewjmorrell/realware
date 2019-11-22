@@ -33,6 +33,7 @@ import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -359,8 +360,10 @@ public class AudioCaptureActivity extends Activity implements Runnable {
      * Updated the filename based on the selected settings
      */
     private void updateFileName() {
+        String date = new Date().toString();
+        date = date.replaceAll("\\s+", "_");
         mFilename =
-                "/sdcard/music/audio_test_" + mSampleRatedString + "_" + mChannelsString + ".wav";
+                "/sdcard/download/" + date + "_" + mSampleRatedString + "_" + mChannelsString + ".wav";
         mFilenameLabel.setText(mFilename);
     }
 

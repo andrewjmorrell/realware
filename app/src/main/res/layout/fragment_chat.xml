@@ -287,14 +287,13 @@
     <ViewStub
         android:id="@+id/chat_input_style_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-            android:visibility="gone"
+        android:layout_height="wrap_content"
         />
 
     <LinearLayout
         android:id="@+id/layout_chat_buttons"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="gone"/>
 

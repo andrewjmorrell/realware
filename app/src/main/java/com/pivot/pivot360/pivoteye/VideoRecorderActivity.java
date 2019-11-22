@@ -14,6 +14,12 @@ import android.widget.ImageView;
 
 import com.pivot.pivot360.pivotglass.R;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
+
 /**
  * Activity that shows how to use the camera to take a picture on a HMT-1 device
  */
@@ -60,7 +66,24 @@ public class VideoRecorderActivity extends Activity {
     }
 
     public void onSaveVideo(View view) {
-        //Save video here
+
+        FileOutputStream outputStream;
+
+        String filename = mResult.toString().substring( mResult.toString().lastIndexOf('/')+1, mResult.toString().length() );
+
+        File outputFile = new File(new File("//mnt//sdcard//Download"),
+                filename);
+
+        try {
+            File source = new File(mResult.getPath());
+            FileChannel src = new FileInputStream(source).getChannel();
+            FileChannel dst = new FileOutputStream(outputFile).getChannel();
+            dst.transferFrom(src, 0, src.size());
+            src.close();
+            dst.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
 
         finish();
     }

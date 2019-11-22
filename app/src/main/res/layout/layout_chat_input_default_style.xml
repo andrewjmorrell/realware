@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_chat_control"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/mxCommonBg"
+    android:minHeight="@dimen/action_bar_height"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:id="@+id/layout_voice_record_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical">
+
+        <RelativeLayout
+            android:id="@+id/layout_voice_record"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/chat_bubble_padding"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_record_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/chat_record_indicator"/>
+
+            <TextView
+                android:id="@+id/tv_record_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/chat_bubble_padding"
+                android:layout_toRightOf="@+id/iv_record_indicator"
+                android:text="0:00"
+                android:textColor="@color/chat_text_color"
+                android:textSize="@dimen/chat_feed_text_size_large"/>
+
+            <TextView
+                android:id="@+id/tv_slide_to_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawableLeft="@drawable/slide_left_arrow"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/Slide_to_Cancel"
+                android:textColor="@color/chat_text_color"
+                android:maxLines="1"
+                android:textSize="@dimen/chat_feed_text_size_large"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_voice_record_hold_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:background="@color/mxCommonBg"
+            android:gravity="center"
+            android:text="@string/Tap_and_hold_to_record"
+            android:textColor="@color/mxGrey40"
+            android:textSize="@dimen/chat_feed_text_size_large"
+            android:visibility="visible"/>
+    </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/iv_voice"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="4dp"
+        android:background="@null"
+        android:minHeight="0dp"
+        android:minWidth="44dp"
+        android:src="@drawable/chat_action_record"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/layout_send_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="44dp"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:id="@+id/layout_edit_chat"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+                android:layout_weight="0"
+            android:background="@color/mxCommonBg"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <com.moxtra.binder.ui.branding.widget.BrandingTextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/Cancel"
+                android:textSize="@dimen/chat_feed_text_size_large"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/Edit_Message"
+                android:textSize="@dimen/chat_feed_text_size_large"/>
+
+            <com.moxtra.binder.ui.branding.widget.BrandingTextView
+                android:id="@+id/tv_save"
+                android:contentDescription="TvEditSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/Save"
+                android:textSize="@dimen/chat_feed_text_size_large"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@color/mxCommonBg"
+            android:gravity="center_vertical"
+            android:visibility="visible">
+
+            <com.moxtra.binder.ui.branding.widget.BrandingImageButton
+                android:id="@+id/iv_addbutton"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:background="@null"
+                android:src="@drawable/selector_chat_add"
+                android:visibility="visible"/>
+
+            <LinearLayout
+                android:id="@+id/layour_et_input"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:background="@drawable/chat_edit_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                >
+
+                <com.moxtra.binder.ui.widget.EmojiconAutoMentionedTextView
+                    android:id="@+id/et_input"
+                    style="@style/MXMentionDropdown"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:completionThreshold="1"
+                    android:hint="@string/Send_message"
+                    android:inputType="text|textMultiLine|textCapSentences"
+                    android:maxLines="4"
+                    android:minHeight="@dimen/chat_input_min_height"
+                    android:textSize="@dimen/chat_feed_text_size_large"/>
+
+                <com.moxtra.binder.ui.widget.CheckableImageButton
+                    android:id="@+id/iv_emoji"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:maxHeight="44dp"
+                    android:maxWidth="44dp"
+                    android:src="@drawable/selector_chat_emoji"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+            <com.moxtra.binder.ui.branding.widget.BrandingImageButton
+                android:id="@+id/btn_send"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginLeft="@dimen/chat_bubble_padding"
+                android:layout_marginRight="@dimen/chat_bubble_padding"
+                android:background="@null"
+                android:padding="0dp"
+                android:src="@drawable/paper_plane"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

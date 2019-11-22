@@ -76,7 +76,7 @@ class MenuActivity : Activity(), EventResponseListener, MenuListener {
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
-        setContentView(R.layout.activity_menu_2)
+        setContentView(R.layout.activity_event)
 
         if (intent != null && intent.getStringExtra("identity") != null) {
             identity = intent.getStringExtra("identity")
@@ -89,7 +89,7 @@ class MenuActivity : Activity(), EventResponseListener, MenuListener {
         var extras = hashMapOf(Pair("identity", identity), Pair("token", mToken))
 
         cameraButton = findViewById(R.id.cameraButton)
-        documentButton = findViewById(R.id.documentButton)
+        //documentButton = findViewById(R.id.documentButton)
         eventName = findViewById(R.id.event_name)
         eventDescription = findViewById(R.id.event_description)
 

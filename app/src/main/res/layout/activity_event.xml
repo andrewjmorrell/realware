@@ -9,106 +9,82 @@
         android:background="@drawable/pivot">
 
     <Button
-            android:layout_width="240dp"
-            android:layout_height="45dp"
-            android:id="@+id/attachments"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:id="@+id/videoConference"
             android:layout_marginTop="0dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:text="Attachments"
-            android:textSize="18sp"
-            android:drawableLeft="@android:drawable/ic_menu_gallery"
-            android:onClick="onAttachmentsClick"
-            android:contentDescription="hf_use_description|attachments"/>
-
-    <Button
-            android:layout_width="240dp"
-            android:layout_height="45dp"
-            android:id="@+id/cameraButton"
-            android:layout_marginTop="0dp"
-            android:layout_below="@id/attachments"
-            android:layout_alignParentStart="true"
-            android:text="Take Photo"
-            android:textSize="18sp"
-            android:onClick="onCameraClick"
-            android:drawableLeft="@android:drawable/ic_menu_camera"
-            android:contentDescription="hf_use_description|Camera"/>
-
-    <Button
-            android:layout_width="240dp"
-            android:layout_height="45dp"
-            android:id="@+id/videoRecordButton"
-            android:layout_marginTop="0dp"
-            android:layout_below="@id/cameraButton"
-            android:layout_alignParentStart="true"
-            android:text="Record Video"
-            android:textSize="18sp"
-            android:drawableLeft="@android:drawable/ic_menu_camera"
-            android:onClick="onRecordVideoClick"
-            android:contentDescription="hf_use_description|Record Video"/>
-
-    <Button
-            android:layout_width="240dp"
-            android:layout_height="45dp"
-            android:id="@+id/audioCaptureButton"
-            android:layout_marginTop="0dp"
-            android:layout_below="@id/videoRecordButton"
-            android:layout_alignParentStart="true"
-            android:text="Record Audio"
-            android:textSize="18sp"
-            android:drawableLeft="@android:drawable/ic_btn_speak_now"
-            android:onClick="onAudioClick"
-            android:contentDescription="hf_use_description|Record Audio"/>
-
-    <Button
-            android:layout_width="240dp"
-            android:layout_height="45dp"
-            android:id="@+id/videoConference"
-            android:layout_marginTop="0dp"
-            android:layout_below="@id/audioCaptureButton"
-            android:layout_alignParentStart="true"
             android:text="Video Conference"
-            android:textSize="18sp"
+            android:textSize="@dimen/button_text_size"
             android:drawableLeft="@android:drawable/ic_menu_view"
             android:onClick="onVideoConferenceClick"
             android:contentDescription="hf_use_description|Video Conference"/>
 
     <Button
-            android:layout_width="240dp"
-            android:layout_height="45dp"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
             android:id="@+id/viewChat"
             android:layout_marginTop="0dp"
             android:layout_below="@id/videoConference"
             android:layout_alignParentStart="true"
             android:text="Conversation"
-            android:textSize="18sp"
+            android:textSize="@dimen/button_text_size"
             android:drawableLeft="@android:drawable/ic_menu_view"
             android:onClick="onViewChatClick"
             android:contentDescription="hf_use_description|Conversation"/>
 
     <Button
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:id="@+id/videoPlayerButton"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:id="@+id/attachments"
             android:layout_marginTop="0dp"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@id/viewChat"
             android:layout_alignParentStart="true"
-            android:text="Video Player"
-            android:drawableLeft="@android:drawable/ic_media_play"
-            android:onClick="onVideoClick"
-            android:contentDescription="hf_use_description|Video Player"/>
+            android:text="Documents"
+            android:textSize="@dimen/button_text_size"
+            android:drawableLeft="@android:drawable/ic_menu_gallery"
+            android:onClick="onAttachmentsClick"
+            android:contentDescription="hf_use_description|documents"/>
 
     <Button
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:id="@+id/documentButton"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:id="@+id/cameraButton"
             android:layout_marginTop="0dp"
-            android:layout_above="@id/videoPlayerButton"
+            android:layout_below="@id/attachments"
             android:layout_alignParentStart="true"
-            android:text="Document Viewer"
-            android:drawableLeft="@android:drawable/ic_menu_agenda"
-            android:onClick="onDocumentClick"
-            android:contentDescription="hf_use_description|Document Viewer"/>
+            android:text="Take Photo"
+            android:textSize="@dimen/button_text_size"
+            android:onClick="onCameraClick"
+            android:drawableLeft="@android:drawable/ic_menu_camera"
+            android:contentDescription="hf_use_description|Take Photo"/>
+
+    <Button
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:id="@+id/videoRecordButton"
+            android:layout_marginTop="0dp"
+            android:layout_below="@id/cameraButton"
+            android:layout_alignParentStart="true"
+            android:text="Record Video"
+            android:textSize="@dimen/button_text_size"
+            android:drawableLeft="@android:drawable/ic_menu_camera"
+            android:onClick="onRecordVideoClick"
+            android:contentDescription="hf_use_description|Record Video"/>
+
+    <Button
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:id="@+id/audioCaptureButton"
+            android:layout_marginTop="0dp"
+            android:layout_below="@id/videoRecordButton"
+            android:layout_alignParentStart="true"
+            android:text="Record Audio"
+            android:textSize="@dimen/button_text_size"
+            android:drawableLeft="@android:drawable/ic_btn_speak_now"
+            android:onClick="onAudioClick"
+            android:contentDescription="hf_use_description|Record Audio"/>
 
     <LinearLayout
         android:layout_width="450dp"

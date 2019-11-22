@@ -1,15 +1,21 @@
 package com.pivot.pivot360.pivoteye;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.pivot.pivot360.pivotglass.R;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Date;
 
 /**
  * Activity that shows how to use the camera to take a picture on a HMT-1 device
@@ -57,7 +63,20 @@ public class CameraActivity extends Activity {
     }
 
     public void onSavePicture(View view) {
-        //save picture here
+        String filename = new Date().toString() + ".jpg";
+        FileOutputStream outputStream;
+
+        File outputFile = new File(new File("//mnt//sdcard//Download"),
+                filename);
+
+        try {
+            outputStream = new FileOutputStream(outputFile);
+            mPhoto.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            outputStream.flush();
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         finish();
     }

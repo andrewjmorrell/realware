@@ -36,7 +36,9 @@ class EventAttachmentAdapter(context1: FragmentActivity, attachments: MutableLis
             holder.itemView.apply {
                 txtAttachmentName.text = name()
                 txtAttachmentType.text = ""
-                // holder.itemView.txtAttachmentType.text = "${type()} : "
+                setOnClickListener {
+                    listener.onItemClick(link())
+                }
                 when {
                     fileType().equals("image", true) -> {
                         iv_attachment_img.background = ContextCompat.getDrawable(context, R.drawable.ic_image_black_24dp)
@@ -45,9 +47,7 @@ class EventAttachmentAdapter(context1: FragmentActivity, attachments: MutableLis
                         iv_attachment_img.background = ContextCompat.getDrawable(context, R.drawable.ic_videocam_black_24dp)
                     }
                 }
-                setOnClickListener {
-                    listener.onItemClick(link())
-                }
+
 
                 tv_attachment_date.text = String.format("%s", "Updated on  ${Utilities.convertDateAttachmentsNew(updatedAt()!!)}")
                 // holder.itemView.iv_attachment_img.background = ContextCompat.getDrawable(context, image)

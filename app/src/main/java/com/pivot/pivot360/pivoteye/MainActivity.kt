@@ -4,12 +4,9 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import com.moxtra.sdk.ChatClient
-import com.moxtra.sdk.client.ChatClientDelegate
-import com.moxtra.sdk.common.ApiCallback
 import com.pivot.pivot360.content.graphql.AccountQuery
 import com.pivot.pivot360.content.listeners.GetAccountResponseListener
 import com.pivot.pivot360.content.listeners.GetUserResponseListener

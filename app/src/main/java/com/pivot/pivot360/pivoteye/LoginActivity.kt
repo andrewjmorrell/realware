@@ -24,6 +24,8 @@ class LoginActivity : BaseActivity(), LoginResponseListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        PreferenceUtil.removeAccessToken(this)
+
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
@@ -66,6 +68,8 @@ class LoginActivity : BaseActivity(), LoginResponseListener,
     }
 
     override fun onAuthField(response: AuthMutation.AsAuthField?) {
+        PreferenceUtil.saveAccessToken(this, response?.accessToken())
+        //val intent = Intent(this, AssetsActivity::class.java)
         val intent = Intent(this, EventsActivity::class.java)
         var extras = hashMapOf(Pair("token", response?.accessToken()))
         for (entry in extras.entries) {

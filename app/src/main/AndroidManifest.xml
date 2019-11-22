@@ -5,8 +5,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <application
             android:name="com.pivot.pivot360.pivoteye.PivotApplication"
@@ -42,6 +43,10 @@
         <activity android:name="com.pivot.pivot360.pivoteye.AudioCaptureActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.BarcodeActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.VideoRecorderActivity" />
+        <activity android:name="com.pivot.pivot360.pivoteye.DocumentViewerActivity" />
+        <activity android:name="com.pivot.pivot360.pivoteye.AssetsActivity" />
+        <activity android:name="com.pivot.pivot360.pivoteye.AssetActivity" />
+        <activity android:name="com.pivot.pivot360.pivoteye.EventsByAssetActivity" />
     </application>
 
 </manifest>

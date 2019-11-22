@@ -1,6 +1,7 @@
 package com.pivot.pivot360.pivoteye
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import com.pivot.pivot360.content.graphql.EventsQuery
 import com.pivot.pivot360.content.listeners.OnItemClickListener
 import com.pivot.pivot360.pivotglass.R
 import kotlinx.android.synthetic.main.fragment_attachment.*
+import java.net.URL
 
 
 /**
@@ -19,6 +21,8 @@ import kotlinx.android.synthetic.main.fragment_attachment.*
 private const val ARG_PARAM1 = "param1"
 class EventAttachmentFragment : Fragment(), OnItemClickListener {
 
+
+    private val DOCUMENT_REQUEST_CODE = 1890
 
     private var mToken: String? = null
     private var identity: String? = null
@@ -49,7 +53,34 @@ class EventAttachmentFragment : Fragment(), OnItemClickListener {
     }
 
     override fun onItemClick(item: String?) {
-        startActivity(Intent(activity, WebActivity::class.java).putExtra("link", item))
+        //startActivity(Intent(activity, WebActivity::class.java).putExtra("link", item))
+
+        val url = URL(item)
+        val fname = url.file
+
+        val file = Utils.copyFromUrlToExternal(activity!!, item, fname, "Pivot")
+        val type = file.extension
+
+        var mimetype = when(type) {
+            "jpe" -> "image/pjpeg"
+            "jpeg"-> "image/jpeg"
+            "pdf" -> "application/pdf"
+            else -> "application/pdf"
+        }
+
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.addCategory(Intent.CATEGORY_DEFAULT)
+
+        intent.setDataAndType(Uri.fromFile(file), mimetype)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+        //
+        // Optionally can control visual appearance
+        //
+        intent.putExtra("page", "1") // Open a specific page
+        intent.putExtra("zoom", "1") // Open at a specific zoom level
+
+        startActivityForResult(intent, DOCUMENT_REQUEST_CODE)
     }
 
     //override fun OnEventsField(response: EventQuery.AsEventField?) {

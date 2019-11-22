@@ -152,8 +152,10 @@ public class ChatActivity extends BaseActivity {
         int i2 = Color.parseColor("#FAFAFA");
         chatConfig.setOutgoingChatMessageTextColor(i2);
         chatConfig.setTabsEnabled(false);
+        chatConfig.setVoiceMessageEnabled(false);
         chatConfig.setESignEnabled(false);
-        chatConfig.setAddFileEnabled(false);
+
+        //chatConfig.setAddFileEnabled(false);
         mChatController = mChatClientDelegate.createChatController(mChat);
         mChatController.setChatConfig(chatConfig);
         mHandler.post(new Runnable() {

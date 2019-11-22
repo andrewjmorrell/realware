@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="38dp"
-        android:background="@color/white"
+        android:background="@drawable/pivot"
     android:contentDescription="hf_no_number">
 
     <Button
@@ -67,12 +67,14 @@
         android:id="@+id/fileTextLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/progressBar"
-        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         android:layout_marginTop="16dp"
         android:text="filename"
         android:textAlignment="center"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:background="#44ffffff"/>
 
     <RadioGroup
         android:id="@+id/sampleRates"
@@ -80,8 +82,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:paddingTop="16dp">
+        android:padding="16dp"
+        android:background="#44ffffff">
 
         <RadioButton
             android:id="@+id/rate8Button"
@@ -123,8 +125,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:orientation="vertical"
-        android:paddingRight="16dp"
-        android:paddingTop="16dp">
+        android:padding="16dp"
+        android:background="#44ffffff">
 
         <RadioButton
             android:id="@+id/monoButton"

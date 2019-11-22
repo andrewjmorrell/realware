@@ -21,7 +21,7 @@ import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 public class GraphQLHandler {
-    private static String mServerUrl = "https://api.pivotplatform.com/graphql";
+    private static String mServerUrl = "https://dev-api.pivotplatform.com/graphql";
     private static ApolloClient mApolloClient;
 
 

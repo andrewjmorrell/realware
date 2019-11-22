@@ -1,11 +1,12 @@
 package com.pivot.pivot360.pivoteye
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 
-//import com.pivot.pivot360.pivoteye.MeetActivity.Companion.startMeet
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -13,8 +14,19 @@ import com.pivot.pivot360.content.graphql.EventQuery
 import com.pivot.pivot360.content.listeners.EventResponseListener
 import com.pivot.pivot360.content.listeners.OnItemClickListener
 import com.pivot.pivot360.network.GraphQlApiHandler
-import com.pivot.pivot360.pivotglass.R
 import kotlinx.android.synthetic.main.fragment_attachment.*
+import com.pivot.pivot360.pivotglass.R
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
+import java.io.BufferedInputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.net.URL
+
+
 
 
 class EventAttachmentActivity : BaseActivity(), EventResponseListener,
@@ -24,6 +36,8 @@ class EventAttachmentActivity : BaseActivity(), EventResponseListener,
     lateinit var mAdapter: EventAttachmentAdapter
 
     lateinit var identity: String
+
+    private val DOCUMENT_REQUEST_CODE = 1890
 
 
     private var glassGestureDetector: GlassGestureDetector? = null
@@ -83,8 +97,69 @@ class EventAttachmentActivity : BaseActivity(), EventResponseListener,
         }
     }
 
-    override fun onItemClick(item: String) {
-        startActivity(Intent(this, WebActivity::class.java).putExtra("link", item))
+    override fun onItemClick(item: String) = runBlocking{
+
+        val url = URL(item)
+        var fname = url.file
+
+        if (fname.endsWith("jpe")) {
+            fname += "g"
+        }
+
+        val file = copyFromUrlToExternalAsync(this@EventAttachmentActivity, item,
+            fname, "Pivot").await()
+
+        var mimetype = when(file.extension) {
+            "jpe" -> "image/jpeg"
+            "jpeg"-> "image/jpeg"
+            "pdf" -> "application/pdf"
+            "mp4" -> "video/mp4"
+            "wav" -> "audio/wav"
+            else -> "application/pdf"
+        }
+
+        if (mimetype == "audio/wav") {
+
+        } else {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.addCategory(Intent.CATEGORY_DEFAULT)
+
+            intent.setDataAndType(Uri.fromFile(file), mimetype)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+            //
+            // Optionally can control visual appearance
+            //
+            intent.putExtra("page", "1") // Open a specific page
+            intent.putExtra("zoom", "1") // Open at a specific zoom level
+
+            startActivityForResult(intent, DOCUMENT_REQUEST_CODE)
+        }
+    }
+
+    @Throws(IOException::class)
+    fun copyFromUrlToExternalAsync(
+        context: Context,
+        url: String,
+        filename: String,
+        destinationFolder: String
+    ): Deferred<File> = GlobalScope.async{
+
+        val outputFile = File(context.getExternalFilesDir(destinationFolder), filename)
+        if (!outputFile.exists()) {
+            val inputStream = BufferedInputStream(URL(url).openStream())
+
+            val outputStream = FileOutputStream(outputFile)
+
+            var bytes: ByteArray = inputStream.readBytes()
+            outputStream.write(bytes)
+
+            outputStream.flush()
+            outputStream.close()
+            inputStream.close()
+        }
+
+        outputFile
     }
 
     companion object {
