@@ -39,19 +39,19 @@ class EventsByAssetAdapter(context: FragmentActivity, events: ArrayList<EventsBy
                 if (status().equals("in_progress") && smeRequest() == null) {
                     txtActiveEventStatus.text = "In Progress"
                 }
-                if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status() == "requested" && PreferenceUtil.getUserUniqueIdentiry(mContext) != smeRequest()?.expert()) {
+                if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status() == "requested" && PreferenceUtil.getUserUniqueIdentity(mContext) != smeRequest()?.expert()) {
                     txtActiveEventStatus.text = "Awaiting SME Approval"
                 }
-                if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status() == "awaiting" && PreferenceUtil.getUserUniqueIdentiry(mContext) != smeRequest()?.expert()) {
+                if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status() == "awaiting" && PreferenceUtil.getUserUniqueIdentity(mContext) != smeRequest()?.expert()) {
                     txtActiveEventStatus.text = "Awaiting SME Acceptance"
                 }
-                if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status() == "awaiting" && PreferenceUtil.getUserUniqueIdentiry(mContext) == smeRequest()?.expert()) {
+                if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status() == "awaiting" && PreferenceUtil.getUserUniqueIdentity(mContext) == smeRequest()?.expert()) {
                     txtActiveEventStatus.text = " Awaiting my Decision"
                 }
-                if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status() == "accepted" && PreferenceUtil.getUserUniqueIdentiry(mContext) != smeRequest()?.expert()) {
+                if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status() == "accepted" && PreferenceUtil.getUserUniqueIdentity(mContext) != smeRequest()?.expert()) {
                     txtActiveEventStatus.text = " SME Approved"
                 }
-                if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status() == "accepted" && PreferenceUtil.getUserUniqueIdentiry(mContext) == smeRequest()?.expert()) {
+                if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status() == "accepted" && PreferenceUtil.getUserUniqueIdentity(mContext) == smeRequest()?.expert()) {
                     txtActiveEventStatus.text = " Work in Progress"
                 }
                 if (status().equals("closed") or status().equals("archive")) {
@@ -71,7 +71,7 @@ class EventsByAssetAdapter(context: FragmentActivity, events: ArrayList<EventsBy
                 } else if (status().equals("closed") or status().equals("archive")) {
                     txtEvent.text = "EVENT CLOSED : "
                     imgViewStatus.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_check_circular_button))
-                } else if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status().equals("awaiting") && PreferenceUtil.getUserUniqueIdentiry(mContext) == smeRequest()?.expert()) {
+                } else if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status().equals("awaiting") && PreferenceUtil.getUserUniqueIdentity(mContext) == smeRequest()?.expert()) {
                     imgViewStatus.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_warning))
 
                 } else {

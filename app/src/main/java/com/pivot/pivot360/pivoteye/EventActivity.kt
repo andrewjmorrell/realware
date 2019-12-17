@@ -24,7 +24,8 @@ import com.moxtra.sdk.meet.controller.MeetSessionController
 import com.moxtra.sdk.meet.model.Meet
 import com.moxtra.sdk.meet.repo.MeetRepo
 import com.pivot.pivot360.content.graphql.EventQuery
-import com.pivot.pivot360.content.listeners.EventResponseListener
+import com.pivot.pivot360.content.graphql.EventsQuery
+import com.pivot.pivot360.content.listeners.GenericListener
 import com.pivot.pivot360.network.GraphQlApiHandler
 import com.pivot.pivot360.pivotglass.R
 import java.util.ArrayList
@@ -32,7 +33,7 @@ import java.util.ArrayList
 /**
  * Main activity which displays a list of examples to the user
  */
-class MenuActivity : Activity(), EventResponseListener, MenuListener {
+class EventActivity : Activity(), GenericListener<Any>, MenuListener {
 
     private var mMainMenuTileAdaptor: MainMenuTileAdaptor? = null
     private var mGridView: GridView? = null
@@ -64,6 +65,8 @@ class MenuActivity : Activity(), EventResponseListener, MenuListener {
     lateinit var eventName: TextView
     lateinit var eventDescription: TextView
 
+    private val BASE_DOMAIN = "sandbox.moxtra.com"
+
     /**
      * Called when the activity is created
      *
@@ -77,11 +80,13 @@ class MenuActivity : Activity(), EventResponseListener, MenuListener {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
         setContentView(R.layout.activity_event)
+        ChatClient.setupDomain(BASE_DOMAIN, null, null, null)
+
 
         if (intent != null && intent.getStringExtra("identity") != null) {
             identity = intent.getStringExtra("identity")
             mToken = intent.getStringExtra("token")
-            GraphQlApiHandler.instance.getEvent(EventQuery.builder().token(mToken!!).id(identity!!).build(), this)
+            GraphQlApiHandler.instance.getData<EventQuery, GenericListener<Any>>(EventQuery.builder().token(mToken!!).id(identity!!).build(), this)
         } else {
             Toast.makeText(this, "Event id not found.", Toast.LENGTH_SHORT).show()
         }
@@ -102,27 +107,48 @@ class MenuActivity : Activity(), EventResponseListener, MenuListener {
         }
     }
 
-    override fun onError(message: String) {
-        runOnUiThread { Toast.makeText(this@MenuActivity, message, Toast.LENGTH_SHORT).show() }
+    override fun OnResults(response: Any?) {
+        when (response) {
+            is EventQuery.Data -> {
+
+                response.event().let {
+                    when (it) {
+                        is EventQuery.AsEventField -> {
+                            onEventsField(it)
+                        }
+                        is EventsQuery.AsResponseMessageField -> {
+                            onResponseMessageField(it.message())
+                        }
+                        is EventsQuery.AsAuthInfoField -> {
+                            onAuthInfoField(it.message())
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    override fun onAuthInfoField(message: String) {
-        runOnUiThread { Toast.makeText(this@MenuActivity, message, Toast.LENGTH_SHORT).show() }
+    override fun onError(message: String?) {
+        runOnUiThread { Toast.makeText(this@EventActivity, message, Toast.LENGTH_SHORT).show() }
+    }
+
+    override fun onAuthInfoField(message: String?) {
+        runOnUiThread { Toast.makeText(this@EventActivity, message, Toast.LENGTH_SHORT).show() }
 
     }
 
-    override fun onResponseMessageField(message: String) {
-        runOnUiThread { Toast.makeText(this@MenuActivity, message, Toast.LENGTH_SHORT).show() }
+    override fun onResponseMessageField(message: String?) {
+        runOnUiThread { Toast.makeText(this@EventActivity, message, Toast.LENGTH_SHORT).show() }
     }
 
-    override fun OnEventsField(response: EventQuery.AsEventField?) {
+    fun onEventsField(response: EventQuery.AsEventField) {
         runOnUiThread {
             eventName.text = response?.title()
             eventDescription.text = response?.description()
         }
 
 
-        ChatClient.linkWithUniqueId(PreferenceUtil.getUserUniqueIdentiry(this@MenuActivity)!!, CLIENT_ID, CLIENT_SECRET, ORG_ID, object :
+        ChatClient.linkWithUniqueId(PreferenceUtil.getUserUniqueIdentity(this@EventActivity)!!, CLIENT_ID, CLIENT_SECRET, ORG_ID, object :
             ApiCallback<ChatClientDelegate> {
             override fun onError(p0: Int, p1: String?) {
 
@@ -180,9 +206,9 @@ class MenuActivity : Activity(), EventResponseListener, MenuListener {
                 val topic = ChatClient.getMyProfile().firstName + "'s " + "meet"
 
                 if (mMeet.isInProgress) {
-                    MeetActivity.joinMeet(this@MenuActivity, mMeet)
+                    MeetActivity.joinMeet(this@EventActivity, mMeet)
                 } else {
-                    MeetActivity.startMeet(this@MenuActivity, topic, userList, mChat)
+                    MeetActivity.startMeet(this@EventActivity, topic, userList, mChat)
                 }
 
                 // mMyCustomLoader.dismissProgressDialog()

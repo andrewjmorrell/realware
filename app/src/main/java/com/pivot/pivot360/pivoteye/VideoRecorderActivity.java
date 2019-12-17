@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -71,7 +72,7 @@ public class VideoRecorderActivity extends Activity {
 
         String filename = mResult.toString().substring( mResult.toString().lastIndexOf('/')+1, mResult.toString().length() );
 
-        File outputFile = new File(new File("//mnt//sdcard//Download"),
+        File outputFile = new File(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator),
                 filename);
 
         try {

@@ -7,15 +7,14 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
-import com.pivot.pivot360.content.graphql.AuthMutation
-import com.pivot.pivot360.content.graphql.EventsByUserQuery
+import com.pivot.pivot360.content.graphql.*
 import com.pivot.pivot360.content.listeners.*
 import com.pivot.pivot360.network.GraphQlApiHandler
 import com.pivot.pivot360.pivotglass.R
 import kotlinx.android.synthetic.main.activity_login.*
 
 
-class LoginActivity : BaseActivity(), LoginResponseListener,
+class LoginActivity : BaseActivity(), GenericListener<Any>,
     OnItemClickListener {
 
     private var mToken: String? = null
@@ -37,7 +36,7 @@ class LoginActivity : BaseActivity(), LoginResponseListener,
         snapHelper.attachToRecyclerView(mRecyclerViewUsers)
 
         runOnUiThread {
-            val list = arrayListOf<String>("andrew.morrell@pivot.com")
+            val list = arrayListOf<String>("andrew.morrell@pivot.com", "neha.mohta@pivot.com")
             val adapter = LoginAdapter(this, list, this)
             if (mRecyclerViewUsers != null) {
                 mRecyclerViewUsers.adapter = adapter
@@ -67,19 +66,60 @@ class LoginActivity : BaseActivity(), LoginResponseListener,
         runOnUiThread { Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show() }
     }
 
-    override fun onAuthField(response: AuthMutation.AsAuthField?) {
+    fun onAuthField(response: AuthMutation.AsAuthField?) {
         PreferenceUtil.saveAccessToken(this, response?.accessToken())
-        //val intent = Intent(this, AssetsActivity::class.java)
-        val intent = Intent(this, EventsActivity::class.java)
-        var extras = hashMapOf(Pair("token", response?.accessToken()))
-        for (entry in extras.entries) {
-            intent.putExtra(entry.key, entry.value)
+        callUserDetailApi()
+    }
+
+    override fun OnResults(response: Any?) {
+        when (response) {
+            is AccountQuery.Data -> {
+                var account = response.account()
+                account.let {
+                    when (it) {
+                        is AccountQuery.AsAccountField -> {
+                            PreferenceUtil.saveUserUniqueIdentity(this@LoginActivity, it.identity()!!)
+                            //val intent = Intent(this, AssetsActivity::class.java)
+                            //val intent = Intent(this, MyWorkActivity::class.java)
+                            val intent = Intent(this, EventsActivity::class.java)
+                            startActivity(intent)
+                        }
+                        is AccountQuery.AsAuthInfoField -> {
+                            showToast(it.message()!!)
+                        }
+                        is AccountQuery.Account -> {
+
+                        }
+                    }
+                }
+            }
+            is AuthMutation.Data -> {
+                response.auth()?.result().let {
+                    when (it) {
+                        is AuthMutation.AsAuthField -> {
+                            onAuthField(it)
+                        }
+                        is AuthMutation.AsResponseMessageField -> {
+                            onResponseMessageField(it.message()!!)
+                        }
+                    }
+                }
+            }
         }
-        startActivity(intent)
+    }
+
+    private fun callUserDetailApi() {
+
+        GraphQlApiHandler.instance
+            .getData<AccountQuery, GenericListener<Any>>(AccountQuery.builder()
+                .token(PreferenceUtil.getToken(this)!!)
+                .build(), this)
+
     }
 
     override fun onItemClick(item: String) {
-        GraphQlApiHandler.instance.makeLogin(AuthMutation.builder().email(item).password("123123").build(), this)
+        GraphQlApiHandler.instance.postData<AuthMutation,
+                GenericListener<Any>>(AuthMutation.builder().email(item).password("123123").build(), this)
     }
 
     companion object {

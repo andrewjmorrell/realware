@@ -8,12 +8,13 @@ import android.widget.TextView
 import android.widget.Toast
 import com.moxtra.sdk.ChatClient
 import com.pivot.pivot360.content.graphql.AccountQuery
-import com.pivot.pivot360.content.listeners.GetAccountResponseListener
-import com.pivot.pivot360.content.listeners.GetUserResponseListener
+import com.pivot.pivot360.content.graphql.EntityByChatIdQuery
+import com.pivot.pivot360.content.graphql.SubmitSubscriptionTokenMutation
+import com.pivot.pivot360.content.listeners.GenericListener
 import com.pivot.pivot360.network.GraphQlApiHandler
 import com.pivot.pivot360.pivotglass.R
 
-class MainActivity : BaseActivity(), GetUserResponseListener, GetAccountResponseListener {
+class MainActivity : BaseActivity(), GenericListener<Any> {
 
 
     lateinit var progressText: TextView
@@ -51,53 +52,59 @@ class MainActivity : BaseActivity(), GetUserResponseListener, GetAccountResponse
 
     private fun callUserDetailApi() {
         GraphQlApiHandler.instance
-            .getUser(AccountQuery.builder()
-                .token(mToken!!)
+            .getData<AccountQuery, GenericListener<Any>>(AccountQuery.builder()
+                .token(PreferenceUtil.getToken(this)!!)
                 .build(), this)
     }
 
-    private fun getAccountDetails() {
-        GraphQlApiHandler.instance
-            .getAccount(
-                AccountQuery.builder()
-                    .token(mToken!!).build(), this)
+    override fun OnResults(response: Any?) {
+        when (response) {
+            is AccountQuery.Data -> {
+                var account = response.account()
+                account.let {
+                    when (it) {
+                        is AccountQuery.AsAccountField -> {
+                            accountResponse(it)
+                        }
+                        is AccountQuery.AsAuthInfoField -> {
+                            showToast(it.message()!!)
+                        }
+                        is AccountQuery.Account -> {
+
+                        }
+                    }
+                }
+            }
+            is AccountQuery.Data -> {
+                var event = response.account()
+                event.let {
+                    when (it) {
+                        is AccountQuery.AsAccountField -> {
+                            accountField(it)
+                        }
+                        is EntityByChatIdQuery.AsAuthInfoField -> {
+                            showToast(it.message()!!)
+                        }
+                        is EntityByChatIdQuery.AsResponseMessageField -> {
+
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    private fun getEvent() {
-//        GraphQlApiHandler.instance.getEvent(
-//            GetEventQuery.builder()
-//                .token(mToken!!)
-//                .id(identity).build(), this)
-    }
-
-    private fun finishInMainThread() {
-        mHandler.post { finish() }
-    }
-
-    override fun AccountField(response: AccountQuery.AsAccountField?) {
+    fun accountField(response: AccountQuery.AsAccountField?) {
         PreferenceUtil.saveUserUniqueIdentity(this@MainActivity, response?.identity()!!)
-        val launchIntent = Intent(this, MenuActivity::class.java)
+        val launchIntent = Intent(this, EventActivity::class.java)
         launchIntent.putExtra("token", mToken)
         launchIntent.putExtra("identity", identity)
         startActivity(launchIntent)
         finish()
     }
 
-    override fun AccountResponse(response: AccountQuery.AsAccountField?) {
+    fun accountResponse(response: AccountQuery.AsAccountField?) {
         PreferenceUtil.saveUserUniqueIdentity(this@MainActivity, response?.identity()!!)
-//        ChatClient.linkWithUniqueId(response?.identity()!!, CLIENT_ID, CLIENT_SECRET, ORG_ID, object :
-//            ApiCallback<ChatClientDelegate> {
-//            override fun onCompleted(ccd: ChatClientDelegate) {
-//                Log.i(TAG, "Linked to Moxtra account successfully.")
-//
-//            }
-//
-//            override fun onError(errorCode: Int, errorMsg: String) {
-//                //  Toast.makeText(mContext, getString(R.string.failed_to_link_to_moxtra_account), Toast.LENGTH_LONG).show()
-//                Log.e(TAG, "Failed to link to Moxtra account, errorCode=$errorCode, errorMsg=$errorMsg")
-//                //  showProgress(false)
-//            }
-//        })
     }
 
     override fun onError(message: String?) {

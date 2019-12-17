@@ -1,0 +1,2183 @@
+# this is an auto generated file. This will be overwritten
+query Asset($token: String!, $id: String) {
+    asset(token: $token, id: $id) {
+        ... on AssetField {
+            identity
+            name
+            type
+            description
+            image
+            attachments {
+                name
+                fileType
+                mimeType
+                link
+                updatedAt
+                fileId
+            }
+            parameters {
+                age
+                barcode
+                make
+                type
+                model
+                serialNo
+            }
+            members {
+                account {
+                    identity
+                    username
+                    email
+                    moxtraId
+                    firstName
+                    lastName
+                    middleName
+                    image
+                    phone
+                    description
+                    location
+                    tags
+                    roles
+                    createdAt
+                    updatedAt
+                }
+                role
+            }
+            isReadOnly
+            chatIdentity
+            events
+            createdAt
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+        ... on AuthInfoField {
+            message
+        }
+    }
+}
+query Assets($token: String!) {
+    assets(token: $token) {
+        ... on AssetResults {
+            assets {
+                identity
+                name
+                type
+                description
+                image
+                attachments {
+                    name
+                    fileType
+                    mimeType
+                    link
+                    updatedAt
+                    fileId
+                }
+                parameters {
+                    age
+                    barcode
+                    make
+                    type
+                    model
+                    serialNo
+                }
+                members {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                isReadOnly
+                chatIdentity
+                events
+                createdAt
+            }
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+        ... on AuthInfoField {
+            message
+        }
+    }
+}
+query Event($token: String!, $id: String) {
+    event(token: $token, id: $id) {
+        ... on EventField {
+            identity
+            title
+            asset
+            members {
+                account {
+                    identity
+                    username
+                    email
+                    moxtraId
+                    firstName
+                    lastName
+                    middleName
+                    image
+                    phone
+                    description
+                    location
+                    tags
+                    roles
+                    createdAt
+                    updatedAt
+                }
+                role
+            }
+            allMembers {
+                account {
+                    identity
+                    username
+                    email
+                    moxtraId
+                    firstName
+                    lastName
+                    middleName
+                    image
+                    phone
+                    description
+                    location
+                    tags
+                    roles
+                    createdAt
+                    updatedAt
+                }
+                role
+            }
+            smeRequest {
+                expert
+                requester
+                status
+                createdAt
+                updatedAt
+                parameters {
+                    safetyIssue
+                    productionStatus
+                }
+                text
+            }
+            smeRequestHistory {
+                expert
+                requester
+                status
+                createdAt
+                updatedAt
+                parameters {
+                    safetyIssue
+                    productionStatus
+                }
+                text
+            }
+            isReadOnly
+            status
+            statusHistory {
+                user
+                status
+                date
+            }
+            type
+            description
+            chatIdentity
+            attachments {
+                name
+                fileType
+                mimeType
+                link
+                updatedAt
+                fileId
+            }
+            createdAt
+            assetTitle
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+        ... on AuthInfoField {
+            message
+        }
+    }
+}
+query Events($page: Int, $count: Boolean, $token: String!) {
+    events(page: $page, count: $count, token: $token) {
+        ... on EventResults {
+            events {
+                identity
+                title
+                asset
+                members {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                allMembers {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                smeRequest {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    parameters {
+                        safetyIssue
+                        productionStatus
+                    }
+                    text
+                }
+                smeRequestHistory {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    parameters {
+                        safetyIssue
+                        productionStatus
+                    }
+                    text
+                }
+                isReadOnly
+                status
+                statusHistory {
+                    user
+                    status
+                    date
+                }
+                type
+                description
+                chatIdentity
+                attachments {
+                    name
+                    fileType
+                    mimeType
+                    link
+                    updatedAt
+                    fileId
+                }
+                createdAt
+                assetTitle
+            }
+            total
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+        ... on AuthInfoField {
+            message
+        }
+    }
+}
+query EventsByAsset(
+    $token: String!
+    $id: String
+    $status: String
+    $page: Int
+    $count: Boolean
+) {
+    eventsByAsset(
+        token: $token
+        id: $id
+        status: $status
+        page: $page
+        count: $count
+    ) {
+        ... on EventResults {
+            events {
+                identity
+                title
+                asset
+                members {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                allMembers {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                smeRequest {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    parameters {
+                        safetyIssue
+                        productionStatus
+                    }
+                    text
+                }
+                smeRequestHistory {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    parameters {
+                        safetyIssue
+                        productionStatus
+                    }
+                    text
+                }
+                isReadOnly
+                status
+                statusHistory {
+                    user
+                    status
+                    date
+                }
+                type
+                description
+                chatIdentity
+                attachments {
+                    name
+                    fileType
+                    mimeType
+                    link
+                    updatedAt
+                    fileId
+                }
+                createdAt
+                assetTitle
+            }
+            total
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+        ... on AuthInfoField {
+            message
+        }
+    }
+}
+query EventsByUser(
+    $token: String!
+    $accountId: String
+    $page: Int
+    $count: Boolean
+) {
+    eventsByUser(
+        token: $token
+        accountId: $accountId
+        page: $page
+        count: $count
+    ) {
+        ... on EventResults {
+            events {
+                identity
+                title
+                asset
+                members {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                allMembers {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                smeRequest {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    parameters {
+                        safetyIssue
+                        productionStatus
+                    }
+                    text
+                }
+                smeRequestHistory {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    parameters {
+                        safetyIssue
+                        productionStatus
+                    }
+                    text
+                }
+                isReadOnly
+                status
+                statusHistory {
+                    user
+                    status
+                    date
+                }
+                type
+                description
+                chatIdentity
+                attachments {
+                    name
+                    fileType
+                    mimeType
+                    link
+                    updatedAt
+                    fileId
+                }
+                createdAt
+                assetTitle
+            }
+            total
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+        ... on AuthInfoField {
+            message
+        }
+    }
+}
+query Account($token: String!) {
+    account(token: $token) {
+        ... on AccountField {
+            identity
+            username
+            email
+            moxtraId
+            firstName
+            lastName
+            middleName
+            image
+            phone
+            description
+            location
+            tags
+            roles
+            createdAt
+            updatedAt
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+        ... on AuthInfoField {
+            message
+        }
+    }
+}
+query Expert($token: String!, $id: String) {
+    expert(token: $token, id: $id) {
+        ... on AccountField {
+            identity
+            username
+            email
+            moxtraId
+            firstName
+            lastName
+            middleName
+            image
+            phone
+            description
+            location
+            tags
+            roles
+            createdAt
+            updatedAt
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+        ... on AuthInfoField {
+            message
+        }
+    }
+}
+query Supervisor($token: String!) {
+    supervisor(token: $token) {
+        ... on AccountField {
+            identity
+            username
+            email
+            moxtraId
+            firstName
+            lastName
+            middleName
+            image
+            phone
+            description
+            location
+            tags
+            roles
+            createdAt
+            updatedAt
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+        ... on AuthInfoField {
+            message
+        }
+    }
+}
+query Search($token: String!, $queryString: String, $rawQuery: String) {
+    search(token: $token, queryString: $queryString, rawQuery: $rawQuery) {
+        ... on SearchResults {
+            assets {
+                identity
+                name
+                type
+                description
+                image
+                attachments {
+                    name
+                    fileType
+                    mimeType
+                    link
+                    updatedAt
+                    fileId
+                }
+                parameters {
+                    age
+                    barcode
+                    make
+                    type
+                    model
+                    serialNo
+                }
+                members {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                isReadOnly
+                chatIdentity
+                events
+                createdAt
+            }
+            events {
+                identity
+                title
+                asset
+                members {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                allMembers {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                smeRequest {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    parameters {
+                        safetyIssue
+                        productionStatus
+                    }
+                    text
+                }
+                smeRequestHistory {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    parameters {
+                        safetyIssue
+                        productionStatus
+                    }
+                    text
+                }
+                isReadOnly
+                status
+                statusHistory {
+                    user
+                    status
+                    date
+                }
+                type
+                description
+                chatIdentity
+                attachments {
+                    name
+                    fileType
+                    mimeType
+                    link
+                    updatedAt
+                    fileId
+                }
+                createdAt
+                assetTitle
+            }
+            messages {
+                chatIdentity
+                messageId
+                contentRichtext
+                contentText
+                content
+                author {
+                    identity
+                    username
+                    email
+                    moxtraId
+                    firstName
+                    lastName
+                    middleName
+                    image
+                    phone
+                    description
+                    location
+                    tags
+                    roles
+                    createdAt
+                    updatedAt
+                }
+                connectedTo {
+                    identity
+                    entityType
+                    entityTitle
+                }
+                publishedAt
+                updatedAt
+            }
+            attachments {
+                name
+                fileType
+                mimeType
+                link
+                updatedAt
+                fileId
+            }
+            total
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+        ... on AuthInfoField {
+            message
+        }
+    }
+}
+query ExpertSearch($token: String!, $keywords: String) {
+    expertSearch(token: $token, keywords: $keywords) {
+        ... on AccountResults {
+            accounts {
+                identity
+                username
+                email
+                moxtraId
+                firstName
+                lastName
+                middleName
+                image
+                phone
+                description
+                location
+                tags
+                roles
+                createdAt
+                updatedAt
+            }
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+        ... on AuthInfoField {
+            message
+        }
+    }
+}
+query Feed($token: String!, $page: Int, $count: Boolean) {
+    feed(token: $token, page: $page, count: $count) {
+        ... on FeedResults {
+            feed {
+                verb
+                description
+                item {
+                    itemType
+                    identity
+                    title
+                    assetTitle
+                }
+                createdAt
+            }
+            total
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+    }
+}
+query Messages(
+    $token: String!
+    $page: Int
+    $count: Boolean
+    $chatIdentity: String!
+) {
+    messages(
+        token: $token
+        page: $page
+        count: $count
+        chatIdentity: $chatIdentity
+    ) {
+        ... on MessageResults {
+            messages {
+                chatIdentity
+                messageId
+                contentRichtext
+                contentText
+                content
+                author {
+                    identity
+                    username
+                    email
+                    moxtraId
+                    firstName
+                    lastName
+                    middleName
+                    image
+                    phone
+                    description
+                    location
+                    tags
+                    roles
+                    createdAt
+                    updatedAt
+                }
+                connectedTo {
+                    identity
+                    entityType
+                    entityTitle
+                }
+                publishedAt
+                updatedAt
+            }
+            total
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+        ... on AuthInfoField {
+            message
+        }
+    }
+}
+query EntityByChatId($token: String!, $chatIdentity: String!) {
+    entityByChatId(token: $token, chatIdentity: $chatIdentity) {
+        ... on EntityByChatIDField {
+            entity
+            identity
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+        ... on AuthInfoField {
+            message
+        }
+    }
+}
+query Task($token: String!, $id: String) {
+    task(token: $token, id: $id) {
+        ... on TaskField {
+            identity
+            title
+            asset {
+                identity
+                name
+                type
+                description
+                image
+                attachments {
+                    name
+                    fileType
+                    mimeType
+                    link
+                    updatedAt
+                    fileId
+                }
+                parameters {
+                    age
+                    barcode
+                    make
+                    type
+                    model
+                    serialNo
+                }
+                members {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                isReadOnly
+                chatIdentity
+                events
+                createdAt
+            }
+            summary
+            description
+            startCards {
+                card {
+                    identity
+                    verb
+                    title
+                    isFinish
+                    description
+                    conditions {
+                        verb
+                        condition
+                        value
+                        goto
+                    }
+                    createdAt
+                }
+                status
+                updatedAt
+            }
+            createdAt
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+        ... on AuthInfoField {
+            message
+        }
+    }
+}
+query UserTask($token: String!, $id: String) {
+    userTask(token: $token, id: $id) {
+        ... on UserTaskField {
+            identity
+            task {
+                identity
+                title
+                asset {
+                    identity
+                    name
+                    type
+                    description
+                    image
+                    attachments {
+                        name
+                        fileType
+                        mimeType
+                        link
+                        updatedAt
+                        fileId
+                    }
+                    parameters {
+                        age
+                        barcode
+                        make
+                        type
+                        model
+                        serialNo
+                    }
+                    members {
+                        account {
+                            identity
+                            username
+                            email
+                            moxtraId
+                            firstName
+                            lastName
+                            middleName
+                            image
+                            phone
+                            description
+                            location
+                            tags
+                            roles
+                            createdAt
+                            updatedAt
+                        }
+                        role
+                    }
+                    isReadOnly
+                    chatIdentity
+                    events
+                    createdAt
+                }
+                summary
+                description
+                startCards {
+                    card {
+                        identity
+                        verb
+                        title
+                        isFinish
+                        description
+                        conditions {
+                            verb
+                            condition
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    status
+                    updatedAt
+                }
+                createdAt
+            }
+            owners {
+                identity
+                username
+                email
+                moxtraId
+                firstName
+                lastName
+                middleName
+                image
+                phone
+                description
+                location
+                tags
+                roles
+                createdAt
+                updatedAt
+            }
+            status
+            results {
+                card {
+                    identity
+                    verb
+                    title
+                    isFinish
+                    description
+                    conditions {
+                        verb
+                        condition
+                        value
+                        goto
+                    }
+                    createdAt
+                }
+                value
+                createdAt
+                updatedAt
+            }
+            createdAt
+            updatedAt
+            updatedBy {
+                identity
+                username
+                email
+                moxtraId
+                firstName
+                lastName
+                middleName
+                image
+                phone
+                description
+                location
+                tags
+                roles
+                createdAt
+                updatedAt
+            }
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+        ... on AuthInfoField {
+            message
+        }
+    }
+}
+query TasksByAsset(
+    $token: String!
+    $assetId: String
+    $page: Int
+    $count: Boolean
+) {
+    tasksByAsset(token: $token, assetId: $assetId, page: $page, count: $count) {
+        ... on TaskResults {
+            tasks {
+                identity
+                title
+                asset {
+                    identity
+                    name
+                    type
+                    description
+                    image
+                    attachments {
+                        name
+                        fileType
+                        mimeType
+                        link
+                        updatedAt
+                        fileId
+                    }
+                    parameters {
+                        age
+                        barcode
+                        make
+                        type
+                        model
+                        serialNo
+                    }
+                    members {
+                        account {
+                            identity
+                            username
+                            email
+                            moxtraId
+                            firstName
+                            lastName
+                            middleName
+                            image
+                            phone
+                            description
+                            location
+                            tags
+                            roles
+                            createdAt
+                            updatedAt
+                        }
+                        role
+                    }
+                    isReadOnly
+                    chatIdentity
+                    events
+                    createdAt
+                }
+                summary
+                description
+                startCards {
+                    card {
+                        identity
+                        verb
+                        title
+                        isFinish
+                        description
+                        conditions {
+                            verb
+                            condition
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    status
+                    updatedAt
+                }
+                createdAt
+            }
+            total
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+        ... on AuthInfoField {
+            message
+        }
+    }
+}
+query UserTasks(
+    $token: String!
+    $accountId: String
+    $page: Int
+    $count: Boolean
+) {
+    userTasks(token: $token, accountId: $accountId, page: $page, count: $count) {
+        ... on UserTaskResults {
+            userTasks {
+                identity
+                task {
+                    identity
+                    title
+                    asset {
+                        identity
+                        name
+                        type
+                        description
+                        image
+                        attachments {
+                            name
+                            fileType
+                            mimeType
+                            link
+                            updatedAt
+                            fileId
+                        }
+                        parameters {
+                            age
+                            barcode
+                            make
+                            type
+                            model
+                            serialNo
+                        }
+                        members {
+                            role
+                        }
+                        isReadOnly
+                        chatIdentity
+                        events
+                        createdAt
+                    }
+                    summary
+                    description
+                    startCards {
+                        card {
+                            identity
+                            verb
+                            title
+                            isFinish
+                            description
+                            createdAt
+                        }
+                        status
+                        updatedAt
+                    }
+                    createdAt
+                }
+                owners {
+                    identity
+                    username
+                    email
+                    moxtraId
+                    firstName
+                    lastName
+                    middleName
+                    image
+                    phone
+                    description
+                    location
+                    tags
+                    roles
+                    createdAt
+                    updatedAt
+                }
+                status
+                results {
+                    card {
+                        identity
+                        verb
+                        title
+                        isFinish
+                        description
+                        conditions {
+                            verb
+                            condition
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    value
+                    createdAt
+                    updatedAt
+                }
+                createdAt
+                updatedAt
+                updatedBy {
+                    identity
+                    username
+                    email
+                    moxtraId
+                    firstName
+                    lastName
+                    middleName
+                    image
+                    phone
+                    description
+                    location
+                    tags
+                    roles
+                    createdAt
+                    updatedAt
+                }
+            }
+            total
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+        ... on AuthInfoField {
+            message
+        }
+    }
+}
+mutation Register(
+    $company: String
+    $email: String!
+    $firstName: String
+    $lastName: String
+    $middleName: String
+    $password: String!
+    $username: String!
+) {
+    register(
+        company: $company
+        email: $email
+        firstName: $firstName
+        lastName: $lastName
+        middleName: $middleName
+        password: $password
+        username: $username
+    ) {
+        result {
+            isSuccess
+            message
+        }
+    }
+}
+mutation Auth($email: String, $password: String) {
+    auth(email: $email, password: $password) {
+        result {
+            ... on AuthField {
+                accessToken
+                refreshToken
+                message
+            }
+            ... on ResponseMessageField {
+                isSuccess
+                message
+            }
+        }
+    }
+}
+mutation Refresh($refreshToken: String) {
+    refresh(refreshToken: $refreshToken) {
+        result {
+            ... on RefreshField {
+                accessToken
+                message
+            }
+            ... on AuthInfoField {
+                message
+            }
+        }
+    }
+}
+mutation EventCreate(
+    $asset: String!
+    $description: String!
+    $title: String!
+    $token: String!
+    $type: String!
+) {
+    eventCreate(
+        asset: $asset
+        description: $description
+        title: $title
+        token: $token
+        type: $type
+    ) {
+        result {
+            ... on EventField {
+                identity
+                title
+                asset
+                members {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                allMembers {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                smeRequest {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    parameters {
+                        safetyIssue
+                        productionStatus
+                    }
+                    text
+                }
+                smeRequestHistory {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    parameters {
+                        safetyIssue
+                        productionStatus
+                    }
+                    text
+                }
+                isReadOnly
+                status
+                statusHistory {
+                    user
+                    status
+                    date
+                }
+                type
+                description
+                chatIdentity
+                attachments {
+                    name
+                    fileType
+                    mimeType
+                    link
+                    updatedAt
+                    fileId
+                }
+                createdAt
+                assetTitle
+            }
+            ... on ResponseMessageField {
+                isSuccess
+                message
+            }
+            ... on AuthInfoField {
+                message
+            }
+        }
+    }
+}
+mutation EventEdit($id: String!, $status: String, $token: String!) {
+    eventEdit(id: $id, status: $status, token: $token) {
+        result {
+            ... on EventField {
+                identity
+                title
+                asset
+                members {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                allMembers {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                smeRequest {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    parameters {
+                        safetyIssue
+                        productionStatus
+                    }
+                    text
+                }
+                smeRequestHistory {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    parameters {
+                        safetyIssue
+                        productionStatus
+                    }
+                    text
+                }
+                isReadOnly
+                status
+                statusHistory {
+                    user
+                    status
+                    date
+                }
+                type
+                description
+                chatIdentity
+                attachments {
+                    name
+                    fileType
+                    mimeType
+                    link
+                    updatedAt
+                    fileId
+                }
+                createdAt
+                assetTitle
+            }
+            ... on ResponseMessageField {
+                isSuccess
+                message
+            }
+            ... on AuthInfoField {
+                message
+            }
+        }
+    }
+}
+mutation EventAssignExpert(
+    $accountId: String!
+    $id: String!
+    $parameters: SmeRequestParametersInput!
+    $text: String!
+    $token: String!
+) {
+    eventAssignExpert(
+        accountId: $accountId
+        id: $id
+        parameters: $parameters
+        text: $text
+        token: $token
+    ) {
+        result {
+            ... on EventField {
+                identity
+                title
+                asset
+                members {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                allMembers {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                smeRequest {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    parameters {
+                        safetyIssue
+                        productionStatus
+                    }
+                    text
+                }
+                smeRequestHistory {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    parameters {
+                        safetyIssue
+                        productionStatus
+                    }
+                    text
+                }
+                isReadOnly
+                status
+                statusHistory {
+                    user
+                    status
+                    date
+                }
+                type
+                description
+                chatIdentity
+                attachments {
+                    name
+                    fileType
+                    mimeType
+                    link
+                    updatedAt
+                    fileId
+                }
+                createdAt
+                assetTitle
+            }
+            ... on ResponseMessageField {
+                isSuccess
+                message
+            }
+            ... on AuthInfoField {
+                message
+            }
+        }
+    }
+}
+mutation EventSupervisorProcessExpertRequest(
+    $accept: Boolean
+    $id: String!
+    $reject: Boolean
+    $token: String!
+) {
+    eventSupervisorProcessExpertRequest(
+        accept: $accept
+        id: $id
+        reject: $reject
+        token: $token
+    ) {
+        result {
+            ... on EventField {
+                identity
+                title
+                asset
+                members {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                allMembers {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                smeRequest {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    parameters {
+                        safetyIssue
+                        productionStatus
+                    }
+                    text
+                }
+                smeRequestHistory {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    parameters {
+                        safetyIssue
+                        productionStatus
+                    }
+                    text
+                }
+                isReadOnly
+                status
+                statusHistory {
+                    user
+                    status
+                    date
+                }
+                type
+                description
+                chatIdentity
+                attachments {
+                    name
+                    fileType
+                    mimeType
+                    link
+                    updatedAt
+                    fileId
+                }
+                createdAt
+                assetTitle
+            }
+            ... on ResponseMessageField {
+                isSuccess
+                message
+            }
+            ... on AuthInfoField {
+                message
+            }
+        }
+    }
+}
+mutation EventExpertManageRequest(
+    $accept: Boolean
+    $id: String!
+    $reject: Boolean
+    $token: String!
+) {
+    eventExpertManageRequest(
+        accept: $accept
+        id: $id
+        reject: $reject
+        token: $token
+    ) {
+        result {
+            ... on EventField {
+                identity
+                title
+                asset
+                members {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                allMembers {
+                    account {
+                        identity
+                        username
+                        email
+                        moxtraId
+                        firstName
+                        lastName
+                        middleName
+                        image
+                        phone
+                        description
+                        location
+                        tags
+                        roles
+                        createdAt
+                        updatedAt
+                    }
+                    role
+                }
+                smeRequest {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    parameters {
+                        safetyIssue
+                        productionStatus
+                    }
+                    text
+                }
+                smeRequestHistory {
+                    expert
+                    requester
+                    status
+                    createdAt
+                    updatedAt
+                    parameters {
+                        safetyIssue
+                        productionStatus
+                    }
+                    text
+                }
+                isReadOnly
+                status
+                statusHistory {
+                    user
+                    status
+                    date
+                }
+                type
+                description
+                chatIdentity
+                attachments {
+                    name
+                    fileType
+                    mimeType
+                    link
+                    updatedAt
+                    fileId
+                }
+                createdAt
+                assetTitle
+            }
+            ... on ResponseMessageField {
+                isSuccess
+                message
+            }
+            ... on AuthInfoField {
+                message
+            }
+        }
+    }
+}
+mutation EventMessageRecieved(
+    $contentText: String!
+    $count: Int
+    $id: String!
+    $runAttachmentsCrawler: Int
+    $token: String!
+) {
+    eventMessageRecieved(
+        contentText: $contentText
+        count: $count
+        id: $id
+        runAttachmentsCrawler: $runAttachmentsCrawler
+        token: $token
+    ) {
+        result {
+            ... on ResponseMessageField {
+                isSuccess
+                message
+            }
+            ... on AuthInfoField {
+                message
+            }
+        }
+    }
+}
+mutation AssetMessageRecieved(
+    $contentText: String!
+    $count: Int
+    $id: String!
+    $runAttachmentsCrawler: Int
+    $token: String!
+) {
+    assetMessageRecieved(
+        contentText: $contentText
+        count: $count
+        id: $id
+        runAttachmentsCrawler: $runAttachmentsCrawler
+        token: $token
+    ) {
+        result {
+            ... on ResponseMessageField {
+                isSuccess
+                message
+            }
+            ... on AuthInfoField {
+                message
+            }
+        }
+    }
+}
+mutation SubmitSubscriptionToken(
+    $subscriptionToken: String!
+    $subscriptionTokenType: String!
+    $token: String!
+    $unsubscribe: Boolean
+) {
+    submitSubscriptionToken(
+        subscriptionToken: $subscriptionToken
+        subscriptionTokenType: $subscriptionTokenType
+        token: $token
+        unsubscribe: $unsubscribe
+    ) {
+        result {
+            isSuccess
+            message
+        }
+    }
+}
+mutation UserTaskCreate($taskId: String!, $token: String!) {
+    userTaskCreate(taskId: $taskId, token: $token) {
+        result {
+            ... on UserTaskField {
+                identity
+                task {
+                    identity
+                    title
+                    asset {
+                        identity
+                        name
+                        type
+                        description
+                        image
+                        attachments {
+                            name
+                            fileType
+                            mimeType
+                            link
+                            updatedAt
+                            fileId
+                        }
+                        parameters {
+                            age
+                            barcode
+                            make
+                            type
+                            model
+                            serialNo
+                        }
+                        members {
+                            role
+                        }
+                        isReadOnly
+                        chatIdentity
+                        events
+                        createdAt
+                    }
+                    summary
+                    description
+                    startCards {
+                        card {
+                            identity
+                            verb
+                            title
+                            isFinish
+                            description
+                            createdAt
+                        }
+                        status
+                        updatedAt
+                    }
+                    createdAt
+                }
+                owners {
+                    identity
+                    username
+                    email
+                    moxtraId
+                    firstName
+                    lastName
+                    middleName
+                    image
+                    phone
+                    description
+                    location
+                    tags
+                    roles
+                    createdAt
+                    updatedAt
+                }
+                status
+                results {
+                    card {
+                        identity
+                        verb
+                        title
+                        isFinish
+                        description
+                        conditions {
+                            verb
+                            condition
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    value
+                    createdAt
+                    updatedAt
+                }
+                createdAt
+                updatedAt
+                updatedBy {
+                    identity
+                    username
+                    email
+                    moxtraId
+                    firstName
+                    lastName
+                    middleName
+                    image
+                    phone
+                    description
+                    location
+                    tags
+                    roles
+                    createdAt
+                    updatedAt
+                }
+            }
+            ... on ResponseMessageField {
+                isSuccess
+                message
+            }
+            ... on AuthInfoField {
+                message
+            }
+        }
+    }
+}

@@ -32,7 +32,7 @@
         </activity>
         <activity android:name="com.pivot.pivot360.pivoteye.EventsActivity"/>
         <activity android:name="com.pivot.pivot360.pivoteye.MainActivity"/>
-        <activity android:name="com.pivot.pivot360.pivoteye.MenuActivity" />
+        <activity android:name="com.pivot.pivot360.pivoteye.EventActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.MeetActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.ChatActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.EventAttachmentActivity" />
@@ -47,6 +47,10 @@
         <activity android:name="com.pivot.pivot360.pivoteye.AssetsActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.AssetActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.EventsByAssetActivity" />
+        <activity android:name="com.pivot.pivot360.pivoteye.MyWorkActivity" />
+        <activity android:name="com.pivot.pivot360.pivoteye.TasksActivity" />
+        <activity android:name="com.pivot.pivot360.pivoteye.TaskViewActivity" />
+        <activity android:name="com.pivot.pivot360.pivoteye.TaskDetailActivity" />
     </application>
 
 </manifest>

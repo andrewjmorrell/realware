@@ -1,6 +1,7 @@
 package com.pivot.pivot360.pivoteye
 
 import android.app.Activity
+import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -10,12 +11,18 @@ import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.pivot.pivot360.content.GraphQLHandler
 import com.pivot.pivot360.pivotglass.R
 
 open class BaseActivity : AppCompatActivity() {
     private var mActionProgressItem: MenuItem? = null
     private var mIsLoading = false
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        GraphQLHandler.apiBaseUrl = resources.getString(R.string.Api_Url_GraphQL)
+        Constants.BASE_URL = resources.getString(R.string.Api_Url)
+    }
 //    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
 //        mActionProgressItem = menu.findItem(com.pivot.pivot360.R.id.miActionProgress)
 //        setLoading(mIsLoading)

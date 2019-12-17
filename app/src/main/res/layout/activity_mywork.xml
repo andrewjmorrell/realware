@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="40dp"
+    android:contentDescription="hf_no_number|hf_hide_help"
+        android:layout_gravity="center"
+        android:background="@drawable/pivot">
+
+    <Button
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:id="@+id/myevents"
+            android:layout_marginTop="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:text="My Events"
+            android:textSize="@dimen/button_text_size"
+            android:onClick="onMyEventsClick"
+            android:contentDescription="hf_use_description|My Events"/>
+
+    <Button
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
+            android:id="@+id/mytasks"
+            android:layout_marginTop="0dp"
+            android:layout_below="@id/myevents"
+            android:text="My Tasks"
+            android:textSize="@dimen/button_text_size"
+            android:onClick="onMyTasksClick"
+            android:contentDescription="hf_use_description|My Tasks"/>
+
+</RelativeLayout>

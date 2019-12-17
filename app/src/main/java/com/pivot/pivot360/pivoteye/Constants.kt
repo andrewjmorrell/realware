@@ -2,7 +2,10 @@ package com.pivot.pivot360.pivoteye
 
 
 object Constants {
-    const val BASE_URL = "https://www.pivotplatform.com"
+    var BASE_URL = ""
+    val CLIENT_ID = "gVT4402EnwU"
+    val CLIENT_SECRET = "gz5L0B4Ng1o"
+    val BASE_DOMAIN = "sandbox.moxtra.com"
 
     const val STATUS_IN_PROGRESS = "In progress"
     const val STATUS_CLOSED = "Closed"
@@ -44,6 +47,8 @@ object Constants {
     const val TIME_FORMAT_ATTACHMENT = "MMM dd, yyyy hh:mm a"
 
     const val UPDATE_VIEW_BROADCAST = "updateView"
+
+    const val TIME_FORMAT_TASKS = "hh:mm a | mm/dd/yyyy" //" "08:30am | 12/21/2019"
 
 
 

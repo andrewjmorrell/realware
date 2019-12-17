@@ -5,6 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
+    flavorDimensions "default"
     defaultConfig {
         applicationId "com.pivot.pivot360.pivotglass"
         minSdkVersion 21
@@ -17,6 +18,19 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors {
+        staging {
+            resValue "string", "Api_Url_GraphQL", project.findProperty("STAGING_URL_GRAPHQL") ?: ""
+            resValue "string", "Api_Url", project.findProperty("STAGING_URL_BASE") ?: ""
+
+        }
+        production {
+            resValue "string", "Api_Url_GraphQL", project.findProperty("PRODUCTION_URL_GRAPHQL") ?: ""
+            resValue "string", "Api_Url", project.findProperty("PRODUCTION_URL_BASE") ?: ""
+
         }
     }
 }

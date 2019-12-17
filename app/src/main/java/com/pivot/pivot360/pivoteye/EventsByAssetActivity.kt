@@ -9,15 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.pivot.pivot360.content.graphql.EventsByAssetQuery
 import com.pivot.pivot360.content.graphql.EventsByUserQuery
-import com.pivot.pivot360.content.listeners.EventsByUserResponseListener
-import com.pivot.pivot360.content.listeners.GetEventsByAssets
+import com.pivot.pivot360.content.listeners.GenericListener
 import com.pivot.pivot360.content.listeners.OnItemClickListener
 import com.pivot.pivot360.network.GraphQlApiHandler
 import com.pivot.pivot360.pivotglass.R
 import kotlinx.android.synthetic.main.activity_events.*
 
 
-class EventsByAssetActivity : BaseActivity(), GetEventsByAssets,
+class EventsByAssetActivity : BaseActivity(), GenericListener<Any>,
     OnItemClickListener {
 
     private var mToken: String? = null
@@ -43,10 +42,14 @@ class EventsByAssetActivity : BaseActivity(), GetEventsByAssets,
         if (intent != null) {
             mToken = PreferenceUtil.getToken(this)
             val identity = intent.getStringExtra("identity")
-            GraphQlApiHandler.instance.getEventByAssets(EventsByAssetQuery.builder()
-                .token(mToken!!)
-                .id(identity)
-                .status("active").build(), this)
+            GraphQlApiHandler.instance
+                .getData<EventsByAssetQuery, GenericListener<Any>>(EventsByAssetQuery.builder()
+                    .token(PreferenceUtil.getToken(this)!!)
+                    .id(identity!!)
+                    .status("active")
+                    .page(1)
+                    .build(),
+                    this)
         } else {
             Toast.makeText(this, "Events not found.", Toast.LENGTH_SHORT).show()
         }
@@ -54,20 +57,42 @@ class EventsByAssetActivity : BaseActivity(), GetEventsByAssets,
         setLoading(false)
     }
 
-    override fun onError(message: String) {
+    override fun OnResults(response: Any?) {
+        when (response) {
+            is EventsByAssetQuery.Data -> {
+                var eventsByAsset = response.eventsByAsset()
+                eventsByAsset.let {
+                    when (it) {
+                        is EventsByAssetQuery.AsEventResults -> {
+                            onEventsByAssets(it)
+                        }
+
+                        is EventsByAssetQuery.AsResponseMessageField -> {
+                            onResponseMessageField(it.message())
+                        }
+                        is EventsByAssetQuery.AsAuthInfoField -> {
+                            onAuthInfoField(it.message())
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onError(message: String?) {
         runOnUiThread { Toast.makeText(this@EventsByAssetActivity, message, Toast.LENGTH_SHORT).show() }
     }
 
-    override fun onAuthInfoField(message: String) {
+    override fun onAuthInfoField(message: String?) {
         runOnUiThread { Toast.makeText(this@EventsByAssetActivity, message, Toast.LENGTH_SHORT).show() }
 
     }
 
-    override fun onResponseMessageField(message: String) {
+    override fun onResponseMessageField(message: String?) {
         runOnUiThread { Toast.makeText(this@EventsByAssetActivity, message, Toast.LENGTH_SHORT).show() }
     }
 
-    override fun onEventsByAssets(response: EventsByAssetQuery.AsEventResults?) {
+    fun onEventsByAssets(response: EventsByAssetQuery.AsEventResults?) {
 
         runOnUiThread {
             val adapter = EventsByAssetAdapter(this, ArrayList(response?.events()!!), this)

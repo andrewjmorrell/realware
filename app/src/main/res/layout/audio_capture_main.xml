@@ -16,6 +16,9 @@
         android:layout_centerHorizontal="true"
         android:onClick="onStartRecord"
         android:text="Record"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:layout_marginTop="80dp"
         android:textSize="18sp" />
 
     <Button
@@ -26,6 +29,9 @@
             android:layout_centerHorizontal="true"
             android:onClick="onStopRecord"
             android:text="Stop"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="80dp"
             android:textSize="18sp"
             android:visibility="invisible"/>
 
@@ -37,6 +43,8 @@
         android:layout_centerHorizontal="true"
         android:onClick="onStartPlayback"
         android:text="Preview"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
         android:textSize="18sp" />
 
     <Button
@@ -47,6 +55,8 @@
             android:layout_centerHorizontal="true"
             android:onClick="onSave"
             android:text="Save"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
             android:textSize="18sp" />
 
     <ProgressBar
@@ -67,7 +77,7 @@
         android:id="@+id/fileTextLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_below="@id/progressBar"
         android:layout_marginTop="16dp"
         android:text="filename"
         android:textAlignment="center"
@@ -83,6 +93,8 @@
         android:layout_alignParentLeft="true"
         android:orientation="vertical"
         android:padding="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
         android:background="#44ffffff">
 
         <RadioButton
@@ -126,6 +138,8 @@
         android:layout_alignParentRight="true"
         android:orientation="vertical"
         android:padding="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
         android:background="#44ffffff">
 
         <RadioButton

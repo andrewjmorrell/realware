@@ -9,38 +9,39 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.pivot.pivot360.content.graphql.AssetsQuery
-import com.pivot.pivot360.content.listeners.GetAssestsResponseListener
+import com.pivot.pivot360.content.listeners.GenericListener
 import com.pivot.pivot360.network.GraphQlApiHandler
 import com.pivot.pivot360.pivotglass.R
 import kotlinx.android.synthetic.main.activity_assets.*
 
 
-class AssetsActivity : AppCompatActivity(), GetAssestsResponseListener {
-//    override fun onGetAssets(response: AssetsQuery.AsAssetResults) {
-//        when (response) {
-//            is AssetsQuery.Data -> {
-//                var event = response.assets()
-//                event.let {
-//                    when (it) {
-//                        is AssetsQuery.AsAssetResults -> {
-//                            onGetAssets(it)
-//                        }
-//                        is AssetsQuery.AsResponseMessageField -> {
-//                            onResponseMessageField(it.message()!!)
-//                        }
-//                        is AssetsQuery.AsAuthInfoField -> {
-//                            onAuthInfoField(it.message()!!)
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
+class AssetsActivity : AppCompatActivity(), GenericListener<Any> {
 
     private var mActionProgressItem: MenuItem? = null
     private var mIsLoading = false
 
     private var mToken: String? = null
+
+    override fun OnResults(response: Any?) {
+        when (response) {
+            is AssetsQuery.Data -> {
+
+                response.assets().let {
+                    when (it) {
+                        is AssetsQuery.AsAssetResults -> {
+                            onGetAssets(it)
+                        }
+                        is AssetsQuery.AsResponseMessageField -> {
+                            onResponseMessageField(it.message()!!)
+                        }
+                        is AssetsQuery.AsAuthInfoField -> {
+                            onAuthInfoField(it.message()!!)
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     override fun onError(message: String?) {
 
@@ -50,7 +51,7 @@ class AssetsActivity : AppCompatActivity(), GetAssestsResponseListener {
 
     }
 
-    override fun onGetAssets(response: AssetsQuery.AsAssetResults?) {
+    fun onGetAssets(response: AssetsQuery.AsAssetResults?) {
         this.runOnUiThread {
             val list = response?.assets()
             var mAdapter = AssetsAdapter(list!!, this@AssetsActivity)
@@ -101,15 +102,10 @@ class AssetsActivity : AppCompatActivity(), GetAssestsResponseListener {
     }
 
     private fun callApi() {
-//        GraphQlApiHandler.instance
-//                .getAssets(AssetsQuery.builder()
-//                        .token(mToken!!)
-//                        .build(),
-//                        this)
         GraphQlApiHandler.instance
-                .getAssets(AssetsQuery.builder()
-                        .token(mToken!!)
-                        .build(),
-                        this)
+            .getData<AssetsQuery, GenericListener<Any>>(AssetsQuery.builder()
+                .token(mToken!!)
+                .build(),
+                this)
     }
 }

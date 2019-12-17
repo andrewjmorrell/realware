@@ -30,7 +30,7 @@ public object PreferenceUtil {
         return DummyData.findByUniqueId(email);
     }*/
 
-    fun getUserUniqueIdentiry(context: Context): String? {
+    fun getUserUniqueIdentity(context: Context): String? {
         val sp = context.getSharedPreferences(PREF, Context.MODE_PRIVATE)
         return sp.getString(UNIQUE_ID, "")
 

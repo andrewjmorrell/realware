@@ -9,12 +9,16 @@ package com.pivot.pivot360.pivoteye;
 
 import android.app.Activity;
 import android.media.AudioFormat;
+import android.media.AudioManager;
 import android.media.AudioRecord;
+import android.media.AudioTrack;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.media.MediaScannerConnection;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -65,12 +69,19 @@ public class AudioCaptureActivity extends Activity implements Runnable {
     private short mChannels;
     private String mChannelsString;
     private String mFilename;
+    private String mTempFilename;
 
     private AudioRecord mAudioRecorder;
 
     private Thread mMotor;
 
     private boolean mRecording = false;
+
+    private ByteArrayOutputStream mAudio;
+
+    private int mBitsPerSecond;
+
+    private AudioTrack mAudioTrack;
 
     /**
      * Called when the activity is created
@@ -100,6 +111,8 @@ public class AudioCaptureActivity extends Activity implements Runnable {
         mRate16Button = (RadioButton) findViewById(R.id.rate16Button);
         mRate44Button = (RadioButton) findViewById(R.id.rate44Button);
         mRate48Button = (RadioButton) findViewById(R.id.rate48Button);
+
+        mAudio = new ByteArrayOutputStream();
     }
 
     /**
@@ -150,7 +163,13 @@ public class AudioCaptureActivity extends Activity implements Runnable {
     }
 
     public void onSave(View view) {
-        //save sample
+        String date = new Date().toString();
+        date = date.replaceAll("\\s+", "_");
+        mFilename = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator +
+                date +".wav";
+        writeWAVFile(mFilename, mAudio, mBitsPerSecond);
+
+        new File(mTempFilename).delete();
 
         finish();
 
@@ -162,13 +181,15 @@ public class AudioCaptureActivity extends Activity implements Runnable {
      * @param view The start record button
      */
     public void onStartRecord(View view) {
-        mRecordButton.setVisibility(View.GONE);
+        mRecordButton.setVisibility(View.INVISIBLE);
         mStopButton.setVisibility(View.VISIBLE);
-        mFilename = mFilenameLabel.getText().toString();
-        if (mFilename.isEmpty()) {
-            Toast.makeText(this, "No file to record to", Toast.LENGTH_LONG).show();
-            return;
-        }
+        mSaveButton.setVisibility(View.INVISIBLE);
+        mPlaybackButton.setVisibility(View.INVISIBLE);
+//        mFilename = mFilenameLabel.getText().toString();
+//        if (mFilename.isEmpty()) {
+//            Toast.makeText(this, "No file to record to", Toast.LENGTH_LONG).show();
+//            return;
+//        }
 
         int monoOrStereo = mChannels == 1 ?
                 AudioFormat.CHANNEL_IN_MONO : AudioFormat.CHANNEL_IN_STEREO;
@@ -191,6 +212,9 @@ public class AudioCaptureActivity extends Activity implements Runnable {
 
         mRecording = true;
 
+        mBitsPerSecond = mAudioRecorder.getAudioFormat() == AudioFormat.ENCODING_PCM_16BIT ?
+                16 : 8;
+
         mAudioRecorder.startRecording();
 
         mMotor = new Thread(this);
@@ -209,17 +233,43 @@ public class AudioCaptureActivity extends Activity implements Runnable {
      * @param view The start playback button
      */
     public void onStartPlayback(View view) {
-        mFilename = mFilenameLabel.getText().toString();
-        if (mFilename.isEmpty()) {
+        //mFilename = mFilenameLabel.getText().toString();
+        if (mTempFilename.isEmpty()) {
             Toast.makeText(this, "No file to play back", Toast.LENGTH_LONG).show();
             return;
         }
 
+        String base64EncodedString = Base64.encodeToString(mAudio.toByteArray(), Base64.DEFAULT);
+        String url = "data:audio/amr;base64,"+base64EncodedString;
         try {
             final MediaPlayer mp = new MediaPlayer();
-            mp.setDataSource(mFilename);
+            mp.setDataSource(mTempFilename);
+            mp.setDataSource(url);
             mp.prepare();
             mp.start();
+
+//            int monoOrStereo = mChannels == 1 ?
+//                AudioFormat.CHANNEL_OUT_MONO : AudioFormat.CHANNEL_OUT_STEREO;
+//            mAudioTrack = new AudioTrack(
+//                    AudioManager.STREAM_MUSIC,
+//                    mSampleRate,
+//                    AudioFormat.ENCODING_PCM_16BIT,
+//                    mBitsPerSecond,
+//                    4096,    //buffer length in bytes
+//                    AudioTrack.MODE_STATIC);
+//            mAudioTrack.write(mAudio.toByteArray(), 0, mAudio.toByteArray().length);
+//            mAudioTrack.setNotificationMarkerPosition(mAudio.toByteArray().length);
+//            mAudioTrack.setPlaybackPositionUpdateListener(new AudioTrack.OnPlaybackPositionUpdateListener() {
+//                @Override
+//                public void onMarkerReached(AudioTrack audioTrack) {
+//
+//                }
+//
+//                @Override
+//                public void onPeriodicNotification(AudioTrack audioTrack) {
+//                }
+//            });
+//            mAudioTrack.play();
 
             setButtonState(false);
             mProgressBar.setProgress(0);
@@ -253,10 +303,8 @@ public class AudioCaptureActivity extends Activity implements Runnable {
      * Thread used to record audio and update the progress bar
      */
     public void run() {
-        int bitsPerSecond = mAudioRecorder.getAudioFormat() == AudioFormat.ENCODING_PCM_16BIT ?
-                16 : 8;
 
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        //ByteArrayOutputStream bos = new ByteArrayOutputStream();
         byte buffer[] = new byte[4096 * 2];
 
         final long startTime = System.currentTimeMillis();
@@ -267,7 +315,7 @@ public class AudioCaptureActivity extends Activity implements Runnable {
                 mAudioRecorder.getRecordingState() == AudioRecord.RECORDSTATE_RECORDING) {
             int bytesRead = mAudioRecorder.read(buffer, 0, buffer.length);
             if (bytesRead > 0) {
-                bos.write(buffer, 0, bytesRead);
+                mAudio.write(buffer, 0, bytesRead);
             }
 
             seconds = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - startTime);
@@ -279,7 +327,11 @@ public class AudioCaptureActivity extends Activity implements Runnable {
             mAudioRecorder.release();
             mAudioRecorder = null;
 
-            writeWAVFile(mFilename, bos, bitsPerSecond);
+            String date = new Date().toString();
+            date = date.replaceAll("\\s+", "_");
+            mTempFilename =
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + date + ".wav";
+            writeWAVFile(mTempFilename, mAudio, mBitsPerSecond);
         }
 
         runOnUiThread(new Runnable() {
@@ -288,7 +340,7 @@ public class AudioCaptureActivity extends Activity implements Runnable {
                 setButtonState(true);
 
                 mRecordButton.setVisibility(View.VISIBLE);
-                mStopButton.setVisibility(View.GONE);
+                mStopButton.setVisibility(View.INVISIBLE);
 
                 mSaveButton.setVisibility(View.VISIBLE);
                 mPlaybackButton.setVisibility(View.VISIBLE);
@@ -363,7 +415,7 @@ public class AudioCaptureActivity extends Activity implements Runnable {
         String date = new Date().toString();
         date = date.replaceAll("\\s+", "_");
         mFilename =
-                "/sdcard/download/" + date + "_" + mSampleRatedString + "_" + mChannelsString + ".wav";
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + date + "_" + mSampleRatedString + "_" + mChannelsString + ".wav";
         mFilenameLabel.setText(mFilename);
     }
 

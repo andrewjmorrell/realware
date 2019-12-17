@@ -18,13 +18,12 @@ import com.moxtra.sdk.chat.model.ChatMember
 import com.moxtra.sdk.chat.repo.ChatRepo
 import com.moxtra.sdk.client.ChatClientDelegate
 import com.moxtra.sdk.common.ApiCallback
-import com.moxtra.sdk.common.BaseRepo
 import com.moxtra.sdk.common.model.User
 import com.moxtra.sdk.meet.controller.MeetSessionController
 import com.moxtra.sdk.meet.model.Meet
 import com.moxtra.sdk.meet.repo.MeetRepo
 import com.pivot.pivot360.content.graphql.AssetQuery
-import com.pivot.pivot360.content.listeners.SummaryResponseListener
+import com.pivot.pivot360.content.listeners.GenericListener
 import com.pivot.pivot360.network.GraphQlApiHandler
 import com.pivot.pivot360.pivotglass.R
 import java.util.ArrayList
@@ -32,7 +31,7 @@ import java.util.ArrayList
 /**
  * Main activity which displays a list of examples to the user
  */
-class AssetActivity : Activity(), SummaryResponseListener, MenuListener {
+class AssetActivity : Activity(), GenericListener<Any>, MenuListener {
 
     private var mMainMenuTileAdaptor: MainMenuTileAdaptor? = null
     private var mGridView: GridView? = null
@@ -83,7 +82,7 @@ class AssetActivity : Activity(), SummaryResponseListener, MenuListener {
         if (intent != null && intent.getStringExtra("identity") != null) {
             identity = intent.getStringExtra("identity")
             mToken = PreferenceUtil.getToken(this)
-            GraphQlApiHandler.instance.getAssets(AssetQuery.builder().token(mToken!!).id(identity!!).build(), this)
+            GraphQlApiHandler.instance.getData<AssetQuery, GenericListener<Any>>(AssetQuery.builder().token(mToken!!).id(identity).build(), this@AssetActivity)
         } else {
             Toast.makeText(this, "asset id not found.", Toast.LENGTH_SHORT).show()
         }
@@ -117,7 +116,29 @@ class AssetActivity : Activity(), SummaryResponseListener, MenuListener {
         runOnUiThread { Toast.makeText(this@AssetActivity, message, Toast.LENGTH_SHORT).show() }
     }
 
-    override fun onAssetField(response: AssetQuery.AsAssetField?) {
+    override fun OnResults(response: Any?) {
+        when (response) {
+            is AssetQuery.Data -> {
+                val asset = response.asset()
+                asset.let {
+                    when (it) {
+                        is AssetQuery.AsAssetField -> {
+                            onAssetField(it)
+                        }
+                        is AssetQuery.AsAuthInfoField -> {
+                            onAuthInfoField(it.message()!!)
+                        }
+                        is AssetQuery.AsResponseMessageField -> {
+                            onResponseMessageField(it.message()!!)
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
+    fun onAssetField(response: AssetQuery.AsAssetField?) {
         runOnUiThread {
             eventName.text = response?.name()
             eventDescription.text = response?.description()

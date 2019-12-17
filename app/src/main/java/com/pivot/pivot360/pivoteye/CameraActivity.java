@@ -7,20 +7,26 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.pivot.pivot360.pivotglass.R;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
 
 /**
  * Activity that shows how to use the camera to take a picture on a HMT-1 device
  */
 public class CameraActivity extends Activity {
+
+    private final static String TAG = "HMT1DevApp-Audio";
 
     // Request code identifying camera events
     private static final int CAMERA_REQUEST_CODE = 1889;
@@ -66,7 +72,7 @@ public class CameraActivity extends Activity {
         String filename = new Date().toString() + ".jpg";
         FileOutputStream outputStream;
 
-        File outputFile = new File(new File("//mnt//sdcard//Download"),
+        File outputFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator,
                 filename);
 
         try {
@@ -74,8 +80,20 @@ public class CameraActivity extends Activity {
             mPhoto.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
             outputStream.flush();
             outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (final FileNotFoundException ex) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(CameraActivity.this, "Error creating camera file", Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "Error creating wav file: ", ex);
+                }
+            });
+        } catch (final IOException ex) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(CameraActivity.this, "Error writing camera file", Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "Error writing wav file: ", ex);
+                }
+            });
         }
 
         finish();

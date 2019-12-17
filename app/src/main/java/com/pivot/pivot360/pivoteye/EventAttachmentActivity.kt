@@ -11,7 +11,8 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.pivot.pivot360.content.graphql.EventQuery
-import com.pivot.pivot360.content.listeners.EventResponseListener
+import com.pivot.pivot360.content.graphql.EventsQuery
+import com.pivot.pivot360.content.listeners.GenericListener
 import com.pivot.pivot360.content.listeners.OnItemClickListener
 import com.pivot.pivot360.network.GraphQlApiHandler
 import kotlinx.android.synthetic.main.fragment_attachment.*
@@ -29,7 +30,7 @@ import java.net.URL
 
 
 
-class EventAttachmentActivity : BaseActivity(), EventResponseListener,
+class EventAttachmentActivity : BaseActivity(), GenericListener<Any>,
     OnItemClickListener {
 
     private var mToken: String? = null
@@ -59,7 +60,7 @@ class EventAttachmentActivity : BaseActivity(), EventResponseListener,
         if (intent != null && intent.getStringExtra("identity") != null) {
             identity = intent.getStringExtra("identity")
             mToken = intent.getStringExtra("token")
-            GraphQlApiHandler.instance.getEvent(EventQuery.builder().token(mToken!!).id(identity!!).build(), this)
+            GraphQlApiHandler.instance.getData<EventQuery, GenericListener<Any>>(EventQuery.builder().token(mToken!!).id(identity!!).build(), this)
         } else {
             Toast.makeText(this, "Event id not found.", Toast.LENGTH_SHORT).show()
         }
@@ -67,20 +68,41 @@ class EventAttachmentActivity : BaseActivity(), EventResponseListener,
         setLoading(false)
     }
 
-    override fun onError(message: String) {
+    override fun OnResults(response: Any?) {
+        when (response) {
+            is EventQuery.Data -> {
+
+                response.event().let {
+                    when (it) {
+                        is EventQuery.AsEventField -> {
+                            onEventsField(it)
+                        }
+                        is EventsQuery.AsResponseMessageField -> {
+                            onResponseMessageField(it.message())
+                        }
+                        is EventsQuery.AsAuthInfoField -> {
+                            onAuthInfoField(it.message())
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onError(message: String?) {
         runOnUiThread { Toast.makeText(this@EventAttachmentActivity, message, Toast.LENGTH_SHORT).show() }
     }
 
-    override fun onAuthInfoField(message: String) {
+    override fun onAuthInfoField(message: String?) {
         runOnUiThread { Toast.makeText(this@EventAttachmentActivity, message, Toast.LENGTH_SHORT).show() }
 
     }
 
-    override fun onResponseMessageField(message: String) {
+    override fun onResponseMessageField(message: String?) {
         runOnUiThread { Toast.makeText(this@EventAttachmentActivity, message, Toast.LENGTH_SHORT).show() }
     }
 
-    override fun OnEventsField(response: EventQuery.AsEventField?) {
+    fun onEventsField(response: EventQuery.AsEventField?) {
 
         runOnUiThread {
             val adapter = EventAttachmentAdapter(this, response?.attachments(), this)
