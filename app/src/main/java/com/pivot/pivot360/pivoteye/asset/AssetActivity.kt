@@ -1,4 +1,4 @@
-package com.pivot.pivot360.pivoteye
+package com.pivot.pivot360.pivoteye.asset
 
 import android.app.Activity
 import android.content.Intent
@@ -25,13 +25,15 @@ import com.moxtra.sdk.meet.repo.MeetRepo
 import com.pivot.pivot360.content.graphql.AssetQuery
 import com.pivot.pivot360.content.listeners.GenericListener
 import com.pivot.pivot360.network.GraphQlApiHandler
+import com.pivot.pivot360.pivoteye.*
 import com.pivot.pivot360.pivotglass.R
 import java.util.ArrayList
 
 /**
  * Main activity which displays a list of examples to the user
  */
-class AssetActivity : Activity(), GenericListener<Any>, MenuListener {
+class AssetActivity : Activity(), GenericListener<Any>,
+    MenuListener {
 
     private var mMainMenuTileAdaptor: MainMenuTileAdaptor? = null
     private var mGridView: GridView? = null
@@ -162,7 +164,10 @@ class AssetActivity : Activity(), GenericListener<Any>, MenuListener {
                 })
                 mChatController = mChatClientDelegate!!.createChatController(mChat)
 
-                ChatActivity.showChat(this@AssetActivity, mChat)
+                ChatActivity.showChat(
+                    this@AssetActivity,
+                    mChat
+                )
             }
 
             override fun onError(errorCode: Int, errorMsg: String) {
@@ -231,9 +236,17 @@ class AssetActivity : Activity(), GenericListener<Any>, MenuListener {
                 val topic = ChatClient.getMyProfile().firstName + "'s " + "meet"
 
                 if (mMeet.isInProgress) {
-                    MeetActivity.joinMeet(this@AssetActivity, mMeet)
+                    MeetActivity.joinMeet(
+                        this@AssetActivity,
+                        mMeet
+                    )
                 } else {
-                    MeetActivity.startMeet(this@AssetActivity, topic, userList, mChat)
+                    MeetActivity.startMeet(
+                        this@AssetActivity,
+                        topic,
+                        userList,
+                        mChat
+                    )
                 }
 
                 // mMyCustomLoader.dismissProgressDialog()

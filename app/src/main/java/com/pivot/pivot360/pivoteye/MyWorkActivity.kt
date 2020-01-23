@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import com.pivot.pivot360.pivoteye.task.TasksActivity
 import com.pivot.pivot360.pivotglass.R
 
 class MyWorkActivity: BaseActivity() {

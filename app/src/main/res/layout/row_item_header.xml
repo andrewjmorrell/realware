@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:background="#81b9df"
-    android:id="@+id/tvHeader"
-    android:gravity="center"
-    android:padding="4dp"
-    android:text="Task"
-    android:textColor="@color/white"
-    android:layout_height="wrap_content">
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:background="#009688"
+        android:id="@+id/txtTaskHeader"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Task"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:layout_height="wrap_content">
 
 </TextView>

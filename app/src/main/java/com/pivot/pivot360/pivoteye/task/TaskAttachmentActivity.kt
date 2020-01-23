@@ -1,10 +1,11 @@
-package com.pivot.pivot360.pivoteye
+package com.pivot.pivot360.pivoteye.task
 
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 
 import android.view.View
@@ -12,9 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.pivot.pivot360.content.graphql.EventQuery
 import com.pivot.pivot360.content.graphql.EventsQuery
+import com.pivot.pivot360.content.graphql.UserTaskQuery
 import com.pivot.pivot360.content.listeners.GenericListener
 import com.pivot.pivot360.content.listeners.OnItemClickListener
 import com.pivot.pivot360.network.GraphQlApiHandler
+import com.pivot.pivot360.pivoteye.BaseActivity
+import com.pivot.pivot360.pivoteye.PreferenceUtil
 import kotlinx.android.synthetic.main.fragment_attachment.*
 import com.pivot.pivot360.pivotglass.R
 import kotlinx.coroutines.Deferred
@@ -30,11 +34,11 @@ import java.net.URL
 
 
 
-class EventAttachmentActivity : BaseActivity(), GenericListener<Any>,
+class TaskAttachmentActivity : BaseActivity(), GenericListener<Any>,
     OnItemClickListener {
 
     private var mToken: String? = null
-    lateinit var mAdapter: EventAttachmentAdapter
+    lateinit var mAdapter: TaskAttachmentAdapter
 
     lateinit var identity: String
 
@@ -56,8 +60,12 @@ class EventAttachmentActivity : BaseActivity(), GenericListener<Any>,
 
         if (intent != null && intent.getStringExtra("identity") != null) {
             identity = intent.getStringExtra("identity")
-            mToken = intent.getStringExtra("token")
-            GraphQlApiHandler.instance.getData<EventQuery, GenericListener<Any>>(EventQuery.builder().token(mToken!!).id(identity!!).build(), this)
+            GraphQlApiHandler.instance
+                .getData<UserTaskQuery, GenericListener<Any>>(
+                    UserTaskQuery.builder()
+                        .token(PreferenceUtil.getToken(this)!!)
+                        .id(identity)
+                        .build(), this)
         } else {
             Toast.makeText(this, "Event id not found.", Toast.LENGTH_SHORT).show()
         }
@@ -67,18 +75,20 @@ class EventAttachmentActivity : BaseActivity(), GenericListener<Any>,
 
     override fun OnResults(response: Any?) {
         when (response) {
-            is EventQuery.Data -> {
-
-                response.event().let {
+            is UserTaskQuery.Data -> {
+                response.userTask().let {
                     when (it) {
-                        is EventQuery.AsEventField -> {
-                            onEventsField(it)
+                        is UserTaskQuery.AsUserTaskField -> {
+                            onUserTaskResults(it.task()?.attachments()!!)
                         }
-                        is EventsQuery.AsResponseMessageField -> {
-                            onResponseMessageField(it.message())
+
+                        is UserTaskQuery.AsResponseMessageField -> {
+                            it.message()?.let { it1 -> showToast(it1) }
                         }
-                        is EventsQuery.AsAuthInfoField -> {
-                            onAuthInfoField(it.message())
+                        is UserTaskQuery.Task -> {
+
+                        }
+                        else -> {
                         }
                     }
                 }
@@ -87,25 +97,25 @@ class EventAttachmentActivity : BaseActivity(), GenericListener<Any>,
     }
 
     override fun onError(message: String?) {
-        runOnUiThread { Toast.makeText(this@EventAttachmentActivity, message, Toast.LENGTH_SHORT).show() }
+        runOnUiThread { Toast.makeText(this@TaskAttachmentActivity, message, Toast.LENGTH_SHORT).show() }
     }
 
     override fun onAuthInfoField(message: String?) {
-        runOnUiThread { Toast.makeText(this@EventAttachmentActivity, message, Toast.LENGTH_SHORT).show() }
+        runOnUiThread { Toast.makeText(this@TaskAttachmentActivity, message, Toast.LENGTH_SHORT).show() }
 
     }
 
     override fun onResponseMessageField(message: String?) {
-        runOnUiThread { Toast.makeText(this@EventAttachmentActivity, message, Toast.LENGTH_SHORT).show() }
+        runOnUiThread { Toast.makeText(this@TaskAttachmentActivity, message, Toast.LENGTH_SHORT).show() }
     }
 
-    fun onEventsField(response: EventQuery.AsEventField?) {
+    private fun onUserTaskResults(attachment: MutableList<UserTaskQuery.Attachment1>) {
 
         runOnUiThread {
-            val adapter = EventAttachmentAdapter(this, response?.attachments(), this)
+            val adapter = TaskAttachmentAdapter(this, attachment, this)
             if (mRecyclerViewAttachment != null) {
                 mRecyclerViewAttachment.adapter = adapter
-                if (response?.attachments()?.size == 0) {
+                if (attachment.size == 0) {
                     emptyView.visibility = View.VISIBLE
                     mRecyclerViewAttachment.visibility = View.GONE
                 } else {
@@ -125,7 +135,7 @@ class EventAttachmentActivity : BaseActivity(), GenericListener<Any>,
             fname += "g"
         }
 
-        val file = copyFromUrlToExternalAsync(this@EventAttachmentActivity, item,
+        val file = copyFromUrlToExternalAsync(this@TaskAttachmentActivity, item,
             fname, "Pivot").await()
 
         var mimetype = when(file.extension) {

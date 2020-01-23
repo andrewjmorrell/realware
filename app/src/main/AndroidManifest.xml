@@ -8,6 +8,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
             android:name="com.pivot.pivot360.pivoteye.PivotApplication"
@@ -44,13 +47,15 @@
         <activity android:name="com.pivot.pivot360.pivoteye.BarcodeActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.VideoRecorderActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.DocumentViewerActivity" />
-        <activity android:name="com.pivot.pivot360.pivoteye.AssetsActivity" />
-        <activity android:name="com.pivot.pivot360.pivoteye.AssetActivity" />
+        <activity android:name="com.pivot.pivot360.pivoteye.asset.AssetsActivity" />
+        <activity android:name="com.pivot.pivot360.pivoteye.asset.AssetActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.EventsByAssetActivity" />
         <activity android:name="com.pivot.pivot360.pivoteye.MyWorkActivity" />
-        <activity android:name="com.pivot.pivot360.pivoteye.TasksActivity" />
-        <activity android:name="com.pivot.pivot360.pivoteye.TaskViewActivity" />
-        <activity android:name="com.pivot.pivot360.pivoteye.TaskDetailActivity" />
+        <activity android:name="com.pivot.pivot360.pivoteye.task.TasksActivity" />
+        <activity android:name="com.pivot.pivot360.pivoteye.task.TaskExecuteActivity" />
+        <activity android:name="com.pivot.pivot360.pivoteye.task.TaskViewActivity" />
+        <activity android:name="com.pivot.pivot360.pivoteye.task.TaskActivity" />
+        <activity android:name="com.pivot.pivot360.pivoteye.task.TaskAttachmentActivity" />
     </application>
 
 </manifest>

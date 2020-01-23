@@ -22,20 +22,22 @@
             android:layout_height="46dp"
             android:layout_centerInParent="true"
             android:background="@drawable/bg_meet_control_btn"
-            android:clickable="false"
             android:duplicateParentState="true"
             android:scaleType="center"
             android:src="@drawable/liveshare_audio"
-            android:contentDescription="hf_use_description|Mute"/>
+            android:contentDescription="hf_no_number|hf_use_description|Audio Mute"/>
 
         <TextView
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:text="Mute"
+                android:text="Audio Mute"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/btn_voice"/>
 
-        <ProgressBar
+
+    </RelativeLayout>
+
+    <ProgressBar
             android:id="@+id/progress_voice"
             android:layout_width="44dp"
             android:layout_height="44dp"
@@ -46,7 +48,6 @@
             android:indeterminate="false"
             android:indeterminateDrawable="@drawable/spinner"
             android:padding="@dimen/margin_padding_10"/>
-    </RelativeLayout>
 
 
     <RelativeLayout
@@ -54,7 +55,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-            android:visibility="gone"
+        android:visibility="gone"
+            android:contentDescription="hf_no_number"
         >
 
         <com.moxtra.binder.ui.branding.widget.MeetFootControlmageButton
@@ -65,7 +67,8 @@
             android:background="@drawable/bg_meet_control_btn"
             android:duplicateParentState="true"
             android:scaleType="center"
-            android:src="@drawable/speak_off"/>
+            android:src="@drawable/speak_off"
+                android:contentDescription="hf_no_number"/>
     </RelativeLayout>
 
 
@@ -85,7 +88,7 @@
             android:duplicateParentState="true"
             android:scaleType="center"
             android:src="@drawable/call_end_full"
-            android:contentDescription="hf_use_description|End Conference"/>
+            android:contentDescription="hf_no_number|hf_use_description|End Conference"/>
 
         <TextView
             android:layout_width="70dp"
@@ -111,7 +114,7 @@
             android:duplicateParentState="true"
             android:scaleType="center"
             android:src="@drawable/stateful_liveshare_video"
-            android:contentDescription="hf_use_description|Select Video"/>
+            android:contentDescription="hf_no_number|hf_use_description|Select Video"/>
 
         <TextView
                 android:layout_width="60dp"
@@ -127,6 +130,7 @@
         android:layout_height="48dp"
         android:layout_weight="1"
             android:visibility="gone"
+            android:contentDescription="hf_no_number"
         >
 
         <com.moxtra.binder.ui.branding.widget.MeetFootControlmageButton
@@ -137,6 +141,7 @@
             android:background="@drawable/bg_meet_control_btn"
             android:duplicateParentState="true"
             android:scaleType="center"
-            android:src="@drawable/stateful_liveshare_screenshare"/>
+            android:src="@drawable/stateful_liveshare_screenshare"
+                android:contentDescription="hf_no_number"/>
     </RelativeLayout>
 </LinearLayout>

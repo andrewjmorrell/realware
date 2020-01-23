@@ -11,18 +11,12 @@ query Asset($token: String!, $id: String) {
                 name
                 fileType
                 mimeType
+                description
                 link
                 updatedAt
                 fileId
             }
-            parameters {
-                age
-                barcode
-                make
-                type
-                model
-                serialNo
-            }
+            parameters
             members {
                 account {
                     identity
@@ -70,18 +64,12 @@ query Assets($token: String!) {
                     name
                     fileType
                     mimeType
+                    description
                     link
                     updatedAt
                     fileId
                 }
-                parameters {
-                    age
-                    barcode
-                    make
-                    type
-                    model
-                    serialNo
-                }
+                parameters
                 members {
                     account {
                         identity
@@ -201,6 +189,7 @@ query Event($token: String!, $id: String) {
                 name
                 fileType
                 mimeType
+                description
                 link
                 updatedAt
                 fileId
@@ -302,6 +291,7 @@ query Events($page: Int, $count: Boolean, $token: String!) {
                     name
                     fileType
                     mimeType
+                    description
                     link
                     updatedAt
                     fileId
@@ -417,6 +407,7 @@ query EventsByAsset(
                     name
                     fileType
                     mimeType
+                    description
                     link
                     updatedAt
                     fileId
@@ -530,6 +521,7 @@ query EventsByUser(
                     name
                     fileType
                     mimeType
+                    description
                     link
                     updatedAt
                     fileId
@@ -645,18 +637,12 @@ query Search($token: String!, $queryString: String, $rawQuery: String) {
                     name
                     fileType
                     mimeType
+                    description
                     link
                     updatedAt
                     fileId
                 }
-                parameters {
-                    age
-                    barcode
-                    make
-                    type
-                    model
-                    serialNo
-                }
+                parameters
                 members {
                     account {
                         identity
@@ -764,6 +750,7 @@ query Search($token: String!, $queryString: String, $rawQuery: String) {
                     name
                     fileType
                     mimeType
+                    description
                     link
                     updatedAt
                     fileId
@@ -806,6 +793,7 @@ query Search($token: String!, $queryString: String, $rawQuery: String) {
                 name
                 fileType
                 mimeType
+                description
                 link
                 updatedAt
                 fileId
@@ -958,18 +946,12 @@ query Task($token: String!, $id: String) {
                     name
                     fileType
                     mimeType
+                    description
                     link
                     updatedAt
                     fileId
                 }
-                parameters {
-                    age
-                    barcode
-                    make
-                    type
-                    model
-                    serialNo
-                }
+                parameters
                 members {
                     account {
                         identity
@@ -997,24 +979,64 @@ query Task($token: String!, $id: String) {
             }
             summary
             description
-            startCards {
-                card {
-                    identity
-                    verb
-                    title
-                    isFinish
-                    description
-                    conditions {
-                        verb
-                        condition
-                        value
-                        goto
-                    }
-                    createdAt
-                }
-                status
+            attachments {
+                name
+                fileType
+                mimeType
+                description
+                link
                 updatedAt
+                fileId
             }
+            setupText
+            setupChecklist {
+                index
+                description
+                defaultValue
+            }
+            cards {
+                identity
+                verb
+                type
+                title
+                isFormCard
+                isFinish
+                description
+                value
+                validation
+                hint
+                conditions {
+                    verb
+                    condition
+                    response
+                    status
+                    value
+                    goto
+                }
+                createdAt
+            }
+            formCards {
+                identity
+                verb
+                type
+                title
+                isFormCard
+                isFinish
+                description
+                value
+                validation
+                hint
+                conditions {
+                    verb
+                    condition
+                    response
+                    status
+                    value
+                    goto
+                }
+                createdAt
+            }
+            completedText
             createdAt
         }
         ... on ResponseMessageField {
@@ -1043,18 +1065,12 @@ query UserTask($token: String!, $id: String) {
                         name
                         fileType
                         mimeType
+                        description
                         link
                         updatedAt
                         fileId
                     }
-                    parameters {
-                        age
-                        barcode
-                        make
-                        type
-                        model
-                        serialNo
-                    }
+                    parameters
                     members {
                         account {
                             identity
@@ -1082,26 +1098,67 @@ query UserTask($token: String!, $id: String) {
                 }
                 summary
                 description
-                startCards {
-                    card {
-                        identity
-                        verb
-                        title
-                        isFinish
-                        description
-                        conditions {
-                            verb
-                            condition
-                            value
-                            goto
-                        }
-                        createdAt
-                    }
-                    status
+                attachments {
+                    name
+                    fileType
+                    mimeType
+                    description
+                    link
                     updatedAt
+                    fileId
                 }
+                setupText
+                setupChecklist {
+                    index
+                    description
+                    defaultValue
+                }
+                cards {
+                    identity
+                    verb
+                    type
+                    title
+                    isFormCard
+                    isFinish
+                    description
+                    value
+                    validation
+                    hint
+                    conditions {
+                        verb
+                        condition
+                        response
+                        status
+                        value
+                        goto
+                    }
+                    createdAt
+                }
+                formCards {
+                    identity
+                    verb
+                    type
+                    title
+                    isFormCard
+                    isFinish
+                    description
+                    value
+                    validation
+                    hint
+                    conditions {
+                        verb
+                        condition
+                        response
+                        status
+                        value
+                        goto
+                    }
+                    createdAt
+                }
+                completedText
                 createdAt
             }
+            type
             owners {
                 identity
                 username
@@ -1120,24 +1177,91 @@ query UserTask($token: String!, $id: String) {
                 updatedAt
             }
             status
+            resultsSetupChecklist {
+                index
+                description
+                value
+            }
             results {
+                userId
                 card {
                     identity
                     verb
+                    type
                     title
+                    isFormCard
                     isFinish
                     description
+                    value
+                    validation
+                    hint
                     conditions {
                         verb
                         condition
+                        response
+                        status
                         value
                         goto
                     }
                     createdAt
                 }
+                step
                 value
+                response
+                status
                 createdAt
                 updatedAt
+            }
+            formResults {
+                userId
+                card {
+                    identity
+                    verb
+                    type
+                    title
+                    isFormCard
+                    isFinish
+                    description
+                    value
+                    validation
+                    hint
+                    conditions {
+                        verb
+                        condition
+                        response
+                        status
+                        value
+                        goto
+                    }
+                    createdAt
+                }
+                step
+                value
+                response
+                status
+                createdAt
+                updatedAt
+            }
+            nextCard {
+                identity
+                verb
+                type
+                title
+                isFormCard
+                isFinish
+                description
+                value
+                validation
+                hint
+                conditions {
+                    verb
+                    condition
+                    response
+                    status
+                    value
+                    goto
+                }
+                createdAt
             }
             createdAt
             updatedAt
@@ -1158,6 +1282,7 @@ query UserTask($token: String!, $id: String) {
                 createdAt
                 updatedAt
             }
+            viewOnly
         }
         ... on ResponseMessageField {
             isSuccess
@@ -1189,18 +1314,12 @@ query TasksByAsset(
                         name
                         fileType
                         mimeType
+                        description
                         link
                         updatedAt
                         fileId
                     }
-                    parameters {
-                        age
-                        barcode
-                        make
-                        type
-                        model
-                        serialNo
-                    }
+                    parameters
                     members {
                         account {
                             identity
@@ -1228,24 +1347,64 @@ query TasksByAsset(
                 }
                 summary
                 description
-                startCards {
-                    card {
-                        identity
-                        verb
-                        title
-                        isFinish
-                        description
-                        conditions {
-                            verb
-                            condition
-                            value
-                            goto
-                        }
-                        createdAt
-                    }
-                    status
+                attachments {
+                    name
+                    fileType
+                    mimeType
+                    description
+                    link
                     updatedAt
+                    fileId
                 }
+                setupText
+                setupChecklist {
+                    index
+                    description
+                    defaultValue
+                }
+                cards {
+                    identity
+                    verb
+                    type
+                    title
+                    isFormCard
+                    isFinish
+                    description
+                    value
+                    validation
+                    hint
+                    conditions {
+                        verb
+                        condition
+                        response
+                        status
+                        value
+                        goto
+                    }
+                    createdAt
+                }
+                formCards {
+                    identity
+                    verb
+                    type
+                    title
+                    isFormCard
+                    isFinish
+                    description
+                    value
+                    validation
+                    hint
+                    conditions {
+                        verb
+                        condition
+                        response
+                        status
+                        value
+                        goto
+                    }
+                    createdAt
+                }
+                completedText
                 createdAt
             }
             total
@@ -1264,8 +1423,15 @@ query UserTasks(
     $accountId: String
     $page: Int
     $count: Boolean
+    $status: String
 ) {
-    userTasks(token: $token, accountId: $accountId, page: $page, count: $count) {
+    userTasks(
+        token: $token
+        accountId: $accountId
+        page: $page
+        count: $count
+        status: $status
+    ) {
         ... on UserTaskResults {
             userTasks {
                 identity
@@ -1282,18 +1448,12 @@ query UserTasks(
                             name
                             fileType
                             mimeType
+                            description
                             link
                             updatedAt
                             fileId
                         }
-                        parameters {
-                            age
-                            barcode
-                            make
-                            type
-                            model
-                            serialNo
-                        }
+                        parameters
                         members {
                             role
                         }
@@ -1304,20 +1464,67 @@ query UserTasks(
                     }
                     summary
                     description
-                    startCards {
-                        card {
-                            identity
-                            verb
-                            title
-                            isFinish
-                            description
-                            createdAt
-                        }
-                        status
+                    attachments {
+                        name
+                        fileType
+                        mimeType
+                        description
+                        link
                         updatedAt
+                        fileId
                     }
+                    setupText
+                    setupChecklist {
+                        index
+                        description
+                        defaultValue
+                    }
+                    cards {
+                        identity
+                        verb
+                        type
+                        title
+                        isFormCard
+                        isFinish
+                        description
+                        value
+                        validation
+                        hint
+                        conditions {
+                            verb
+                            condition
+                            response
+                            status
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    formCards {
+                        identity
+                        verb
+                        type
+                        title
+                        isFormCard
+                        isFinish
+                        description
+                        value
+                        validation
+                        hint
+                        conditions {
+                            verb
+                            condition
+                            response
+                            status
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    completedText
                     createdAt
                 }
+                type
                 owners {
                     identity
                     username
@@ -1336,24 +1543,91 @@ query UserTasks(
                     updatedAt
                 }
                 status
+                resultsSetupChecklist {
+                    index
+                    description
+                    value
+                }
                 results {
+                    userId
                     card {
                         identity
                         verb
+                        type
                         title
+                        isFormCard
                         isFinish
                         description
+                        value
+                        validation
+                        hint
                         conditions {
                             verb
                             condition
+                            response
+                            status
                             value
                             goto
                         }
                         createdAt
                     }
+                    step
                     value
+                    response
+                    status
                     createdAt
                     updatedAt
+                }
+                formResults {
+                    userId
+                    card {
+                        identity
+                        verb
+                        type
+                        title
+                        isFormCard
+                        isFinish
+                        description
+                        value
+                        validation
+                        hint
+                        conditions {
+                            verb
+                            condition
+                            response
+                            status
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    step
+                    value
+                    response
+                    status
+                    createdAt
+                    updatedAt
+                }
+                nextCard {
+                    identity
+                    verb
+                    type
+                    title
+                    isFormCard
+                    isFinish
+                    description
+                    value
+                    validation
+                    hint
+                    conditions {
+                        verb
+                        condition
+                        response
+                        status
+                        value
+                        goto
+                    }
+                    createdAt
                 }
                 createdAt
                 updatedAt
@@ -1374,6 +1648,7 @@ query UserTasks(
                     createdAt
                     updatedAt
                 }
+                viewOnly
             }
             total
         }
@@ -1386,23 +1661,305 @@ query UserTasks(
         }
     }
 }
+query UserTasksByTask(
+    $token: String!
+    $taskId: String
+    $page: Int
+    $count: Boolean
+    $status: String
+) {
+    userTasksByTask(
+        token: $token
+        taskId: $taskId
+        page: $page
+        count: $count
+        status: $status
+    ) {
+        ... on UserTaskResults {
+            userTasks {
+                identity
+                task {
+                    identity
+                    title
+                    asset {
+                        identity
+                        name
+                        type
+                        description
+                        image
+                        attachments {
+                            name
+                            fileType
+                            mimeType
+                            description
+                            link
+                            updatedAt
+                            fileId
+                        }
+                        parameters
+                        members {
+                            role
+                        }
+                        isReadOnly
+                        chatIdentity
+                        events
+                        createdAt
+                    }
+                    summary
+                    description
+                    attachments {
+                        name
+                        fileType
+                        mimeType
+                        description
+                        link
+                        updatedAt
+                        fileId
+                    }
+                    setupText
+                    setupChecklist {
+                        index
+                        description
+                        defaultValue
+                    }
+                    cards {
+                        identity
+                        verb
+                        type
+                        title
+                        isFormCard
+                        isFinish
+                        description
+                        value
+                        validation
+                        hint
+                        conditions {
+                            verb
+                            condition
+                            response
+                            status
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    formCards {
+                        identity
+                        verb
+                        type
+                        title
+                        isFormCard
+                        isFinish
+                        description
+                        value
+                        validation
+                        hint
+                        conditions {
+                            verb
+                            condition
+                            response
+                            status
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    completedText
+                    createdAt
+                }
+                type
+                owners {
+                    identity
+                    username
+                    email
+                    moxtraId
+                    firstName
+                    lastName
+                    middleName
+                    image
+                    phone
+                    description
+                    location
+                    tags
+                    roles
+                    createdAt
+                    updatedAt
+                }
+                status
+                resultsSetupChecklist {
+                    index
+                    description
+                    value
+                }
+                results {
+                    userId
+                    card {
+                        identity
+                        verb
+                        type
+                        title
+                        isFormCard
+                        isFinish
+                        description
+                        value
+                        validation
+                        hint
+                        conditions {
+                            verb
+                            condition
+                            response
+                            status
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    step
+                    value
+                    response
+                    status
+                    createdAt
+                    updatedAt
+                }
+                formResults {
+                    userId
+                    card {
+                        identity
+                        verb
+                        type
+                        title
+                        isFormCard
+                        isFinish
+                        description
+                        value
+                        validation
+                        hint
+                        conditions {
+                            verb
+                            condition
+                            response
+                            status
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    step
+                    value
+                    response
+                    status
+                    createdAt
+                    updatedAt
+                }
+                nextCard {
+                    identity
+                    verb
+                    type
+                    title
+                    isFormCard
+                    isFinish
+                    description
+                    value
+                    validation
+                    hint
+                    conditions {
+                        verb
+                        condition
+                        response
+                        status
+                        value
+                        goto
+                    }
+                    createdAt
+                }
+                createdAt
+                updatedAt
+                updatedBy {
+                    identity
+                    username
+                    email
+                    moxtraId
+                    firstName
+                    lastName
+                    middleName
+                    image
+                    phone
+                    description
+                    location
+                    tags
+                    roles
+                    createdAt
+                    updatedAt
+                }
+                viewOnly
+            }
+            total
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+        ... on AuthInfoField {
+            message
+        }
+    }
+}
+query TaskCardResults($token: String!, $id: String, $value: String) {
+    taskCardResults(token: $token, id: $id, value: $value) {
+        ... on CardSaveField {
+            response
+            status
+            updatedAt
+            nextCard {
+                identity
+                verb
+                type
+                title
+                isFormCard
+                isFinish
+                description
+                value
+                validation
+                hint
+                conditions {
+                    verb
+                    condition
+                    response
+                    status
+                    value
+                    goto
+                }
+                createdAt
+            }
+            userTaskStatus
+            nextStep
+        }
+        ... on ResponseMessageField {
+            isSuccess
+            message
+        }
+        ... on AuthInfoField {
+            message
+        }
+    }
+}
 mutation Register(
-    $company: String
-    $email: String!
     $firstName: String
     $lastName: String
+    $email: String!
     $middleName: String
-    $password: String!
+    $company: String
     $username: String!
+    $password: String!
 ) {
     register(
-        company: $company
-        email: $email
         firstName: $firstName
         lastName: $lastName
+        email: $email
         middleName: $middleName
-        password: $password
+        company: $company
         username: $username
+        password: $password
     ) {
         result {
             isSuccess
@@ -1439,18 +1996,18 @@ mutation Refresh($refreshToken: String) {
     }
 }
 mutation EventCreate(
-    $asset: String!
-    $description: String!
+    $type: String!
     $title: String!
     $token: String!
-    $type: String!
+    $asset: String!
+    $description: String!
 ) {
     eventCreate(
-        asset: $asset
-        description: $description
+        type: $type
         title: $title
         token: $token
-        type: $type
+        asset: $asset
+        description: $description
     ) {
         result {
             ... on EventField {
@@ -1535,6 +2092,7 @@ mutation EventCreate(
                     name
                     fileType
                     mimeType
+                    description
                     link
                     updatedAt
                     fileId
@@ -1552,8 +2110,8 @@ mutation EventCreate(
         }
     }
 }
-mutation EventEdit($id: String!, $status: String, $token: String!) {
-    eventEdit(id: $id, status: $status, token: $token) {
+mutation EventEdit($token: String!, $status: String, $id: String!) {
+    eventEdit(token: $token, status: $status, id: $id) {
         result {
             ... on EventField {
                 identity
@@ -1637,6 +2195,7 @@ mutation EventEdit($id: String!, $status: String, $token: String!) {
                     name
                     fileType
                     mimeType
+                    description
                     link
                     updatedAt
                     fileId
@@ -1656,17 +2215,17 @@ mutation EventEdit($id: String!, $status: String, $token: String!) {
 }
 mutation EventAssignExpert(
     $accountId: String!
-    $id: String!
     $parameters: SmeRequestParametersInput!
-    $text: String!
     $token: String!
+    $text: String!
+    $id: String!
 ) {
     eventAssignExpert(
         accountId: $accountId
-        id: $id
         parameters: $parameters
-        text: $text
         token: $token
+        text: $text
+        id: $id
     ) {
         result {
             ... on EventField {
@@ -1751,6 +2310,7 @@ mutation EventAssignExpert(
                     name
                     fileType
                     mimeType
+                    description
                     link
                     updatedAt
                     fileId
@@ -1769,16 +2329,16 @@ mutation EventAssignExpert(
     }
 }
 mutation EventSupervisorProcessExpertRequest(
+    $token: String!
+    $reject: Boolean
     $accept: Boolean
     $id: String!
-    $reject: Boolean
-    $token: String!
 ) {
     eventSupervisorProcessExpertRequest(
+        token: $token
+        reject: $reject
         accept: $accept
         id: $id
-        reject: $reject
-        token: $token
     ) {
         result {
             ... on EventField {
@@ -1863,6 +2423,7 @@ mutation EventSupervisorProcessExpertRequest(
                     name
                     fileType
                     mimeType
+                    description
                     link
                     updatedAt
                     fileId
@@ -1881,16 +2442,16 @@ mutation EventSupervisorProcessExpertRequest(
     }
 }
 mutation EventExpertManageRequest(
+    $token: String!
+    $reject: Boolean
     $accept: Boolean
     $id: String!
-    $reject: Boolean
-    $token: String!
 ) {
     eventExpertManageRequest(
+        token: $token
+        reject: $reject
         accept: $accept
         id: $id
-        reject: $reject
-        token: $token
     ) {
         result {
             ... on EventField {
@@ -1975,6 +2536,7 @@ mutation EventExpertManageRequest(
                     name
                     fileType
                     mimeType
+                    description
                     link
                     updatedAt
                     fileId
@@ -1993,18 +2555,18 @@ mutation EventExpertManageRequest(
     }
 }
 mutation EventMessageRecieved(
-    $contentText: String!
+    $token: String!
     $count: Int
     $id: String!
     $runAttachmentsCrawler: Int
-    $token: String!
+    $contentText: String!
 ) {
     eventMessageRecieved(
-        contentText: $contentText
+        token: $token
         count: $count
         id: $id
         runAttachmentsCrawler: $runAttachmentsCrawler
-        token: $token
+        contentText: $contentText
     ) {
         result {
             ... on ResponseMessageField {
@@ -2018,18 +2580,18 @@ mutation EventMessageRecieved(
     }
 }
 mutation AssetMessageRecieved(
-    $contentText: String!
+    $token: String!
     $count: Int
     $id: String!
     $runAttachmentsCrawler: Int
-    $token: String!
+    $contentText: String!
 ) {
     assetMessageRecieved(
-        contentText: $contentText
+        token: $token
         count: $count
         id: $id
         runAttachmentsCrawler: $runAttachmentsCrawler
-        token: $token
+        contentText: $contentText
     ) {
         result {
             ... on ResponseMessageField {
@@ -2060,8 +2622,8 @@ mutation SubmitSubscriptionToken(
         }
     }
 }
-mutation UserTaskCreate($taskId: String!, $token: String!) {
-    userTaskCreate(taskId: $taskId, token: $token) {
+mutation UserTaskCreate($token: String!, $taskId: String!) {
+    userTaskCreate(token: $token, taskId: $taskId) {
         result {
             ... on UserTaskField {
                 identity
@@ -2078,18 +2640,12 @@ mutation UserTaskCreate($taskId: String!, $token: String!) {
                             name
                             fileType
                             mimeType
+                            description
                             link
                             updatedAt
                             fileId
                         }
-                        parameters {
-                            age
-                            barcode
-                            make
-                            type
-                            model
-                            serialNo
-                        }
+                        parameters
                         members {
                             role
                         }
@@ -2100,20 +2656,67 @@ mutation UserTaskCreate($taskId: String!, $token: String!) {
                     }
                     summary
                     description
-                    startCards {
-                        card {
-                            identity
-                            verb
-                            title
-                            isFinish
-                            description
-                            createdAt
-                        }
-                        status
+                    attachments {
+                        name
+                        fileType
+                        mimeType
+                        description
+                        link
                         updatedAt
+                        fileId
                     }
+                    setupText
+                    setupChecklist {
+                        index
+                        description
+                        defaultValue
+                    }
+                    cards {
+                        identity
+                        verb
+                        type
+                        title
+                        isFormCard
+                        isFinish
+                        description
+                        value
+                        validation
+                        hint
+                        conditions {
+                            verb
+                            condition
+                            response
+                            status
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    formCards {
+                        identity
+                        verb
+                        type
+                        title
+                        isFormCard
+                        isFinish
+                        description
+                        value
+                        validation
+                        hint
+                        conditions {
+                            verb
+                            condition
+                            response
+                            status
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    completedText
                     createdAt
                 }
+                type
                 owners {
                     identity
                     username
@@ -2132,24 +2735,91 @@ mutation UserTaskCreate($taskId: String!, $token: String!) {
                     updatedAt
                 }
                 status
+                resultsSetupChecklist {
+                    index
+                    description
+                    value
+                }
                 results {
+                    userId
                     card {
                         identity
                         verb
+                        type
                         title
+                        isFormCard
                         isFinish
                         description
+                        value
+                        validation
+                        hint
                         conditions {
                             verb
                             condition
+                            response
+                            status
                             value
                             goto
                         }
                         createdAt
                     }
+                    step
                     value
+                    response
+                    status
                     createdAt
                     updatedAt
+                }
+                formResults {
+                    userId
+                    card {
+                        identity
+                        verb
+                        type
+                        title
+                        isFormCard
+                        isFinish
+                        description
+                        value
+                        validation
+                        hint
+                        conditions {
+                            verb
+                            condition
+                            response
+                            status
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    step
+                    value
+                    response
+                    status
+                    createdAt
+                    updatedAt
+                }
+                nextCard {
+                    identity
+                    verb
+                    type
+                    title
+                    isFormCard
+                    isFinish
+                    description
+                    value
+                    validation
+                    hint
+                    conditions {
+                        verb
+                        condition
+                        response
+                        status
+                        value
+                        goto
+                    }
+                    createdAt
                 }
                 createdAt
                 updatedAt
@@ -2170,6 +2840,540 @@ mutation UserTaskCreate($taskId: String!, $token: String!) {
                     createdAt
                     updatedAt
                 }
+                viewOnly
+            }
+            ... on ResponseMessageField {
+                isSuccess
+                message
+            }
+            ... on AuthInfoField {
+                message
+            }
+        }
+    }
+}
+mutation UserTaskSetupChecklistSave(
+    $checkboxIndex: String!
+    $token: String!
+    $checkboxValue: String!
+    $taskId: String!
+) {
+    userTaskSetupChecklistSave(
+        checkboxIndex: $checkboxIndex
+        token: $token
+        checkboxValue: $checkboxValue
+        taskId: $taskId
+    ) {
+        result {
+            ... on UserTaskField {
+                identity
+                task {
+                    identity
+                    title
+                    asset {
+                        identity
+                        name
+                        type
+                        description
+                        image
+                        attachments {
+                            name
+                            fileType
+                            mimeType
+                            description
+                            link
+                            updatedAt
+                            fileId
+                        }
+                        parameters
+                        members {
+                            role
+                        }
+                        isReadOnly
+                        chatIdentity
+                        events
+                        createdAt
+                    }
+                    summary
+                    description
+                    attachments {
+                        name
+                        fileType
+                        mimeType
+                        description
+                        link
+                        updatedAt
+                        fileId
+                    }
+                    setupText
+                    setupChecklist {
+                        index
+                        description
+                        defaultValue
+                    }
+                    cards {
+                        identity
+                        verb
+                        type
+                        title
+                        isFormCard
+                        isFinish
+                        description
+                        value
+                        validation
+                        hint
+                        conditions {
+                            verb
+                            condition
+                            response
+                            status
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    formCards {
+                        identity
+                        verb
+                        type
+                        title
+                        isFormCard
+                        isFinish
+                        description
+                        value
+                        validation
+                        hint
+                        conditions {
+                            verb
+                            condition
+                            response
+                            status
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    completedText
+                    createdAt
+                }
+                type
+                owners {
+                    identity
+                    username
+                    email
+                    moxtraId
+                    firstName
+                    lastName
+                    middleName
+                    image
+                    phone
+                    description
+                    location
+                    tags
+                    roles
+                    createdAt
+                    updatedAt
+                }
+                status
+                resultsSetupChecklist {
+                    index
+                    description
+                    value
+                }
+                results {
+                    userId
+                    card {
+                        identity
+                        verb
+                        type
+                        title
+                        isFormCard
+                        isFinish
+                        description
+                        value
+                        validation
+                        hint
+                        conditions {
+                            verb
+                            condition
+                            response
+                            status
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    step
+                    value
+                    response
+                    status
+                    createdAt
+                    updatedAt
+                }
+                formResults {
+                    userId
+                    card {
+                        identity
+                        verb
+                        type
+                        title
+                        isFormCard
+                        isFinish
+                        description
+                        value
+                        validation
+                        hint
+                        conditions {
+                            verb
+                            condition
+                            response
+                            status
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    step
+                    value
+                    response
+                    status
+                    createdAt
+                    updatedAt
+                }
+                nextCard {
+                    identity
+                    verb
+                    type
+                    title
+                    isFormCard
+                    isFinish
+                    description
+                    value
+                    validation
+                    hint
+                    conditions {
+                        verb
+                        condition
+                        response
+                        status
+                        value
+                        goto
+                    }
+                    createdAt
+                }
+                createdAt
+                updatedAt
+                updatedBy {
+                    identity
+                    username
+                    email
+                    moxtraId
+                    firstName
+                    lastName
+                    middleName
+                    image
+                    phone
+                    description
+                    location
+                    tags
+                    roles
+                    createdAt
+                    updatedAt
+                }
+                viewOnly
+            }
+            ... on ResponseMessageField {
+                isSuccess
+                message
+            }
+            ... on AuthInfoField {
+                message
+            }
+        }
+    }
+}
+mutation CardSave(
+    $step: Int!
+    $token: String!
+    $currCardId: String!
+    $userTaskId: String!
+    $value: String!
+) {
+    cardSave(
+        step: $step
+        token: $token
+        currCardId: $currCardId
+        userTaskId: $userTaskId
+        value: $value
+    ) {
+        result {
+            ... on CardSaveField {
+                response
+                status
+                updatedAt
+                nextCard {
+                    identity
+                    verb
+                    type
+                    title
+                    isFormCard
+                    isFinish
+                    description
+                    value
+                    validation
+                    hint
+                    conditions {
+                        verb
+                        condition
+                        response
+                        status
+                        value
+                        goto
+                    }
+                    createdAt
+                }
+                userTaskStatus
+                nextStep
+            }
+            ... on ResponseMessageField {
+                isSuccess
+                message
+            }
+            ... on AuthInfoField {
+                message
+            }
+        }
+    }
+}
+mutation UserTaskFormValuesSave(
+    $setAsCompleted: Boolean!
+    $token: String!
+    $formValues: UserTaskFormValues!
+    $userTaskId: String!
+) {
+    userTaskFormValuesSave(
+        setAsCompleted: $setAsCompleted
+        token: $token
+        formValues: $formValues
+        userTaskId: $userTaskId
+    ) {
+        result {
+            ... on UserTaskField {
+                identity
+                task {
+                    identity
+                    title
+                    asset {
+                        identity
+                        name
+                        type
+                        description
+                        image
+                        attachments {
+                            name
+                            fileType
+                            mimeType
+                            description
+                            link
+                            updatedAt
+                            fileId
+                        }
+                        parameters
+                        members {
+                            role
+                        }
+                        isReadOnly
+                        chatIdentity
+                        events
+                        createdAt
+                    }
+                    summary
+                    description
+                    attachments {
+                        name
+                        fileType
+                        mimeType
+                        description
+                        link
+                        updatedAt
+                        fileId
+                    }
+                    setupText
+                    setupChecklist {
+                        index
+                        description
+                        defaultValue
+                    }
+                    cards {
+                        identity
+                        verb
+                        type
+                        title
+                        isFormCard
+                        isFinish
+                        description
+                        value
+                        validation
+                        hint
+                        conditions {
+                            verb
+                            condition
+                            response
+                            status
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    formCards {
+                        identity
+                        verb
+                        type
+                        title
+                        isFormCard
+                        isFinish
+                        description
+                        value
+                        validation
+                        hint
+                        conditions {
+                            verb
+                            condition
+                            response
+                            status
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    completedText
+                    createdAt
+                }
+                type
+                owners {
+                    identity
+                    username
+                    email
+                    moxtraId
+                    firstName
+                    lastName
+                    middleName
+                    image
+                    phone
+                    description
+                    location
+                    tags
+                    roles
+                    createdAt
+                    updatedAt
+                }
+                status
+                resultsSetupChecklist {
+                    index
+                    description
+                    value
+                }
+                results {
+                    userId
+                    card {
+                        identity
+                        verb
+                        type
+                        title
+                        isFormCard
+                        isFinish
+                        description
+                        value
+                        validation
+                        hint
+                        conditions {
+                            verb
+                            condition
+                            response
+                            status
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    step
+                    value
+                    response
+                    status
+                    createdAt
+                    updatedAt
+                }
+                formResults {
+                    userId
+                    card {
+                        identity
+                        verb
+                        type
+                        title
+                        isFormCard
+                        isFinish
+                        description
+                        value
+                        validation
+                        hint
+                        conditions {
+                            verb
+                            condition
+                            response
+                            status
+                            value
+                            goto
+                        }
+                        createdAt
+                    }
+                    step
+                    value
+                    response
+                    status
+                    createdAt
+                    updatedAt
+                }
+                nextCard {
+                    identity
+                    verb
+                    type
+                    title
+                    isFormCard
+                    isFinish
+                    description
+                    value
+                    validation
+                    hint
+                    conditions {
+                        verb
+                        condition
+                        response
+                        status
+                        value
+                        goto
+                    }
+                    createdAt
+                }
+                createdAt
+                updatedAt
+                updatedBy {
+                    identity
+                    username
+                    email
+                    moxtraId
+                    firstName
+                    lastName
+                    middleName
+                    image
+                    phone
+                    description
+                    location
+                    tags
+                    roles
+                    createdAt
+                    updatedAt
+                }
+                viewOnly
             }
             ... on ResponseMessageField {
                 isSuccess

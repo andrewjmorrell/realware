@@ -82,3 +82,61 @@ fun String.fromHtml(): Spanned {
     }
 
 }
+
+fun String.valueToBoolean(): Boolean {
+    return when (this) {
+        "no" -> {
+            false
+        }
+        "yes" -> {
+            true
+        }
+        else -> false
+    }
+}
+
+fun Boolean.valueToString(): String {
+    return when (this) {
+        true -> {
+            "yes"
+        }
+        false -> {
+            "no"
+        }
+
+    }
+}
+
+fun String?.notNull(): String {
+    return if (this.isNullOrEmpty() or this.equals("null", true)) {
+        ""
+    } else {
+        this.toString()
+    }
+}
+
+fun String.timeFormat(): String {
+    var temp: String = if (this.isEmpty()) {
+        "0"
+    } else {
+        this
+    }
+    val min = temp.toInt() / 60000 % 60
+    val sec = temp.toInt() / 1000 % 60
+    var ms = temp.toInt() % 1000 / 10
+
+    if (ms > 100) ms = 0
+
+    return (if (min > 9) min else "0$min").toString() + ":" + (if (sec > 9) sec else "0$sec") + "." + if (ms > 9) ms else "0$ms"
+
+}
+
+fun String.timeFormatToLong(): Long {
+    val time = this.split(":")//min * 60000 + sec*1000 + ms*10
+    val min = time[0].toInt()
+    val seconds = time[1].split(".")
+    val sec = seconds[0].toInt()
+    val ms = seconds[1].toInt()
+    return min * 6000 + sec * 1000 + ms * 10.toLong()
+
+}

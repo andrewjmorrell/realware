@@ -1,4 +1,4 @@
-package com.pivot.pivot360.pivoteye
+package com.pivot.pivot360.pivoteye.asset
 
 
 import android.content.pm.ActivityInfo
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import com.pivot.pivot360.content.graphql.AssetsQuery
 import com.pivot.pivot360.content.listeners.GenericListener
 import com.pivot.pivot360.network.GraphQlApiHandler
+import com.pivot.pivot360.pivoteye.PreferenceUtil
 import com.pivot.pivot360.pivotglass.R
 import kotlinx.android.synthetic.main.activity_assets.*
 
@@ -54,7 +55,10 @@ class AssetsActivity : AppCompatActivity(), GenericListener<Any> {
     fun onGetAssets(response: AssetsQuery.AsAssetResults?) {
         this.runOnUiThread {
             val list = response?.assets()
-            var mAdapter = AssetsAdapter(list!!, this@AssetsActivity)
+            var mAdapter = AssetsAdapter(
+                list!!,
+                this@AssetsActivity
+            )
             mRecyclerView.adapter = mAdapter
         }
     }

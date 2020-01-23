@@ -836,6 +836,16 @@
                   "name": "Boolean",
                   "ofType": null
                 }
+              },
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "status",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
               }
             ],
             "deprecationReason": null,
@@ -845,6 +855,120 @@
             "type": {
               "kind": "UNION",
               "name": "UserTasksUnion",
+              "ofType": null
+            }
+          },
+          {
+            "args": [
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "token",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "taskId",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "page",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              {
+                "defaultValue": "false",
+                "description": null,
+                "name": "count",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              },
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "status",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            ],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "userTasksByTask",
+            "type": {
+              "kind": "UNION",
+              "name": "UserTasksUnion",
+              "ofType": null
+            }
+          },
+          {
+            "args": [
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "token",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "id",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "value",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            ],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "taskCardResults",
+            "type": {
+              "kind": "UNION",
+              "name": "CardSaveUnion",
               "ofType": null
             }
           }
@@ -968,8 +1092,8 @@
             "isDeprecated": false,
             "name": "parameters",
             "type": {
-              "kind": "OBJECT",
-              "name": "ParametersField",
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             }
           },
@@ -1103,6 +1227,18 @@
             "deprecationReason": null,
             "description": null,
             "isDeprecated": false,
+            "name": "description",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
             "name": "link",
             "type": {
               "kind": "SCALAR",
@@ -1139,89 +1275,6 @@
         "interfaces": [],
         "kind": "OBJECT",
         "name": "AttachmentField",
-        "possibleTypes": null
-      },
-      {
-        "description": null,
-        "enumValues": null,
-        "fields": [
-          {
-            "args": [],
-            "deprecationReason": null,
-            "description": null,
-            "isDeprecated": false,
-            "name": "age",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            }
-          },
-          {
-            "args": [],
-            "deprecationReason": null,
-            "description": null,
-            "isDeprecated": false,
-            "name": "barcode",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            }
-          },
-          {
-            "args": [],
-            "deprecationReason": null,
-            "description": null,
-            "isDeprecated": false,
-            "name": "make",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            }
-          },
-          {
-            "args": [],
-            "deprecationReason": null,
-            "description": null,
-            "isDeprecated": false,
-            "name": "type",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            }
-          },
-          {
-            "args": [],
-            "deprecationReason": null,
-            "description": null,
-            "isDeprecated": false,
-            "name": "model",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            }
-          },
-          {
-            "args": [],
-            "deprecationReason": null,
-            "description": null,
-            "isDeprecated": false,
-            "name": "serialNo",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            }
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "kind": "OBJECT",
-        "name": "ParametersField",
         "possibleTypes": null
       },
       {
@@ -2847,15 +2900,87 @@
             "deprecationReason": null,
             "description": null,
             "isDeprecated": false,
-            "name": "startCards",
+            "name": "attachments",
             "type": {
               "kind": "LIST",
               "name": null,
               "ofType": {
                 "kind": "OBJECT",
-                "name": "TaskStartCardField",
+                "name": "AttachmentField",
                 "ofType": null
               }
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "setupText",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "setupChecklist",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "taskSetupChecklistField",
+                "ofType": null
+              }
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "cards",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "CardField",
+                "ofType": null
+              }
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "formCards",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "CardField",
+                "ofType": null
+              }
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "completedText",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             }
           },
           {
@@ -2886,10 +3011,10 @@
             "deprecationReason": null,
             "description": null,
             "isDeprecated": false,
-            "name": "card",
+            "name": "index",
             "type": {
-              "kind": "OBJECT",
-              "name": "CardField",
+              "kind": "SCALAR",
+              "name": "Int",
               "ofType": null
             }
           },
@@ -2898,7 +3023,7 @@
             "deprecationReason": null,
             "description": null,
             "isDeprecated": false,
-            "name": "status",
+            "name": "description",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -2910,7 +3035,7 @@
             "deprecationReason": null,
             "description": null,
             "isDeprecated": false,
-            "name": "updatedAt",
+            "name": "defaultValue",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -2921,7 +3046,7 @@
         "inputFields": null,
         "interfaces": [],
         "kind": "OBJECT",
-        "name": "TaskStartCardField",
+        "name": "taskSetupChecklistField",
         "possibleTypes": null
       },
       {
@@ -2957,10 +3082,34 @@
             "deprecationReason": null,
             "description": null,
             "isDeprecated": false,
+            "name": "type",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
             "name": "title",
             "type": {
               "kind": "SCALAR",
               "name": "String",
+              "ofType": null
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "isFormCard",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
               "ofType": null
             }
           },
@@ -2982,6 +3131,42 @@
             "description": null,
             "isDeprecated": false,
             "name": "description",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "value",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "validation",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "hint",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -3045,6 +3230,30 @@
             "description": null,
             "isDeprecated": false,
             "name": "condition",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "response",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "status",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -3141,6 +3350,18 @@
             "deprecationReason": null,
             "description": null,
             "isDeprecated": false,
+            "name": "type",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
             "name": "owners",
             "type": {
               "kind": "LIST",
@@ -3169,6 +3390,22 @@
             "deprecationReason": null,
             "description": null,
             "isDeprecated": false,
+            "name": "resultsSetupChecklist",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "userTaskSetupChecklistField",
+                "ofType": null
+              }
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
             "name": "results",
             "type": {
               "kind": "LIST",
@@ -3178,6 +3415,34 @@
                 "name": "UserTaskResultField",
                 "ofType": null
               }
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "formResults",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "UserTaskResultField",
+                "ofType": null
+              }
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "nextCard",
+            "type": {
+              "kind": "OBJECT",
+              "name": "CardField",
+              "ofType": null
             }
           },
           {
@@ -3215,6 +3480,18 @@
               "name": "AccountField",
               "ofType": null
             }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "viewOnly",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            }
           }
         ],
         "inputFields": null,
@@ -3232,6 +3509,65 @@
             "deprecationReason": null,
             "description": null,
             "isDeprecated": false,
+            "name": "index",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "description",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "value",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            }
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "kind": "OBJECT",
+        "name": "userTaskSetupChecklistField",
+        "possibleTypes": null
+      },
+      {
+        "description": null,
+        "enumValues": null,
+        "fields": [
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "userId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
             "name": "card",
             "type": {
               "kind": "OBJECT",
@@ -3244,7 +3580,43 @@
             "deprecationReason": null,
             "description": null,
             "isDeprecated": false,
+            "name": "step",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
             "name": "value",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "response",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "status",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -3415,13 +3787,132 @@
       {
         "description": null,
         "enumValues": null,
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "kind": "UNION",
+        "name": "CardSaveUnion",
+        "possibleTypes": [
+          {
+            "kind": "OBJECT",
+            "name": "CardSaveField",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "ResponseMessageField",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "AuthInfoField",
+            "ofType": null
+          }
+        ]
+      },
+      {
+        "description": null,
+        "enumValues": null,
+        "fields": [
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "response",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "status",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "updatedAt",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "nextCard",
+            "type": {
+              "kind": "OBJECT",
+              "name": "CardField",
+              "ofType": null
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "userTaskStatus",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            }
+          },
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "nextStep",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            }
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "kind": "OBJECT",
+        "name": "CardSaveField",
+        "possibleTypes": null
+      },
+      {
+        "description": null,
+        "enumValues": null,
         "fields": [
           {
             "args": [
               {
                 "defaultValue": "\"\"",
                 "description": null,
-                "name": "company",
+                "name": "firstName",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "defaultValue": "\"\"",
+                "description": null,
+                "name": "lastName",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -3445,27 +3936,17 @@
               {
                 "defaultValue": "\"\"",
                 "description": null,
-                "name": "firstName",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              {
-                "defaultValue": "\"\"",
-                "description": null,
-                "name": "lastName",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              {
-                "defaultValue": "\"\"",
-                "description": null,
                 "name": "middleName",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              {
+                "defaultValue": "\"\"",
+                "description": null,
+                "name": "company",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -3475,7 +3956,7 @@
               {
                 "defaultValue": null,
                 "description": null,
-                "name": "password",
+                "name": "username",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -3489,7 +3970,7 @@
               {
                 "defaultValue": null,
                 "description": null,
-                "name": "username",
+                "name": "password",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -3572,21 +4053,7 @@
               {
                 "defaultValue": null,
                 "description": null,
-                "name": "asset",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                }
-              },
-              {
-                "defaultValue": null,
-                "description": null,
-                "name": "description",
+                "name": "type",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -3628,7 +4095,21 @@
               {
                 "defaultValue": null,
                 "description": null,
-                "name": "type",
+                "name": "asset",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "description",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -3655,7 +4136,7 @@
               {
                 "defaultValue": null,
                 "description": null,
-                "name": "id",
+                "name": "token",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -3679,7 +4160,7 @@
               {
                 "defaultValue": null,
                 "description": null,
-                "name": "token",
+                "name": "id",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -3720,20 +4201,6 @@
               {
                 "defaultValue": null,
                 "description": null,
-                "name": "id",
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "SCALAR",
-                    "name": "String",
-                    "ofType": null
-                  }
-                }
-              },
-              {
-                "defaultValue": null,
-                "description": null,
                 "name": "parameters",
                 "type": {
                   "kind": "NON_NULL",
@@ -3741,6 +4208,20 @@
                   "ofType": {
                     "kind": "INPUT_OBJECT",
                     "name": "SmeRequestParametersInput",
+                    "ofType": null
+                  }
+                }
+              },
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "token",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
                     "ofType": null
                   }
                 }
@@ -3762,7 +4243,7 @@
               {
                 "defaultValue": null,
                 "description": null,
-                "name": "token",
+                "name": "id",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -3789,17 +4270,7 @@
               {
                 "defaultValue": null,
                 "description": null,
-                "name": "accept",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                }
-              },
-              {
-                "defaultValue": null,
-                "description": null,
-                "name": "id",
+                "name": "token",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -3823,7 +4294,17 @@
               {
                 "defaultValue": null,
                 "description": null,
-                "name": "token",
+                "name": "accept",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              },
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "id",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -3850,17 +4331,7 @@
               {
                 "defaultValue": null,
                 "description": null,
-                "name": "accept",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Boolean",
-                  "ofType": null
-                }
-              },
-              {
-                "defaultValue": null,
-                "description": null,
-                "name": "id",
+                "name": "token",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -3884,7 +4355,17 @@
               {
                 "defaultValue": null,
                 "description": null,
-                "name": "token",
+                "name": "accept",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              },
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "id",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -3911,7 +4392,7 @@
               {
                 "defaultValue": null,
                 "description": null,
-                "name": "contentText",
+                "name": "token",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -3959,7 +4440,7 @@
               {
                 "defaultValue": null,
                 "description": null,
-                "name": "token",
+                "name": "contentText",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -3986,7 +4467,7 @@
               {
                 "defaultValue": null,
                 "description": null,
-                "name": "contentText",
+                "name": "token",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -4034,7 +4515,7 @@
               {
                 "defaultValue": null,
                 "description": null,
-                "name": "token",
+                "name": "contentText",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -4126,7 +4607,48 @@
               {
                 "defaultValue": null,
                 "description": null,
+                "name": "token",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              {
+                "defaultValue": null,
+                "description": null,
                 "name": "taskId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            ],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "userTaskCreate",
+            "type": {
+              "kind": "OBJECT",
+              "name": "UserTaskCreateMutation",
+              "ofType": null
+            }
+          },
+          {
+            "args": [
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "checkboxIndex",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -4150,15 +4672,195 @@
                     "ofType": null
                   }
                 }
+              },
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "checkboxValue",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "taskId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
               }
             ],
             "deprecationReason": null,
             "description": null,
             "isDeprecated": false,
-            "name": "userTaskCreate",
+            "name": "userTaskSetupChecklistSave",
             "type": {
               "kind": "OBJECT",
-              "name": "UserTaskCreateMutation",
+              "name": "userTaskSetupChecklistSaveMutation",
+              "ofType": null
+            }
+          },
+          {
+            "args": [
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "step",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                }
+              },
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "token",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "currCardId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "userTaskId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "value",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            ],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "cardSave",
+            "type": {
+              "kind": "OBJECT",
+              "name": "CardSaveMutation",
+              "ofType": null
+            }
+          },
+          {
+            "args": [
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "setAsCompleted",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
+                }
+              },
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "token",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "formValues",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "UserTaskFormValues",
+                    "ofType": null
+                  }
+                }
+              },
+              {
+                "defaultValue": null,
+                "description": null,
+                "name": "userTaskId",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              }
+            ],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "userTaskFormValuesSave",
+            "type": {
+              "kind": "OBJECT",
+              "name": "UserTaskFormValuesSaveMutation",
               "ofType": null
             }
           }
@@ -4619,6 +5321,131 @@
         "interfaces": [],
         "kind": "OBJECT",
         "name": "UserTaskCreateMutation",
+        "possibleTypes": null
+      },
+      {
+        "description": null,
+        "enumValues": null,
+        "fields": [
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "result",
+            "type": {
+              "kind": "UNION",
+              "name": "UserTaskUnion",
+              "ofType": null
+            }
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "kind": "OBJECT",
+        "name": "userTaskSetupChecklistSaveMutation",
+        "possibleTypes": null
+      },
+      {
+        "description": null,
+        "enumValues": null,
+        "fields": [
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "result",
+            "type": {
+              "kind": "UNION",
+              "name": "CardSaveUnion",
+              "ofType": null
+            }
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "kind": "OBJECT",
+        "name": "CardSaveMutation",
+        "possibleTypes": null
+      },
+      {
+        "description": null,
+        "enumValues": null,
+        "fields": [
+          {
+            "args": [],
+            "deprecationReason": null,
+            "description": null,
+            "isDeprecated": false,
+            "name": "result",
+            "type": {
+              "kind": "UNION",
+              "name": "UserTaskUnion",
+              "ofType": null
+            }
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "kind": "OBJECT",
+        "name": "UserTaskFormValuesSaveMutation",
+        "possibleTypes": null
+      },
+      {
+        "description": null,
+        "enumValues": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "defaultValue": null,
+            "description": null,
+            "name": "formValues",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "UserTaskFormValue",
+                "ofType": null
+              }
+            }
+          }
+        ],
+        "interfaces": null,
+        "kind": "INPUT_OBJECT",
+        "name": "UserTaskFormValues",
+        "possibleTypes": null
+      },
+      {
+        "description": null,
+        "enumValues": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "defaultValue": null,
+            "description": null,
+            "name": "cardId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            }
+          },
+          {
+            "defaultValue": null,
+            "description": null,
+            "name": "value",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            }
+          }
+        ],
+        "interfaces": null,
+        "kind": "INPUT_OBJECT",
+        "name": "UserTaskFormValue",
         "possibleTypes": null
       },
       {

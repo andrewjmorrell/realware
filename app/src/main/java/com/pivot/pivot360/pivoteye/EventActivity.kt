@@ -2,6 +2,7 @@ package com.pivot.pivot360.pivoteye
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -33,7 +34,7 @@ import java.util.ArrayList
 /**
  * Main activity which displays a list of examples to the user
  */
-class EventActivity : Activity(), GenericListener<Any>, MenuListener {
+class EventActivity : BaseActivity(), GenericListener<Any>, MenuListener {
 
     private var mMainMenuTileAdaptor: MainMenuTileAdaptor? = null
     private var mGridView: GridView? = null
@@ -46,6 +47,7 @@ class EventActivity : Activity(), GenericListener<Any>, MenuListener {
     lateinit var mMeetRepo: MeetRepo
     private val chatConfig = ChatConfig()
     private var mToken: String? = null
+    private var mUniqueId: String? = null
 
     lateinit var mMeet: Meet
 
@@ -55,17 +57,12 @@ class EventActivity : Activity(), GenericListener<Any>, MenuListener {
     private val CLIENT_SECRET = "gz5L0B4Ng1o"
     private val ORG_ID: String? = null
 
-    lateinit var cameraButton: Button
-    lateinit var documentButton: Button
-    lateinit var audioButton: Button
-    lateinit var videoButton: Button
-    lateinit var attachmentButton: Button
-    lateinit var videoConferenceButton: Button
-
     lateinit var eventName: TextView
     lateinit var eventDescription: TextView
 
     private val BASE_DOMAIN = "sandbox.moxtra.com"
+
+    private lateinit var conferenceButton: Button
 
     /**
      * Called when the activity is created
@@ -75,17 +72,25 @@ class EventActivity : Activity(), GenericListener<Any>, MenuListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+//        window.setFlags(
+//            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//            WindowManager.LayoutParams.FLAG_FULLSCREEN
+//        )
         setContentView(R.layout.activity_event)
         ChatClient.setupDomain(BASE_DOMAIN, null, null, null)
 
+//        mToken =
+//            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNTc4NTQ0MzU5LCJuYmYiOjE1Nzg1NDQzNTksImp0aSI6IjRhZmU1ZTY3LTRkNDgtNGYyZC1hMTA1LWExMTBhZmZhNzc1OCIsImV4cCI6MTU5NDA5NjM1OSwiaWRlbnRpdHkiOiJhbmRyZXcubW9ycmVsbEBwaXZvdC5jb20ifQ.Gi5Ye6j18TPoUW-1UTAczV9Z7F_UAaejUEP3-jo_OYo"
+//        PreferenceUtil.saveUserUniqueIdentity(this@EventActivity, mToken!!)
 
         if (intent != null && intent.getStringExtra("identity") != null) {
             identity = intent.getStringExtra("identity")
+                //"f926b3766d55a539b461cc606d080ede"
             mToken = intent.getStringExtra("token")
+            mUniqueId = intent.getStringExtra("uniqueid")
             GraphQlApiHandler.instance.getData<EventQuery, GenericListener<Any>>(EventQuery.builder().token(mToken!!).id(identity!!).build(), this)
         } else {
             Toast.makeText(this, "Event id not found.", Toast.LENGTH_SHORT).show()
@@ -93,8 +98,9 @@ class EventActivity : Activity(), GenericListener<Any>, MenuListener {
 
         var extras = hashMapOf(Pair("identity", identity), Pair("token", mToken))
 
-        cameraButton = findViewById(R.id.cameraButton)
         //documentButton = findViewById(R.id.documentButton)
+        conferenceButton = findViewById(R.id.videoConference)
+        conferenceButton.isEnabled = false
         eventName = findViewById(R.id.event_name)
         eventDescription = findViewById(R.id.event_description)
 
@@ -102,9 +108,9 @@ class EventActivity : Activity(), GenericListener<Any>, MenuListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (mChatController != null) {
-            mChatController!!.cleanup()
-        }
+        try {
+            mChatController.cleanup()
+        } catch (e: Exception) {}
     }
 
     override fun OnResults(response: Any?) {
@@ -116,10 +122,10 @@ class EventActivity : Activity(), GenericListener<Any>, MenuListener {
                         is EventQuery.AsEventField -> {
                             onEventsField(it)
                         }
-                        is EventsQuery.AsResponseMessageField -> {
+                        is EventQuery.AsResponseMessageField -> {
                             onResponseMessageField(it.message())
                         }
-                        is EventsQuery.AsAuthInfoField -> {
+                        is EventQuery.AsAuthInfoField -> {
                             onAuthInfoField(it.message())
                         }
                     }
@@ -148,16 +154,17 @@ class EventActivity : Activity(), GenericListener<Any>, MenuListener {
         }
 
 
-        ChatClient.linkWithUniqueId(PreferenceUtil.getUserUniqueIdentity(this@EventActivity)!!, CLIENT_ID, CLIENT_SECRET, ORG_ID, object :
+        ChatClient.linkWithUniqueId(mUniqueId!!, CLIENT_ID, CLIENT_SECRET, ORG_ID, object :
             ApiCallback<ChatClientDelegate> {
             override fun onError(p0: Int, p1: String?) {
-
+                runOnUiThread { Toast.makeText(this@EventActivity, p1, Toast.LENGTH_SHORT).show() }
             }
 
             override fun onCompleted(ccd: ChatClientDelegate) {
                 mChatClientDelegate = ccd
-                mChatRepo = mChatClientDelegate!!.createChatRepo()
-                mChat = mChatRepo.getChatById(response?.chatIdentity())
+                mChatRepo = mChatClientDelegate.createChatRepo()
+                Log.e("TAG", "!!!!!!!!!!!!!ci"+response.chatIdentity())
+                mChat = mChatRepo.getChatById(response.chatIdentity())
 
                 Log.e("TAG", "!!!!!!!!!!!" + mChat.topic)
 
@@ -193,6 +200,8 @@ class EventActivity : Activity(), GenericListener<Any>, MenuListener {
 
                     }
                 })
+
+                conferenceButton.isEnabled = true
             }
 
         })

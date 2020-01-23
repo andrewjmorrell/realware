@@ -42,15 +42,25 @@ object Constants {
     const val TIME_FORMAT_YMDTHMS = "yyyy-MM-dd'T'HH:mm:ss"
     const val TIME_FORMAT_YMDHMS = "yyyy-MM-dd HH:mm:ss"
     const val TIME_FORMAT_DATE_OPEN_CLOSED_EVENT = "MMM dd, yyyy hh:mm a"
+    const val TIME_FORMAT_DATE_TASK_RESPONSE = "MMMM dd, yyyy hh:mm a"
     const val TIME_FORMAT_DATE_CLOSED_EVENT_STATUS = "MMMM dd, yyyy"
     const val TIME_FORMAT_DATE_SME = "hh:mm a MMM dd yyyy "
     const val TIME_FORMAT_ATTACHMENT = "MMM dd, yyyy hh:mm a"
+    const val TIME_FORMAT_TASKS = "hh:mm a | MM/dd/yyyy" //" "08:30am | 12/21/2019"
 
     const val UPDATE_VIEW_BROADCAST = "updateView"
 
-    const val TIME_FORMAT_TASKS = "hh:mm a | mm/dd/yyyy" //" "08:30am | 12/21/2019"
+    const val TASK_STATUS = "status"
+    const val TASK_STATUS_NOT_STARTED = "not_started"
+    const val TASK_STATUS_COMPLETED = "completed"
+    const val TASK_STATUS_FAILED = "failed"
+    const val TASK_STATUS_PASSED = "passed"
+    const val TASK_STATUS_IN_PROGRESS = "in_progress"
+    const val TASK_STATUS_STOPPED = "stopped"
 
-
+    const val TASK_CARD_TYPE_COUNTDOWN = "countdown"
+    const val TASK_CARD_TYPE_STOPWATCH = "stopwatch"
+    const val TASK_CARD_TYPE_TEXT = "text"
 
 
 }

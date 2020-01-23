@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.moxtra.sdk.ChatClient
 import com.moxtra.sdk.chat.controller.ChatConfig
 import com.moxtra.sdk.chat.model.Chat
@@ -17,6 +18,8 @@ import com.moxtra.sdk.meet.controller.MeetSessionController
 import com.moxtra.sdk.meet.model.Meet
 import com.moxtra.sdk.meet.model.MeetSession
 import com.moxtra.sdk.meet.repo.MeetRepo
+import com.pivot.pivot360.pivoteye.Constants.CLIENT_ID
+import com.pivot.pivot360.pivoteye.Constants.CLIENT_SECRET
 import com.pivot.pivot360.pivotglass.R
 import java.util.*
 
@@ -222,12 +225,21 @@ class MeetActivity : BaseActivity(), GlassGestureDetector.OnGestureListener {
             ctx.startActivity(intent)
         }
 
-        fun joinMeetNotification(ctx: Context, meet: String) {
+        fun joinMeetNotification(ctx: Context, meet: String, uniqueId: String) {
+            ChatClient.linkWithUniqueId(uniqueId!!, CLIENT_ID, CLIENT_SECRET, null, object :
+                ApiCallback<ChatClientDelegate> {
+                override fun onError(p0: Int, p1: String?) {
+                    //runOnUiThread { Toast.makeText(this@MeetActivity, p1, Toast.LENGTH_SHORT).show() }
+                    Log.e("TAG", "!!!!!!!!!!error: {p1}")
+                }
 
-            val intent = Intent(ctx, MeetActivity::class.java)
-            intent.putExtra(KEY_ACTION, ACTION_JOIN_NOTIFICATION)
-            intent.putExtra(ACTION_JOIN_NOTIFICATION, meet)
-            ctx.startActivity(intent)
+                override fun onCompleted(ccd: ChatClientDelegate) {
+                    val intent = Intent(ctx, MeetActivity::class.java)
+                    intent.putExtra(KEY_ACTION, ACTION_JOIN_NOTIFICATION)
+                    intent.putExtra(ACTION_JOIN_NOTIFICATION, meet)
+                    ctx.startActivity(intent)
+                }
+            })
         }
 
         fun startMeet(ctx: Context, topic: String, userList: ArrayList<User>, chat: Chat) {

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pivot360</string>
+    <string name="app_name">Pivot 360</string>
     <string name="loading">Loading...</string>
     <string name="action_logout">Logout</string>
     <string name="selectUserTitle">Select User</string>
@@ -124,4 +124,6 @@
     <string name="attachments_command">Event Attachments</string>
     <string name="start_meet_command">Start Videoconference</string>
     <string name="join_meet_command">Join Videoconference</string>
+
+    <string name="text1">This is a step-by-step guide to completing the monthly <b>F-160 Furnace Check</b>. \n \n Here’s a quick pre-test checklist to help you get things this.stopwatchStarted. If, for some reason, this guidance pauses, simply type <b>"continue"</b> to resume.</string>
 </resources>

@@ -20,6 +20,8 @@ import kotlinx.android.synthetic.main.activity_events.*
 class EventsActivity : BaseActivity(), GenericListener<Any>,
     OnItemClickListener {
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -33,9 +35,9 @@ class EventsActivity : BaseActivity(), GenericListener<Any>,
         mRecyclerViewAttachment.layoutManager = LinearLayoutManager(this)
         snapHelper.attachToRecyclerView(mRecyclerViewAttachment)
 
-
-            //mToken =
-                //"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNTY5NDUzOTE1LCJuYmYiOjE1Njk0NTM5MTUsImp0aSI6IjczOGM2YmQ2LWY4MGItNGMyYi04OGY4LTY3NjJjM2UyZDdiOCIsImV4cCI6MTU4NTAwNTkxNSwiaWRlbnRpdHkiOiJhbmRyZXcubW9ycmVsbEBwaXZvdC5jb20ifQ.8jmZxIfLXIBN-KYXcUKw5FQ1vTG3Wcjlohd_Yi6BBoU"
+        val mToken =
+                "08ce51d2bf09261004234a7ced825538"
+        PreferenceUtil.saveUserUniqueIdentity(this@EventsActivity, mToken)
         GraphQlApiHandler.instance
             .getData<EventsByUserQuery, GenericListener<Any>>(EventsByUserQuery.builder()
                 .token(PreferenceUtil.getToken(this)!!).build(), this)

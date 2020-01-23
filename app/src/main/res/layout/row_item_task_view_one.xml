@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:minHeight="50dp"
+    app:cardCornerRadius="10dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_width="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imgCheck"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:src="@drawable/ic_check_circular_button"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+
+            android:text="Process 02"
+            android:padding="8dp"
+            android:textSize="18sp"
+            android:textColor="#000"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/tvResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/imgCheck" />
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

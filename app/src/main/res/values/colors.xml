@@ -339,4 +339,6 @@
     <color name="gray">#A6A6A0</color>
 
     <color name="transparent">#0000</color>
+
+    <color name="color_green">#0F9D58</color>
 </resources>

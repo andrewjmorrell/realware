@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
+        android:contentDescription="hf_hide_help"
+        android:background="@drawable/pivot"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/llMessageBox"
+            android:fillViewport="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
+
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:layout_height="match_parent" />
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <RelativeLayout
+            android:id="@+id/llMessageBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
+
+<!--        <Button-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:id="@+id/img_Voice"-->
+<!--                android:text="Voice Entry"-->
+<!--                android:textSize="12dp"-->
+<!--                android:onClick="onVoiceClick"-->
+<!--                android:tint="@color/white"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:contentDescription="hf_use_description|Voice Entry"/>-->
+<!--        <ImageView-->
+<!--                android:id="@+id/img_Voice"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_marginLeft="5dp"-->
+<!--                android:src="@drawable/ic_mic_black_24dp"-->
+<!--                android:layout_alignParentLeft="true"-->
+<!--                android:tint="@color/white"-->
+<!--                android:padding="2dp"-->
+<!--                android:layout_centerVertical="true" />-->
+        <EditText
+                android:id="@+id/edtMessage"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/cardview2"
+                android:padding="5dp"
+                android:paddingLeft="10dp"
+                android:layout_margin="5dp"
+                android:layout_gravity="center"
+                android:layout_toLeftOf="@id/imgSend"
+                android:layout_alignParentLeft="true"
+                android:imeOptions="actionDone"
+                android:maxLines="1"
+                android:inputType="text"
+                android:hint="Entry" />
+
+        <Button
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:id="@+id/imgSend"
+                android:text="Enter"
+                android:textSize="12dp"
+                android:onClick="onSendClick"
+                android:tint="@color/white"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="hf_use_description|Enter"/>
+<!--        <ImageView-->
+<!--                android:id="@+id/imgSend"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:src="@drawable/ic_send_black_24dp"-->
+<!--                android:tint="@color/white"-->
+<!--                android:padding="2dp"-->
+<!--                android:layout_marginRight="5dp"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:layout_centerVertical="true"/>-->
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
