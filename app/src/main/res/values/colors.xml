@@ -341,4 +341,8 @@
     <color name="transparent">#0000</color>
 
     <color name="color_green">#0F9D58</color>
+
+    <color name="color_status_failed">#F3BF0E</color>
+    <color name="color_status_passed">#5493F4</color>
+    <color name="color_status_stopped">#f9992c</color>
 </resources>

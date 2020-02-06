@@ -1,4 +1,4 @@
-package com.pivot.pivot360.pivoteye
+package com.pivot.pivot360.pivoteye.event
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -25,7 +25,9 @@ class EventAttachmentAdapter(context1: FragmentActivity, attachments: MutableLis
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val listItem = layoutInflater.inflate(R.layout.item_list_attachment_v2, parent, false)
-        return ViewHolder(listItem)
+        return ViewHolder(
+            listItem
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

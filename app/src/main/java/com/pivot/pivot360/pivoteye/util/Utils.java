@@ -1,4 +1,4 @@
-package com.pivot.pivot360.pivoteye;
+package com.pivot.pivot360.pivoteye.util;
 
 import android.content.Context;
 

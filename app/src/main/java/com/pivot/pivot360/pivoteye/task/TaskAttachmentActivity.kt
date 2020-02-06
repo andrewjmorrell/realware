@@ -5,20 +5,18 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
-import com.pivot.pivot360.content.graphql.EventQuery
-import com.pivot.pivot360.content.graphql.EventsQuery
 import com.pivot.pivot360.content.graphql.UserTaskQuery
 import com.pivot.pivot360.content.listeners.GenericListener
 import com.pivot.pivot360.content.listeners.OnItemClickListener
 import com.pivot.pivot360.network.GraphQlApiHandler
 import com.pivot.pivot360.pivoteye.BaseActivity
-import com.pivot.pivot360.pivoteye.PreferenceUtil
+import com.pivot.pivot360.pivoteye.Constants
+import com.pivot.pivot360.pivoteye.util.PreferenceUtil
 import kotlinx.android.synthetic.main.fragment_attachment.*
 import com.pivot.pivot360.pivotglass.R
 import kotlinx.coroutines.Deferred
@@ -37,12 +35,9 @@ import java.net.URL
 class TaskAttachmentActivity : BaseActivity(), GenericListener<Any>,
     OnItemClickListener {
 
-    private var mToken: String? = null
-    lateinit var mAdapter: TaskAttachmentAdapter
+    private var identity: String? = null
+    private var token: String? = null
 
-    lateinit var identity: String
-
-    private val DOCUMENT_REQUEST_CODE = 1890
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,12 +53,13 @@ class TaskAttachmentActivity : BaseActivity(), GenericListener<Any>,
         snapHelper.attachToRecyclerView(mRecyclerViewAttachment)
 
 
-        if (intent != null && intent.getStringExtra("identity") != null) {
-            identity = intent.getStringExtra("identity")
+        if (intent != null) {
+            identity = intent.getStringExtra(Constants.IDENTITY)
+            token = intent.getStringExtra(Constants.TOKEN)
             GraphQlApiHandler.instance
                 .getData<UserTaskQuery, GenericListener<Any>>(
                     UserTaskQuery.builder()
-                        .token(PreferenceUtil.getToken(this)!!)
+                        .token(token!!)
                         .id(identity)
                         .build(), this)
         } else {
@@ -128,67 +124,7 @@ class TaskAttachmentActivity : BaseActivity(), GenericListener<Any>,
 
     override fun onItemClick(item: String) = runBlocking{
 
-        val url = URL(item)
-        var fname = url.file
-
-        if (fname.endsWith("jpe")) {
-            fname += "g"
-        }
-
-        val file = copyFromUrlToExternalAsync(this@TaskAttachmentActivity, item,
-            fname, "Pivot").await()
-
-        var mimetype = when(file.extension) {
-            "jpe" -> "image/jpeg"
-            "jpeg"-> "image/jpeg"
-            "pdf" -> "application/pdf"
-            "mp4" -> "video/mp4"
-            "wav" -> "audio/wav"
-            else -> "application/pdf"
-        }
-
-        if (mimetype == "audio/wav") {
-
-        } else {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.addCategory(Intent.CATEGORY_DEFAULT)
-
-            intent.setDataAndType(Uri.fromFile(file), mimetype)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-
-            //
-            // Optionally can control visual appearance
-            //
-            intent.putExtra("page", "1") // Open a specific page
-            intent.putExtra("zoom", "1") // Open at a specific zoom level
-
-            startActivityForResult(intent, DOCUMENT_REQUEST_CODE)
-        }
-    }
-
-    @Throws(IOException::class)
-    fun copyFromUrlToExternalAsync(
-        context: Context,
-        url: String,
-        filename: String,
-        destinationFolder: String
-    ): Deferred<File> = GlobalScope.async{
-
-        val outputFile = File(context.getExternalFilesDir(destinationFolder), filename)
-        if (!outputFile.exists()) {
-            val inputStream = BufferedInputStream(URL(url).openStream())
-
-            val outputStream = FileOutputStream(outputFile)
-
-            var bytes: ByteArray = inputStream.readBytes()
-            outputStream.write(bytes)
-
-            outputStream.flush()
-            outputStream.close()
-            inputStream.close()
-        }
-
-        outputFile
+        showAttachment(item)
     }
 
     companion object {

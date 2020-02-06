@@ -26,6 +26,8 @@ object Constants {
 
 
     const val IDENTITY = "identity"
+    const val TOKEN = "token"
+    const val UNIQUEID = "uniqueid"
 
     const val SEARCH_TAB_ALL = "All"
     const val SEARCH_TAB_ASSETS = "Assets"
@@ -57,10 +59,19 @@ object Constants {
     const val TASK_STATUS_PASSED = "passed"
     const val TASK_STATUS_IN_PROGRESS = "in_progress"
     const val TASK_STATUS_STOPPED = "stopped"
+    const val TASK_STATUS_TEXT_COUNTDOWN_COMPLETE = "Countdown Completed "
+    const val TASK_STATUS_TEXT_FAILED = "Failed "
+    const val TASK_STATUS_TEXT_STOPPED_EARLY = "Countdown Stopped Early "
+    const val TASK_STATUS_TEXT_PASSED = "Passed "
+    const val TASK_STATUS_TEXT_START = "Start Test"
+    const val TASK_STATUS_TEXT_STOP_THE_CLOCK = "Stop the clock"
+    const val TASK_STATUS_TEXT_SKIP_THE_COUNTDOWN = "Skip the countdown"
 
     const val TASK_CARD_TYPE_COUNTDOWN = "countdown"
     const val TASK_CARD_TYPE_STOPWATCH = "stopwatch"
     const val TASK_CARD_TYPE_TEXT = "text"
 
+    const val USER_TASK_TYPE_CONVERSATION = "conversation"
+    const val USER_TASK_TYPE_FORM = "form"
 
 }

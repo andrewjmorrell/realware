@@ -1,4 +1,4 @@
-package com.pivot.pivot360.pivoteye
+package com.pivot.pivot360.pivoteye.event
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,8 +9,9 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.pivot.pivot360.common.Utilities
 import com.pivot.pivot360.content.graphql.EventsByAssetQuery
-import com.pivot.pivot360.content.graphql.EventsByUserQuery
 import com.pivot.pivot360.content.listeners.OnItemClickListener
+import com.pivot.pivot360.pivoteye.Constants
+import com.pivot.pivot360.pivoteye.util.PreferenceUtil
 import com.pivot.pivot360.pivotglass.R
 import kotlinx.android.synthetic.main.active_event_list_item.view.*
 
@@ -23,7 +24,9 @@ class EventsByAssetAdapter(context: FragmentActivity, events: ArrayList<EventsBy
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val listItem = layoutInflater.inflate(R.layout.active_event_list_item, parent, false)
-        return ViewHolder(listItem)
+        return ViewHolder(
+            listItem
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -39,19 +42,29 @@ class EventsByAssetAdapter(context: FragmentActivity, events: ArrayList<EventsBy
                 if (status().equals("in_progress") && smeRequest() == null) {
                     txtActiveEventStatus.text = "In Progress"
                 }
-                if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status() == "requested" && PreferenceUtil.getUserUniqueIdentity(mContext) != smeRequest()?.expert()) {
+                if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status() == "requested" && PreferenceUtil.getUserUniqueIdentity(
+                        mContext
+                    ) != smeRequest()?.expert()) {
                     txtActiveEventStatus.text = "Awaiting SME Approval"
                 }
-                if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status() == "awaiting" && PreferenceUtil.getUserUniqueIdentity(mContext) != smeRequest()?.expert()) {
+                if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status() == "awaiting" && PreferenceUtil.getUserUniqueIdentity(
+                        mContext
+                    ) != smeRequest()?.expert()) {
                     txtActiveEventStatus.text = "Awaiting SME Acceptance"
                 }
-                if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status() == "awaiting" && PreferenceUtil.getUserUniqueIdentity(mContext) == smeRequest()?.expert()) {
+                if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status() == "awaiting" && PreferenceUtil.getUserUniqueIdentity(
+                        mContext
+                    ) == smeRequest()?.expert()) {
                     txtActiveEventStatus.text = " Awaiting my Decision"
                 }
-                if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status() == "accepted" && PreferenceUtil.getUserUniqueIdentity(mContext) != smeRequest()?.expert()) {
+                if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status() == "accepted" && PreferenceUtil.getUserUniqueIdentity(
+                        mContext
+                    ) != smeRequest()?.expert()) {
                     txtActiveEventStatus.text = " SME Approved"
                 }
-                if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status() == "accepted" && PreferenceUtil.getUserUniqueIdentity(mContext) == smeRequest()?.expert()) {
+                if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status() == "accepted" && PreferenceUtil.getUserUniqueIdentity(
+                        mContext
+                    ) == smeRequest()?.expert()) {
                     txtActiveEventStatus.text = " Work in Progress"
                 }
                 if (status().equals("closed") or status().equals("archive")) {
@@ -59,7 +72,9 @@ class EventsByAssetAdapter(context: FragmentActivity, events: ArrayList<EventsBy
                 }
 
 
-                txtCreatedAt.text = Utilities.ConvertUTCToLocal(Constants.TIME_FORMAT_YMDTHMS, Constants.TIME_FORMAT_DATE_OPEN_CLOSED_EVENT, createdAt().toString())
+                txtCreatedAt.text = Utilities.ConvertUTCToLocal(
+                    Constants.TIME_FORMAT_YMDTHMS,
+                    Constants.TIME_FORMAT_DATE_OPEN_CLOSED_EVENT, createdAt().toString())
                 imgViewStatus.setImageDrawable(null)
                 imgViewStatus.setImageResource(0)
 
@@ -71,7 +86,9 @@ class EventsByAssetAdapter(context: FragmentActivity, events: ArrayList<EventsBy
                 } else if (status().equals("closed") or status().equals("archive")) {
                     txtEvent.text = "EVENT CLOSED : "
                     imgViewStatus.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_check_circular_button))
-                } else if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status().equals("awaiting") && PreferenceUtil.getUserUniqueIdentity(mContext) == smeRequest()?.expert()) {
+                } else if (status().equals("in_progress") && smeRequest() != null && smeRequest()?.status().equals("awaiting") && PreferenceUtil.getUserUniqueIdentity(
+                        mContext
+                    ) == smeRequest()?.expert()) {
                     imgViewStatus.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_warning))
 
                 } else {

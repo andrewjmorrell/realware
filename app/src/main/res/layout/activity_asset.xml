@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="40dp"
-    android:contentDescription="hf_no_number|hf_hide_help"
+    android:contentDescription="hf_no_number|hf_hide_help|hf_show_dot"
         android:layout_gravity="center"
         android:background="@drawable/pivot">
 
@@ -34,44 +34,44 @@
             android:onClick="onAttachmentsClick"
             android:contentDescription="hf_use_description|documents"/>
 
-<!--    <Button-->
-<!--            android:layout_width="240dp"-->
-<!--            android:layout_height="45dp"-->
-<!--            android:id="@+id/cameraButton"-->
-<!--            android:layout_marginTop="0dp"-->
-<!--            android:layout_below="@id/attachments"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:text="Take Photo"-->
-<!--            android:textSize="18sp"-->
-<!--            android:onClick="onCameraClick"-->
-<!--            android:drawableLeft="@android:drawable/ic_menu_camera"-->
-<!--            android:contentDescription="hf_use_description|Take Photo"/>-->
+    <Button
+            android:layout_width="240dp"
+            android:layout_height="45dp"
+            android:id="@+id/cameraButton"
+            android:layout_marginTop="0dp"
+            android:layout_below="@id/attachments"
+            android:layout_alignParentStart="true"
+            android:text="Take Photo"
+            android:textSize="18sp"
+            android:onClick="onCameraClick"
+            android:drawableLeft="@android:drawable/ic_menu_camera"
+            android:contentDescription="hf_use_description|Take Photo"/>
 
-<!--    <Button-->
-<!--            android:layout_width="240dp"-->
-<!--            android:layout_height="45dp"-->
-<!--            android:id="@+id/videoRecordButton"-->
-<!--            android:layout_marginTop="0dp"-->
-<!--            android:layout_below="@id/cameraButton"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:text="Record Video"-->
-<!--            android:textSize="18sp"-->
-<!--            android:drawableLeft="@android:drawable/ic_menu_camera"-->
-<!--            android:onClick="onRecordVideoClick"-->
-<!--            android:contentDescription="hf_use_description|Record Video"/>-->
+    <Button
+            android:layout_width="240dp"
+            android:layout_height="45dp"
+            android:id="@+id/videoRecordButton"
+            android:layout_marginTop="0dp"
+            android:layout_below="@id/cameraButton"
+            android:layout_alignParentStart="true"
+            android:text="Record Video"
+            android:textSize="18sp"
+            android:drawableLeft="@android:drawable/ic_menu_camera"
+            android:onClick="onRecordVideoClick"
+            android:contentDescription="hf_use_description|Record Video"/>
 
-<!--    <Button-->
-<!--            android:layout_width="240dp"-->
-<!--            android:layout_height="45dp"-->
-<!--            android:id="@+id/audioCaptureButton"-->
-<!--            android:layout_marginTop="0dp"-->
-<!--            android:layout_below="@id/videoRecordButton"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:text="Record Audio"-->
-<!--            android:textSize="18sp"-->
-<!--            android:drawableLeft="@android:drawable/ic_btn_speak_now"-->
-<!--            android:onClick="onAudioClick"-->
-<!--            android:contentDescription="hf_use_description|Record Audio"/>-->
+    <Button
+            android:layout_width="240dp"
+            android:layout_height="45dp"
+            android:id="@+id/audioCaptureButton"
+            android:layout_marginTop="0dp"
+            android:layout_below="@id/videoRecordButton"
+            android:layout_alignParentStart="true"
+            android:text="Record Audio"
+            android:textSize="18sp"
+            android:drawableLeft="@android:drawable/ic_btn_speak_now"
+            android:onClick="onAudioClick"
+            android:contentDescription="hf_use_description|Record Audio"/>
 
     <Button
             android:layout_width="240dp"

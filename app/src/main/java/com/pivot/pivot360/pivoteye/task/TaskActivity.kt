@@ -10,6 +10,7 @@ import com.pivot.pivot360.content.graphql.UserTaskQuery
 import com.pivot.pivot360.content.listeners.GenericListener
 import com.pivot.pivot360.network.GraphQlApiHandler
 import com.pivot.pivot360.pivoteye.*
+import com.pivot.pivot360.pivoteye.util.PreferenceUtil
 import com.pivot.pivot360.pivotglass.R
 import kotlinx.android.synthetic.main.activity_task.*
 
@@ -18,7 +19,8 @@ import kotlinx.android.synthetic.main.activity_task.*
  */
 class TaskActivity : Activity(), GenericListener<Any> {
 
-    lateinit var identity: String
+    var identity: String? = null
+    var token: String? = null
 
     lateinit var mUserTask: UserTaskQuery.AsUserTaskField
 
@@ -37,29 +39,19 @@ class TaskActivity : Activity(), GenericListener<Any> {
         setContentView(R.layout.activity_task)
 
 
-        if (intent != null && intent.getStringExtra("identity") != null) {
-            identity = intent.getStringExtra("identity")
-            getTask()
+        if (intent != null) {
+            identity = intent.getStringExtra(Constants.IDENTITY)
+            token = intent.getStringExtra(Constants.TOKEN)
+            GraphQlApiHandler.instance
+                .getData<UserTaskQuery, GenericListener<Any>>(
+                    UserTaskQuery.builder()
+                        .token(token!!)
+                        .id(identity)
+                        .build(), this)
         } else {
             Toast.makeText(this, "Task id not found.", Toast.LENGTH_SHORT).show()
         }
 
-        //var extras = hashMapOf(Pair("identity", identity), Pair("token", mToken))
-
-    }
-
-    override fun onStart() {
-        super.onStart()
-        getTask()
-    }
-
-    fun getTask() {
-        GraphQlApiHandler.instance
-            .getData<UserTaskQuery, GenericListener<Any>>(
-                UserTaskQuery.builder()
-                    .token(PreferenceUtil.getToken(this)!!)
-                    .id(identity)
-                    .build(), this)
     }
 
     override fun OnResults(response: Any?) {
@@ -128,23 +120,26 @@ class TaskActivity : Activity(), GenericListener<Any> {
     }
 
     fun onAttachmentsClick(view: View) {
-        val intent = Intent(this, TaskAttachmentActivity::class.java)
-        var extras = hashMapOf(Pair("identity", identity))
-            for (entry in extras.entries) {
-                intent.putExtra(entry.key, entry.value)
-            }
-        startActivity(intent)
+        startActivity(Intent(this, TaskAttachmentActivity::class.java)
+            .putExtra(Constants.IDENTITY, identity)
+            .putExtra(Constants.TOKEN, token))
     }
 
     fun onStartTaskClick(view: View) {
-        startActivity(Intent(this, TaskExecuteActivity::class.java).putExtra(Constants.IDENTITY, identity))
+        startActivity(Intent(this, TaskExecuteActivity::class.java)
+            .putExtra(Constants.IDENTITY, identity)
+            .putExtra(Constants.TOKEN, token))
     }
 
     fun onContinueTaskClick(view: View) {
-        startActivity(Intent(this, TaskExecuteActivity::class.java).putExtra(Constants.IDENTITY, identity))
+        startActivity(Intent(this, TaskExecuteActivity::class.java)
+            .putExtra(Constants.IDENTITY, identity)
+            .putExtra(Constants.TOKEN, token))
     }
 
     fun onViewTaskClick(view: View) {
-        startActivity(Intent(this, TaskViewActivity::class.java).putExtra(Constants.IDENTITY, identity))
+        startActivity(Intent(this, TaskViewActivity::class.java)
+            .putExtra(Constants.IDENTITY, identity)
+            .putExtra(Constants.TOKEN, token))
     }
 }

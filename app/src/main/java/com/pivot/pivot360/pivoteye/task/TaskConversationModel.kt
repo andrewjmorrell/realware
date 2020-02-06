@@ -1,17 +1,23 @@
 package com.pivot.pivot360.pivoteye.task
 
 data class TaskConversationModel(
-        var title: String = "",
-        var value: String = "",
-        var description: String = "",
-        var status: String = "",
-        var updatedAt: String = "",
-        var modelType: Int = -1,
-        var cardType: String = "",
-        var taskStatus: String = "",
-        var checkBoxIndex: String = "",
-        var checkBoxValue: String = "",
-        var switchValue: Boolean = false
+    var cardId: String = "",
+    var title: String = "",
+    var value: String = "",
+    var timerValueSummary: String = "",
+    var description: String = "",
+    var status: String = "",
+    var taskType: String = "",
+    var updatedAt: String = "",
+    var modelType: Int = -1,
+    var cardType: String = "",
+    var taskStatus: String = "",
+    var checkBoxIndex: String = "",
+    var checkBoxValue: String = "",
+    var switchValue: Boolean = false,
+    var showCheckMark: Boolean = false,
+    var summaryUserEnteredValue: String = "",
+    var showCompleteButton: Boolean = false
 
 ) {
 

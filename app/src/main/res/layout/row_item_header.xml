@@ -9,6 +9,4 @@
         android:text="Task"
         android:textSize="20sp"
         android:textColor="@color/white"
-        android:layout_height="wrap_content">
-
-</TextView>
+        android:layout_height="wrap_content"/>

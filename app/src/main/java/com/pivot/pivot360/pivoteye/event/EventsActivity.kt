@@ -1,4 +1,4 @@
-package com.pivot.pivot360.pivoteye
+package com.pivot.pivot360.pivoteye.event
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -7,23 +7,22 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
-import com.pivot.pivot360.content.graphql.EventsByAssetQuery
 import com.pivot.pivot360.content.graphql.EventsByUserQuery
 import com.pivot.pivot360.content.listeners.GenericListener
 import com.pivot.pivot360.content.listeners.OnItemClickListener
 import com.pivot.pivot360.network.GraphQlApiHandler
+import com.pivot.pivot360.pivoteye.BaseActivity
+import com.pivot.pivot360.pivoteye.Constants
+import com.pivot.pivot360.pivoteye.util.PreferenceUtil
 import com.pivot.pivot360.pivotglass.R
 import kotlinx.android.synthetic.main.activity_events.*
 
 
-class EventsByAssetActivity : BaseActivity(), GenericListener<Any>,
+class EventsActivity : BaseActivity(), GenericListener<Any>,
     OnItemClickListener {
 
-    private var mToken: String? = null
-    lateinit var mAdapter: EventAttachmentAdapter
-
-
-    private var glassGestureDetector: GlassGestureDetector? = null
+    private lateinit var mToken: String
+    private lateinit var mUniqueId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,39 +37,31 @@ class EventsByAssetActivity : BaseActivity(), GenericListener<Any>,
         mRecyclerViewAttachment.layoutManager = LinearLayoutManager(this)
         snapHelper.attachToRecyclerView(mRecyclerViewAttachment)
 
-
         if (intent != null) {
-            mToken = PreferenceUtil.getToken(this)
-            val identity = intent.getStringExtra("identity")
-            GraphQlApiHandler.instance
-                .getData<EventsByAssetQuery, GenericListener<Any>>(EventsByAssetQuery.builder()
-                    .token(PreferenceUtil.getToken(this)!!)
-                    .id(identity!!)
-                    .status("active")
-                    .page(1)
-                    .build(),
-                    this)
-        } else {
-            Toast.makeText(this, "Events not found.", Toast.LENGTH_SHORT).show()
+            mToken = intent.getStringExtra("token")
+            mUniqueId = intent.getStringExtra("uniqueid")
         }
+        GraphQlApiHandler.instance
+            .getData<EventsByUserQuery, GenericListener<Any>>(EventsByUserQuery.builder()
+                .token(mToken).build(), this)
 
         setLoading(false)
     }
 
     override fun OnResults(response: Any?) {
         when (response) {
-            is EventsByAssetQuery.Data -> {
-                var eventsByAsset = response.eventsByAsset()
-                eventsByAsset.let {
+            is EventsByUserQuery.Data -> {
+                var eventsByUser = response.eventsByUser()
+                eventsByUser.let {
                     when (it) {
-                        is EventsByAssetQuery.AsEventResults -> {
-                            onEventsByAssets(it)
+                        is EventsByUserQuery.AsEventResults -> {
+                            onEventResults(it)
                         }
 
-                        is EventsByAssetQuery.AsResponseMessageField -> {
+                        is EventsByUserQuery.AsResponseMessageField -> {
                             onResponseMessageField(it.message())
                         }
-                        is EventsByAssetQuery.AsAuthInfoField -> {
+                        is EventsByUserQuery.AsAuthInfoField -> {
                             onAuthInfoField(it.message())
                         }
                     }
@@ -80,22 +71,26 @@ class EventsByAssetActivity : BaseActivity(), GenericListener<Any>,
     }
 
     override fun onError(message: String?) {
-        runOnUiThread { Toast.makeText(this@EventsByAssetActivity, message, Toast.LENGTH_SHORT).show() }
+        runOnUiThread { Toast.makeText(this@EventsActivity, message, Toast.LENGTH_SHORT).show() }
     }
 
     override fun onAuthInfoField(message: String?) {
-        runOnUiThread { Toast.makeText(this@EventsByAssetActivity, message, Toast.LENGTH_SHORT).show() }
+        runOnUiThread { Toast.makeText(this@EventsActivity, message, Toast.LENGTH_SHORT).show() }
 
     }
 
     override fun onResponseMessageField(message: String?) {
-        runOnUiThread { Toast.makeText(this@EventsByAssetActivity, message, Toast.LENGTH_SHORT).show() }
+        runOnUiThread { Toast.makeText(this@EventsActivity, message, Toast.LENGTH_SHORT).show() }
     }
 
-    fun onEventsByAssets(response: EventsByAssetQuery.AsEventResults?) {
+    fun onEventResults(response: EventsByUserQuery.AsEventResults?) {
 
         runOnUiThread {
-            val adapter = EventsByAssetAdapter(this, ArrayList(response?.events()!!), this)
+            val adapter = EventsAdapter(
+                this,
+                ArrayList(response?.events()!!),
+                this
+            )
             if (mRecyclerViewAttachment != null) {
                 mRecyclerViewAttachment.adapter = adapter
                 if (response?.events()?.size == 0) {
@@ -110,11 +105,9 @@ class EventsByAssetActivity : BaseActivity(), GenericListener<Any>,
     }
 
     override fun onItemClick(item: String) {
-        val intent = Intent(this, MainActivity::class.java)
-        var extras = hashMapOf(Pair("identity", item), Pair("token", mToken))
-        for (entry in extras.entries) {
-            intent.putExtra(entry.key, entry.value)
-        }
+        val intent = Intent(this, EventActivity::class.java)
+            .putExtra(Constants.IDENTITY, item)
+            .putExtra(Constants.TOKEN, mToken)
         startActivity(intent)
     }
 

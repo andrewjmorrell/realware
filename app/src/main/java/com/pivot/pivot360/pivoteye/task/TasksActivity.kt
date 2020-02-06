@@ -3,25 +3,28 @@ package com.pivot.pivot360.pivoteye.task
 import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
 import com.pivot.pivot360.content.graphql.TasksByAssetQuery
 import com.pivot.pivot360.content.graphql.UserTasksQuery
 import com.pivot.pivot360.content.listeners.GenericListener
 import com.pivot.pivot360.network.GraphQlApiHandler
 import com.pivot.pivot360.content.listeners.OnTaskItemClickListener
 import com.pivot.pivot360.pivoteye.*
+import com.pivot.pivot360.pivoteye.util.PreferenceUtil
 import com.pivot.pivot360.pivotglass.R
 import com.pivot.pivot360.screens.tasks.TasksAdapter
 import kotlinx.android.synthetic.main.activity_tasks.*
 
 class TasksActivity : BaseActivity(), OnTaskItemClickListener, GenericListener<Any> {
 
-    private var totalPages = 0
+    private lateinit var mToken: String
+    private lateinit var mUniqueId: String
 
     override fun onTaskItemClick(userTask: Any) {
 
         if (userTask is UserTasksQuery.UserTask?) {
-            startActivity(Intent(this, TaskActivity::class.java).putExtra(Constants.IDENTITY, userTask.identity()))
+            startActivity(Intent(this, TaskActivity::class.java)
+                .putExtra(Constants.IDENTITY, userTask.identity())
+                .putExtra(Constants.TOKEN, mToken))
         }
     }
 
@@ -29,8 +32,12 @@ class TasksActivity : BaseActivity(), OnTaskItemClickListener, GenericListener<A
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tasks)
 
+        if (intent != null) {
+            mToken = intent.getStringExtra("token")
+            mUniqueId = intent.getStringExtra("uniqueid")
+        }
+
         getTasks()
-        //getTasksByAssets("b5551d4c31de4d1d3a126052446ce55")
 
         rvTasks.apply {
             layoutManager = LinearLayoutManager(this@TasksActivity)
@@ -42,12 +49,8 @@ class TasksActivity : BaseActivity(), OnTaskItemClickListener, GenericListener<A
     private fun getTasks() {
         GraphQlApiHandler.instance
             .getData<UserTasksQuery, GenericListener<Any>>(UserTasksQuery.builder()
-                .token(PreferenceUtil.getToken(this)!!)
-                .accountId(
-                    PreferenceUtil.getUserUniqueIdentity(
-                        this
-                    )
-                )
+                .token(mToken)
+                .accountId(mUniqueId)
                 .build(), this)
     }
 

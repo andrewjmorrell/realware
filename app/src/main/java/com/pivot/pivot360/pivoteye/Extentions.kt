@@ -10,10 +10,13 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.pivot.pivot360.pivoteye.Constants.TASK_CARD_TYPE_COUNTDOWN
+import com.pivot.pivot360.pivoteye.Constants.TASK_CARD_TYPE_STOPWATCH
 import com.pivot.pivot360.pivotglass.R
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import com.pivot.pivot360.pivotglass.BuildConfig
 
 fun Activity.showToast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_LONG).show()
@@ -37,6 +40,19 @@ fun Fragment.startActivityWithData(Other: Activity, bundle: Bundle) {
 
 fun Activity.startActivityWithData(Other: Activity, bundle: Bundle) {
     startActivity(Intent(this, Other::class.java).putExtra("data", bundle))
+}
+
+fun String.isTimer(): Boolean {
+    return this == TASK_CARD_TYPE_COUNTDOWN || this == TASK_CARD_TYPE_STOPWATCH
+
+}
+
+fun String?.nullToNumber(): String {
+    return if (this.isNullOrEmpty() or this.equals("null", true)) {
+        "0"
+    } else {
+        this.toString()
+    }
 }
 
 fun Activity.runLayoutAnimation(recyclerView: RecyclerView) {
@@ -139,4 +155,8 @@ fun String.timeFormatToLong(): Long {
     val ms = seconds[1].toInt()
     return min * 6000 + sec * 1000 + ms * 10.toLong()
 
+}
+
+fun String.flavour(): String {
+    return if (BuildConfig.FLAVOR.contains("pae")) this else this//Constants.BASE_URL + this
 }

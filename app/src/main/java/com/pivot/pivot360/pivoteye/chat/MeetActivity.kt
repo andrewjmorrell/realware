@@ -1,14 +1,14 @@
-package com.pivot.pivot360.pivoteye
+package com.pivot.pivot360.pivoteye.chat
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
-import android.widget.Toast
+import com.moxtra.binder.ui.meet.LiveMeetFragment
 import com.moxtra.sdk.ChatClient
-import com.moxtra.sdk.chat.controller.ChatConfig
 import com.moxtra.sdk.chat.model.Chat
 import com.moxtra.sdk.client.ChatClientDelegate
 import com.moxtra.sdk.common.ApiCallback
@@ -18,12 +18,15 @@ import com.moxtra.sdk.meet.controller.MeetSessionController
 import com.moxtra.sdk.meet.model.Meet
 import com.moxtra.sdk.meet.model.MeetSession
 import com.moxtra.sdk.meet.repo.MeetRepo
+import com.pivot.pivot360.pivoteye.BaseActivity
 import com.pivot.pivot360.pivoteye.Constants.CLIENT_ID
 import com.pivot.pivot360.pivoteye.Constants.CLIENT_SECRET
 import com.pivot.pivot360.pivotglass.R
+import com.pivot.pivot360.screens.tasks.userTask.TaskExecuteAdapter
+import kotlinx.android.synthetic.main.activity_task_execute.*
 import java.util.*
 
-class MeetActivity : BaseActivity(), GlassGestureDetector.OnGestureListener {
+class MeetActivity : BaseActivity() {
 
     private val mHandler = Handler()
 
@@ -32,8 +35,6 @@ class MeetActivity : BaseActivity(), GlassGestureDetector.OnGestureListener {
     private var mMeetSession: MeetSession? = null
     private var mMeetSessionController: MeetSessionController? = null
     lateinit var mChat: Chat
-
-    private var glassGestureDetector: GlassGestureDetector? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,8 +48,6 @@ class MeetActivity : BaseActivity(), GlassGestureDetector.OnGestureListener {
             finishInMainThread()
             return
         }
-
-        glassGestureDetector = GlassGestureDetector(this, this)
 
         mChatClientDelegate = ChatClient.getClientDelegate()
         if (mChatClientDelegate == null) {
@@ -91,11 +90,33 @@ class MeetActivity : BaseActivity(), GlassGestureDetector.OnGestureListener {
                 fragment = mMeetSessionController!!.createMeetFragment()
                 supportFragmentManager.beginTransaction().add(R.id.meet_frame, fragment!!).commit()
             }
-            mMeetSessionController!!.setSwitchToNormalViewActionListener { view, aVoid -> showMeet(view.context) }
+            mMeetSessionController!!.setSwitchToNormalViewActionListener { view, aVoid ->
+                showMeet(
+                    view.context
+                )
+            }
             mMeetSessionController!!.setSwitchToFloatingViewActionListener { view, aVoid -> finish() }
             mMeetSession!!.setOnMeetEndedEventListener { finish() }
             setLoading(false)
         }
+    }
+
+    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        when (keyCode) {
+            ActionBtnKeyCode -> {
+                mMeetSession?.endOrLeaveMeet(object: ApiCallback<String> {
+                    override fun onCompleted(string: String) {
+
+                    }
+
+                    override fun onError(errorCode: Int, errorMsg: String) {
+
+                    }
+
+                })
+            }
+        }
+        return super.onKeyUp(keyCode, event)
     }
 
     private fun finishInMainThread() {
@@ -191,21 +212,6 @@ class MeetActivity : BaseActivity(), GlassGestureDetector.OnGestureListener {
         Log.d(TAG, "onCreate")
     }
 
-    override fun onGesture(gesture: GlassGestureDetector.Gesture): Boolean {
-        when (gesture) {
-            GlassGestureDetector.Gesture.TAP ->
-                // Response for TAP gesture
-                return false
-            GlassGestureDetector.Gesture.SWIPE_FORWARD ->
-                // Response for SWIPE_FORWARD gesture
-                return false
-            GlassGestureDetector.Gesture.SWIPE_BACKWARD ->
-                finish()
-            else -> return false
-        }
-        return false
-    }
-
     companion object {
 
         private const val TAG = "DEMO_MeetActivity"
@@ -220,7 +226,10 @@ class MeetActivity : BaseActivity(), GlassGestureDetector.OnGestureListener {
 
         fun joinMeet(ctx: Context, meet: Meet) {
             val intent = Intent(ctx, MeetActivity::class.java)
-            intent.putExtra(KEY_ACTION, ACTION_JOIN)
+            intent.putExtra(
+                KEY_ACTION,
+                ACTION_JOIN
+            )
             intent.putExtra(KEY_MEET, meet)
             ctx.startActivity(intent)
         }
@@ -235,7 +244,10 @@ class MeetActivity : BaseActivity(), GlassGestureDetector.OnGestureListener {
 
                 override fun onCompleted(ccd: ChatClientDelegate) {
                     val intent = Intent(ctx, MeetActivity::class.java)
-                    intent.putExtra(KEY_ACTION, ACTION_JOIN_NOTIFICATION)
+                    intent.putExtra(
+                        KEY_ACTION,
+                        ACTION_JOIN_NOTIFICATION
+                    )
                     intent.putExtra(ACTION_JOIN_NOTIFICATION, meet)
                     ctx.startActivity(intent)
                 }
@@ -244,7 +256,10 @@ class MeetActivity : BaseActivity(), GlassGestureDetector.OnGestureListener {
 
         fun startMeet(ctx: Context, topic: String, userList: ArrayList<User>, chat: Chat) {
             val intent = Intent(ctx, MeetActivity::class.java)
-            intent.putExtra(KEY_ACTION, ACTION_START)
+            intent.putExtra(
+                KEY_ACTION,
+                ACTION_START
+            )
             intent.putExtra(KEY_TOPIC, topic)
             intent.putExtra("chat", chat)
             intent.putParcelableArrayListExtra(KEY_USER_LIST, userList)
@@ -253,7 +268,10 @@ class MeetActivity : BaseActivity(), GlassGestureDetector.OnGestureListener {
 
         fun showMeet(ctx: Context) {
             val intent = Intent(ctx, MeetActivity::class.java)
-            intent.putExtra(KEY_ACTION, ACTION_SHOW)
+            intent.putExtra(
+                KEY_ACTION,
+                ACTION_SHOW
+            )
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             ctx.startActivity(intent)
         }

@@ -1,4 +1,4 @@
-package com.pivot.pivot360.pivoteye;
+package com.pivot.pivot360.pivoteye.chat;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import com.moxtra.sdk.chat.model.Chat;
 import com.moxtra.sdk.chat.repo.ChatRepo;
 import com.moxtra.sdk.client.ChatClientDelegate;
 import com.moxtra.sdk.common.ApiCallback;
+import com.pivot.pivot360.pivoteye.BaseActivity;
 import com.pivot.pivot360.pivotglass.R;
 
 import java.util.ArrayList;

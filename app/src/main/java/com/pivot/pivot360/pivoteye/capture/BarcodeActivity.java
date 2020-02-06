@@ -5,7 +5,7 @@
  * Contact info@realwear.com for further information about the use of this code.
  */
 
-package com.pivot.pivot360.pivoteye;
+package com.pivot.pivot360.pivoteye.capture;
 
 import android.app.Activity;
 import android.content.Intent;

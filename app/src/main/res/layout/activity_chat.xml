@@ -4,7 +4,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.pivot.pivot360.pivoteye.ChatActivity">
+        tools:context="com.pivot.pivot360.pivoteye.chat.ChatActivity"
+        android:contentDescription="hf_persists">
 
     <FrameLayout
             android:id="@+id/chat_frame"

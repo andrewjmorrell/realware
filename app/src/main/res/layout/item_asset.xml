@@ -1,110 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:foreground="?android:attr/selectableItemBackground"
-    card_view:cardBackgroundColor="@color/white"
-    card_view:cardCornerRadius="4dp"
-    card_view:cardElevation="5dp"
-    card_view:cardUseCompatPadding="true">
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardBackgroundColor="@color/white"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="5dp"
+        card_view:cardUseCompatPadding="true">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <FrameLayout
-            android:id="@+id/iv_cover_container"
-            android:layout_width="@dimen/timeline_height"
-            android:layout_height="@dimen/timeline_height">
+                android:id="@+id/iv_cover_container"
+                android:layout_width="@dimen/timeline_height"
+                android:layout_height="@dimen/timeline_height">
 
             <ImageView
-                android:id="@+id/iv_cover"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="1dp" />
+                    android:id="@+id/iv_cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="1dp" />
 
             <TextView
-                android:id="@+id/tv_badge"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="top|end"
-                android:background="@drawable/badge_circle_bg"
-                android:gravity="center"
-                android:text="@string/default_badge_number"
+                    android:id="@+id/tv_badge"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="top|end"
+                    android:background="@drawable/badge_circle_bg"
+                    android:gravity="center"
+                    android:text="@string/default_badge_number"
 
-                android:textColor="@color/white"
-                android:visibility="gone" />
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
         </FrameLayout>
 
 
         <TextView
-            android:id="@+id/txtTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_toEndOf="@+id/iv_cover_container"
-            android:layout_toRightOf="@+id/iv_cover_container"
-            android:maxLines="1"
-            android:paddingLeft="@dimen/padding"
-            android:text=""
-            android:textAllCaps="true"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+                android:id="@+id/txtTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/iv_cover_container"
+                android:layout_toRightOf="@+id/iv_cover_container"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/padding"
+                android:text=""
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/txtModelMake"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtTitle"
-            android:layout_toEndOf="@+id/iv_cover_container"
-            android:layout_toRightOf="@+id/iv_cover_container"
-            android:paddingLeft="@dimen/padding"
-            android:paddingRight="5dp"
-            android:text=""
+                android:id="@+id/txtModelMake"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtTitle"
+                android:layout_toEndOf="@+id/iv_cover_container"
+                android:layout_toRightOf="@+id/iv_cover_container"
+                android:paddingLeft="@dimen/padding"
+                android:paddingRight="5dp"
+                android:text=""
 
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/txtBarcode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtModelMake"
-            android:layout_toEndOf="@+id/iv_cover_container"
-            android:layout_toRightOf="@+id/iv_cover_container"
-            android:paddingLeft="@dimen/padding"
-            android:paddingRight="5dp"
-            android:text=""
-
-            android:textSize="14sp" />
+                android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/txtDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtModelMake"
-            android:layout_alignParentBottom="@+id/txtBarcode"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="5dp"
-            android:layout_toEndOf="@+id/iv_cover_container"
-            android:layout_toRightOf="@+id/iv_cover_container"
-            android:paddingLeft="@dimen/padding"
-            android:paddingRight="5dp"
-            android:text=""
+                android:id="@+id/txtBarcode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtModelMake"
+                android:layout_toEndOf="@+id/iv_cover_container"
+                android:layout_toRightOf="@+id/iv_cover_container"
+                android:paddingLeft="@dimen/padding"
+                android:paddingRight="5dp"
+                android:text=""
 
-            android:textSize="11sp" />
+                android:textSize="14sp" />
+
+        <TextView
+                android:id="@+id/txtPaeRadarType"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtBarcode"
+                android:layout_toEndOf="@+id/iv_cover_container"
+                android:layout_toRightOf="@+id/iv_cover_container"
+                android:paddingLeft="@dimen/padding"
+                android:paddingRight="5dp"
+                android:text=""
+
+                android:textSize="14sp" />
+
+        <TextView
+                android:id="@+id/txtDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtModelMake"
+                android:layout_alignParentBottom="@+id/txtBarcode"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toEndOf="@+id/iv_cover_container"
+                android:layout_toRightOf="@+id/iv_cover_container"
+                android:paddingLeft="@dimen/padding"
+                android:paddingRight="5dp"
+                android:text=""
+
+                android:textSize="11sp" />
 
 
         <Space
-            android:id="@+id/space"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtTitle"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true" />
+                android:id="@+id/space"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtTitle"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true" />
 
 
     </RelativeLayout>

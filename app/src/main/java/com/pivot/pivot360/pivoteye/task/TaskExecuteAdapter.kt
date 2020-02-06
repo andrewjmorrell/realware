@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.CountDownTimer
 import android.os.Handler
 import android.os.SystemClock
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +12,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.pivot.pivot360.content.listeners.OnTaskTimerItemClickListener
+import com.pivot.pivot360.content.listeners.OnTaskItemClickListener
+import com.pivot.pivot360.content.listeners.TaskListener
 import com.pivot.pivot360.pivoteye.*
+import com.pivot.pivot360.pivoteye.Constants.TASK_STATUS_TEXT_SKIP_THE_COUNTDOWN
+import com.pivot.pivot360.pivoteye.Constants.TASK_STATUS_TEXT_START
 import com.pivot.pivot360.pivoteye.task.TaskConversationModel
+import com.pivot.pivot360.pivoteye.task.TaskExecuteActivity
 import com.pivot.pivot360.pivotglass.R
 import kotlinx.android.synthetic.main.row_item_task_complete_view.view.*
 import kotlinx.android.synthetic.main.row_item_task_result.view.*
@@ -26,7 +31,7 @@ import java.util.concurrent.TimeUnit
 
 
 class TaskExecuteAdapter(private val mTaskConversationList: ArrayList<TaskConversationModel>,
-                              private val listener: OnTaskTimerItemClickListener, var viewOnly: Boolean) :
+                         private val listener: TaskListener, var viewOnly: Boolean) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -58,6 +63,9 @@ class TaskExecuteAdapter(private val mTaskConversationList: ArrayList<TaskConver
         private var mStopWatchTask: TimerTask? = null
         private var mStopWatchTimer: Timer? = null
         private var mStopWatchHandler = Handler()
+
+        private lateinit var currentHolder: RecyclerView.ViewHolder
+        private lateinit var currentModel: TaskConversationModel
     }
 
 
@@ -123,6 +131,8 @@ class TaskExecuteAdapter(private val mTaskConversationList: ArrayList<TaskConver
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         holder.itemView.apply {
             mTaskConversationList[position].also {
+                currentHolder = holder
+                currentModel = it
                 when (holder) {
                     is ViewOneHolder -> {
                         tvResult.text = it.description.fromHtml()
@@ -131,6 +141,7 @@ class TaskExecuteAdapter(private val mTaskConversationList: ArrayList<TaskConver
                         } else {
                             imgCheck.visibility = View.GONE
                         }
+                        listener.onShowHideMessageBox(true)
                     }
                     is SwitchViewHolder -> {
                         with(swTaskConversation) {
@@ -142,11 +153,9 @@ class TaskExecuteAdapter(private val mTaskConversationList: ArrayList<TaskConver
                             var map = HashMap<String, String>()
                             map["index"] = it.checkBoxIndex
                             map["value"] = b.valueToString()
-                            listener.onTaskTimerItemClick(map)
+                            listener.onTaskItemClick(map)
                         }
-
-
-
+                        listener.onShowHideMessageBox(false)
                     }
                     is ResultHolder -> {
                         txtStep.text = it.description.fromHtml()
@@ -160,10 +169,12 @@ class TaskExecuteAdapter(private val mTaskConversationList: ArrayList<TaskConver
                             txtStepDate.setTextColor(Color.WHITE)
                             txtStep.setTextColor(Color.WHITE)
                         }
+                        listener.onShowHideMessageBox(false)
 
                     }
                     is CompleteViewHolder -> {
                         txtCompleteText.text = it.description.fromHtml()
+                        listener.onShowHideMessageBox(false)
                     }
                     is TimerViewHolder -> {
                         tvResult.text = it.description.fromHtml()
@@ -209,6 +220,8 @@ class TaskExecuteAdapter(private val mTaskConversationList: ArrayList<TaskConver
                             }
                         }
 
+                        listener.onShowHideMessageBox(false)
+
 
                         ////// timer and countdown button click
                         imgTimerPlayButton.setOnClickListener { view ->
@@ -236,17 +249,6 @@ class TaskExecuteAdapter(private val mTaskConversationList: ArrayList<TaskConver
         }
     }
 
-    //    private fun switchValueBtoS(value: Boolean): String {
-//        return when (value) {
-//            true -> {
-//                "yes"
-//            }
-//            false -> {
-//                "no"
-//            }
-//
-//        }
-//    }
     private fun callStopwatch(txtTimerCardValue: TextView?, imgTimerPlayButton: ImageView, txtTimerStatus: TextView) {
 
 
@@ -257,7 +259,7 @@ class TaskExecuteAdapter(private val mTaskConversationList: ArrayList<TaskConver
             imgTimerPlayButton.setImageResource(R.drawable.ic_play_circle_outline)
             imgTimerPlayButton.setColorFilter(ContextCompat.getColor(imgTimerPlayButton.context, R.color.color_green), android.graphics.PorterDuff.Mode.SRC_IN)
             isStopwatchRunning = false
-            listener.onTaskTimerItemClick(txtTimerCardValue?.text.toString().timeFormatToLong().toString())
+            listener.onTaskItemClick(txtTimerCardValue?.text.toString().timeFormatToLong().toString())
         } else {
 
             StartTime = SystemClock.uptimeMillis()
@@ -276,21 +278,21 @@ class TaskExecuteAdapter(private val mTaskConversationList: ArrayList<TaskConver
 
         if (isCountdownRunning) {
             stopCountDownTimer(txtTimerCardValue)
-            txtTimerStatus.text = "Start Test"
+            txtTimerStatus.text = TASK_STATUS_TEXT_START
             txtTimerStatus.setTextColor(ContextCompat.getColor(txtTimerStatus.context, R.color.black))
             imgTimerPlayButton.setImageResource(R.drawable.ic_play_circle_outline)
             imgTimerPlayButton.setColorFilter(ContextCompat.getColor(imgTimerPlayButton.context, R.color.color_green), android.graphics.PorterDuff.Mode.SRC_IN)
             isCountdownRunning = false
-            // listener.onTaskTimerItemClick(txtTimerCardValue.text.toString().timeFormatToLong().toString())
+            listener.onTaskItemClick(txtTimerCardValue.text.toString().timeFormatToLong().toString())
         } else {
 
             StartTime = SystemClock.uptimeMillis()
 
             startCountDownTimer(value, txtTimerCardValue)
-            txtTimerStatus.text = "skip the countdown"
+            txtTimerStatus.text = TASK_STATUS_TEXT_SKIP_THE_COUNTDOWN
             txtTimerStatus.setTextColor(ContextCompat.getColor(txtTimerStatus.context, R.color.black))
             imgTimerPlayButton.setImageResource(R.drawable.ic_forward)
-            imgTimerPlayButton.setColorFilter(Color.parseColor("#F3BF0E"), android.graphics.PorterDuff.Mode.SRC_IN)
+            imgTimerPlayButton.setColorFilter(ContextCompat.getColor(txtTimerCardValue.context, R.color.color_status_failed), android.graphics.PorterDuff.Mode.SRC_IN)
             isCountdownRunning = true
         }
 
@@ -364,7 +366,7 @@ class TaskExecuteAdapter(private val mTaskConversationList: ArrayList<TaskConver
 
         mTimerRunning = false
         mCountDownTimer?.cancel()
-        listener.onTaskTimerItemClick(tvCountDownTime.text.toString().timeFormatToLong().toString())
+        listener.onTaskItemClick(tvCountDownTime.text.toString().timeFormatToLong().toString())
 
     }
 
@@ -400,5 +402,13 @@ class TaskExecuteAdapter(private val mTaskConversationList: ArrayList<TaskConver
 
         tvCountDownTime.text =
             String.format(Locale.getDefault(), "%02d:%02d.%02d", min, seconds, millis / 10)
+    }
+
+    fun onActionButtonPressed(keyCode: Int, event: KeyEvent?) {
+        if (currentHolder is TimerViewHolder) {
+            currentHolder.itemView.imgTimerPlayButton.callOnClick()
+        } else if (currentHolder is ViewOneHolder) {
+            listener.onTaskDataEntryClick(currentHolder.itemView)
+        }
     }
 }

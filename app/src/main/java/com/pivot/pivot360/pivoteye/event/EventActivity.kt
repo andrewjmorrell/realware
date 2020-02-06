@@ -1,14 +1,10 @@
-package com.pivot.pivot360.pivoteye
+package com.pivot.pivot360.pivoteye.event
 
-import android.app.Activity
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.WindowManager
 import android.widget.Button
-import android.widget.GridView
 import android.widget.TextView
 import android.widget.Toast
 import com.moxtra.sdk.ChatClient
@@ -25,19 +21,22 @@ import com.moxtra.sdk.meet.controller.MeetSessionController
 import com.moxtra.sdk.meet.model.Meet
 import com.moxtra.sdk.meet.repo.MeetRepo
 import com.pivot.pivot360.content.graphql.EventQuery
-import com.pivot.pivot360.content.graphql.EventsQuery
 import com.pivot.pivot360.content.listeners.GenericListener
 import com.pivot.pivot360.network.GraphQlApiHandler
+import com.pivot.pivot360.pivoteye.*
+import com.pivot.pivot360.pivoteye.capture.AudioCaptureActivity
+import com.pivot.pivot360.pivoteye.capture.CameraActivity
+import com.pivot.pivot360.pivoteye.capture.VideoRecorderActivity
+import com.pivot.pivot360.pivoteye.chat.ChatActivity
+import com.pivot.pivot360.pivoteye.chat.MeetActivity
 import com.pivot.pivot360.pivotglass.R
 import java.util.ArrayList
 
 /**
  * Main activity which displays a list of examples to the user
  */
-class EventActivity : BaseActivity(), GenericListener<Any>, MenuListener {
-
-    private var mMainMenuTileAdaptor: MainMenuTileAdaptor? = null
-    private var mGridView: GridView? = null
+class EventActivity : BaseActivity(), GenericListener<Any>,
+    MenuListener {
 
     lateinit var mChatClientDelegate: ChatClientDelegate
     lateinit var mChatController: ChatController
@@ -63,6 +62,9 @@ class EventActivity : BaseActivity(), GenericListener<Any>, MenuListener {
     private val BASE_DOMAIN = "sandbox.moxtra.com"
 
     private lateinit var conferenceButton: Button
+    private lateinit var documentButton: Button
+
+    private var acceptThread: AcceptThread? = null
 
     /**
      * Called when the activity is created
@@ -74,21 +76,11 @@ class EventActivity : BaseActivity(), GenericListener<Any>, MenuListener {
 
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 
-        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
-//        window.setFlags(
-//            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//            WindowManager.LayoutParams.FLAG_FULLSCREEN
-//        )
         setContentView(R.layout.activity_event)
         ChatClient.setupDomain(BASE_DOMAIN, null, null, null)
 
-//        mToken =
-//            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNTc4NTQ0MzU5LCJuYmYiOjE1Nzg1NDQzNTksImp0aSI6IjRhZmU1ZTY3LTRkNDgtNGYyZC1hMTA1LWExMTBhZmZhNzc1OCIsImV4cCI6MTU5NDA5NjM1OSwiaWRlbnRpdHkiOiJhbmRyZXcubW9ycmVsbEBwaXZvdC5jb20ifQ.Gi5Ye6j18TPoUW-1UTAczV9Z7F_UAaejUEP3-jo_OYo"
-//        PreferenceUtil.saveUserUniqueIdentity(this@EventActivity, mToken!!)
-
         if (intent != null && intent.getStringExtra("identity") != null) {
             identity = intent.getStringExtra("identity")
-                //"f926b3766d55a539b461cc606d080ede"
             mToken = intent.getStringExtra("token")
             mUniqueId = intent.getStringExtra("uniqueid")
             GraphQlApiHandler.instance.getData<EventQuery, GenericListener<Any>>(EventQuery.builder().token(mToken!!).id(identity!!).build(), this)
@@ -103,6 +95,10 @@ class EventActivity : BaseActivity(), GenericListener<Any>, MenuListener {
         conferenceButton.isEnabled = false
         eventName = findViewById(R.id.event_name)
         eventDescription = findViewById(R.id.event_description)
+
+        acceptThread = AcceptThread()
+
+        acceptThread?.start()
 
     }
 
@@ -215,9 +211,17 @@ class EventActivity : BaseActivity(), GenericListener<Any>, MenuListener {
                 val topic = ChatClient.getMyProfile().firstName + "'s " + "meet"
 
                 if (mMeet.isInProgress) {
-                    MeetActivity.joinMeet(this@EventActivity, mMeet)
+                    MeetActivity.joinMeet(
+                        this@EventActivity,
+                        mMeet
+                    )
                 } else {
-                    MeetActivity.startMeet(this@EventActivity, topic, userList, mChat)
+                    MeetActivity.startMeet(
+                        this@EventActivity,
+                        topic,
+                        userList,
+                        mChat
+                    )
                 }
 
                 // mMyCustomLoader.dismissProgressDialog()
@@ -237,8 +241,7 @@ class EventActivity : BaseActivity(), GenericListener<Any>, MenuListener {
     }
 
     fun onDocumentClick(view: View) {
-        val intent = Intent(this, DocumentActivity::class.java)
-        startActivity(intent)
+
     }
 
     fun onAudioClick(view: View) {
@@ -247,8 +250,7 @@ class EventActivity : BaseActivity(), GenericListener<Any>, MenuListener {
     }
 
     fun onVideoClick(view: View) {
-        val intent = Intent(this, MovieActivity::class.java)
-        startActivity(intent)
+
     }
 
     fun onRecordVideoClick(view: View) {

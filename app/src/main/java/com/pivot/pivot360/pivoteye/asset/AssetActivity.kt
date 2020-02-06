@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
-import android.widget.GridView
 import android.widget.TextView
 import android.widget.Toast
 import com.moxtra.sdk.ChatClient
@@ -26,6 +25,14 @@ import com.pivot.pivot360.content.graphql.AssetQuery
 import com.pivot.pivot360.content.listeners.GenericListener
 import com.pivot.pivot360.network.GraphQlApiHandler
 import com.pivot.pivot360.pivoteye.*
+import com.pivot.pivot360.pivoteye.capture.AudioCaptureActivity
+import com.pivot.pivot360.pivoteye.capture.CameraActivity
+import com.pivot.pivot360.pivoteye.capture.VideoRecorderActivity
+import com.pivot.pivot360.pivoteye.chat.ChatActivity
+import com.pivot.pivot360.pivoteye.chat.MeetActivity
+import com.pivot.pivot360.pivoteye.event.EventAttachmentActivity
+import com.pivot.pivot360.pivoteye.event.EventsByAssetActivity
+import com.pivot.pivot360.pivoteye.event.MenuListener
 import com.pivot.pivot360.pivotglass.R
 import java.util.ArrayList
 
@@ -34,9 +41,6 @@ import java.util.ArrayList
  */
 class AssetActivity : Activity(), GenericListener<Any>,
     MenuListener {
-
-    private var mMainMenuTileAdaptor: MainMenuTileAdaptor? = null
-    private var mGridView: GridView? = null
 
     lateinit var mChatClientDelegate: ChatClientDelegate
     lateinit var mChatController: ChatController
@@ -81,9 +85,9 @@ class AssetActivity : Activity(), GenericListener<Any>,
         )
         setContentView(R.layout.activity_asset)
 
-        if (intent != null && intent.getStringExtra("identity") != null) {
-            identity = intent.getStringExtra("identity")
-            mToken = PreferenceUtil.getToken(this)
+        if (intent != null) {
+            identity = intent.getStringExtra(Constants.IDENTITY)
+            mToken = intent.getStringExtra(Constants.TOKEN)
             GraphQlApiHandler.instance.getData<AssetQuery, GenericListener<Any>>(AssetQuery.builder().token(mToken!!).id(identity).build(), this@AssetActivity)
         } else {
             Toast.makeText(this, "asset id not found.", Toast.LENGTH_SHORT).show()
@@ -100,9 +104,9 @@ class AssetActivity : Activity(), GenericListener<Any>,
 
     override fun onDestroy() {
         super.onDestroy()
-        if (mChatController != null) {
-            mChatController!!.cleanup()
-        }
+        try {
+            mChatController.cleanup()
+        } catch (e: Exception) {}
     }
 
     override fun onError(message: String) {
@@ -266,17 +270,13 @@ class AssetActivity : Activity(), GenericListener<Any>,
     }
 
     fun onDocumentClick(view: View) {
-        val intent = Intent(this, DocumentActivity::class.java)
-        startActivity(intent)
+
     }
 
     fun onEventsClick(view: View) {
-        val intent = Intent(this, EventsByAssetActivity::class.java)
-        var extras = hashMapOf(Pair("identity", identity), Pair("token", mToken))
-        for (entry in extras.entries) {
-            intent.putExtra(entry.key, entry.value)
-        }
-        startActivity(intent)
+        startActivity(Intent(this, EventsByAssetActivity::class.java)
+            .putExtra(Constants.IDENTITY, identity)
+            .putExtra(Constants.TOKEN, mToken))
     }
 
     fun onAudioClick(view: View) {
@@ -285,8 +285,7 @@ class AssetActivity : Activity(), GenericListener<Any>,
     }
 
     fun onVideoClick(view: View) {
-        val intent = Intent(this, MovieActivity::class.java)
-        startActivity(intent)
+
     }
 
     fun onRecordVideoClick(view: View) {

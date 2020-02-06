@@ -1,7 +1,6 @@
 package com.pivot.pivot360.pivoteye.task
 
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.pivot.pivot360.content.graphql.UserTaskQuery
@@ -9,13 +8,15 @@ import com.pivot.pivot360.content.listeners.GenericListener
 import com.pivot.pivot360.content.listeners.OnTaskTimerItemClickListener
 import com.pivot.pivot360.network.GraphQlApiHandler
 import com.pivot.pivot360.pivoteye.*
+import com.pivot.pivot360.pivoteye.util.PreferenceUtil
 import com.pivot.pivot360.pivotglass.R
 import kotlinx.android.synthetic.main.activity_task_view.*
 
 
 class TaskViewActivity : AppCompatActivity(), GenericListener<Any>, OnTaskTimerItemClickListener {
 
-    lateinit var identity: String
+    private var identity: String? = null
+    private var token: String? = null
 
     lateinit var mUserTask: UserTaskQuery.AsUserTaskField
 
@@ -25,21 +26,18 @@ class TaskViewActivity : AppCompatActivity(), GenericListener<Any>, OnTaskTimerI
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_view)
 
-        if (intent != null && intent.getStringExtra("identity") != null) {
-            identity = intent.getStringExtra("identity")
-            getTask(identity)
+        if (intent != null) {
+            identity = intent.getStringExtra(Constants.IDENTITY)
+            token = intent.getStringExtra(Constants.TOKEN)
+            GraphQlApiHandler.instance
+                .getData<UserTaskQuery, GenericListener<Any>>(UserTaskQuery.builder()
+                    .token(token!!)
+                    .id(identity)
+                    .build(), this)
         } else {
             Toast.makeText(this, "Task id not found.", Toast.LENGTH_SHORT).show()
         }
 
-    }
-
-    fun getTask(identity: String) {
-        GraphQlApiHandler.instance
-            .getData<UserTaskQuery, GenericListener<Any>>(UserTaskQuery.builder()
-                .token(PreferenceUtil.getToken(this)!!)
-                .id(identity)
-                .build(), this)
     }
 
     override fun OnResults(response: Any?) {
