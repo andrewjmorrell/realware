@@ -35,7 +35,7 @@ import java.io.IOException
 import java.net.URL
 import java.util.*
 
-open class BaseActivity : AppCompatActivity() {
+public open class BaseActivity : AppCompatActivity() {
     private var mActionProgressItem: MenuItem? = null
     private var mIsLoading = false
 
@@ -76,18 +76,18 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    fun setLoading(isLoading: Boolean) {
+    public fun setLoading(isLoading: Boolean) {
         mIsLoading = isLoading
         if (mActionProgressItem != null) {
             mActionProgressItem!!.isVisible = mIsLoading
         }
     }
 
-    fun showToast(message: String) {
+    public fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    fun hideKeyboard(activity: Activity) {
+    public fun hideKeyboard(activity: Activity) {
         val imm = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         //Find the currently focused view, so we can grab the correct window token from it.
         var view = activity.currentFocus
@@ -144,7 +144,7 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    open fun onMessageReceived(item: String) {
+    public open fun onMessageReceived(item: String) {
 
         var gson = Gson()
         var userInput = gson?.fromJson(item, InputMessage::class.java)
@@ -159,7 +159,7 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    fun login(userInput: InputMessage) {
+    public fun login(userInput: InputMessage) {
         val intent = Intent(this, MyWorkActivity::class.java)
             .putExtra(Constants.TOKEN, userInput.token)
             .putExtra(Constants.UNIQUEID, userInput.uniqueid)
@@ -222,7 +222,7 @@ open class BaseActivity : AppCompatActivity() {
         }
 
         if (mimetype == "audio/wav") {
-
+            Log.e("TAG", "Audio")
         } else {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.addCategory(Intent.CATEGORY_DEFAULT)
