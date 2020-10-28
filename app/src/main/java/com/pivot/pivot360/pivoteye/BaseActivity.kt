@@ -35,6 +35,11 @@ import java.io.IOException
 import java.net.URL
 import java.util.*
 
+/**
+ * Base activity
+ *
+ * @constructor Create empty Base activity
+ */
 public open class BaseActivity : AppCompatActivity() {
     private var mActionProgressItem: MenuItem? = null
     private var mIsLoading = false
@@ -76,18 +81,33 @@ public open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    public fun setLoading(isLoading: Boolean) {
+    /**
+     * Set loading
+     *
+     * @param isLoading
+     */
+    fun setLoading(isLoading: Boolean) {
         mIsLoading = isLoading
         if (mActionProgressItem != null) {
             mActionProgressItem!!.isVisible = mIsLoading
         }
     }
 
-    public fun showToast(message: String) {
+    /**
+     * Show toast
+     *
+     * @param message
+     */
+    fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    public fun hideKeyboard(activity: Activity) {
+    /**
+     * Hide keyboard
+     *
+     * @param activity
+     */
+    fun hideKeyboard(activity: Activity) {
         val imm = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         //Find the currently focused view, so we can grab the correct window token from it.
         var view = activity.currentFocus
